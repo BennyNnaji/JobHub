@@ -11,11 +11,14 @@
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" type="image/png" href="{{ asset('images/front/fav.png') }}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 
 <body class=" bg-gray-200">
-    <section>
-        <div class=" bg-blue-200 py-3">
+    <section data-aos="zoom-in">
+        <section>
+        <div class=" bg-blue-500 py-3">
             <div class="w-11/12 md:w-5/6 mx-auto flex justify-between items-center">
                 <div class="flex items-center  justify-start">
                     <div class="md:w-2/12  w-4/12">
@@ -24,48 +27,48 @@
                     </div>
                     <div class="hidden md:block sm:hidden">
                         <a href=""
-                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Home</a>
+                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Home</a>
                         <a href=""
-                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">About
+                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">About
                             Us</a>
                         <a href=""
-                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Services</a>
+                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Services</a>
                         <a href=""
-                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Jobs</a>
+                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Jobs</a>
                         <a href=""
-                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Companies</a>
+                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Companies</a>
                     </div>
                 </div>
                 <div class="">
                     <div class="md:hidden" id="button"><i
-                            class="fa-solid fa-bars hover:bg-blue-600  hover:text-blue-200 text-blue-600 fa-2x cursor-pointer"></i>
+                            class="fa-solid fa-bars hover:bg-blue-600  hover:text-blue-200 text-blue-100 fa-2x cursor-pointer"></i>
                     </div>
                     <div class="hidden md:block">
 
                         <a href=""
-                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Login</a><a
+                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Login</a><a
                             href=""
-                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Register</a>
+                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Register</a>
                     </div>
 
                 </div>
             </div>
             <div class="hidden" id="mobile_menu">
                 <a href=""
-                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Home</a>
+                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Home</a>
                 <a href=""
-                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">About
+                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">About
                     Us</a>
                 <a href=""
-                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Services</a>
+                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Services</a>
                 <a href=""
-                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Jobs</a>
+                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Jobs</a>
                 <a href=""
-                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Companies</a>
+                    class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Companies</a>
                 <div class="flex justify-between w-8/12 mx-auto my-4">
 
                     <a href=""
-                        class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600 border-2 border-blue-600">Login</a>
+                        class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100 border-2 border-blue-600">Login</a>
                     <a href=""
                         class="mx-2 rounded px-6 py-3 bg-blue-600 text-blue-200 hover:bg-blue-200 hover:text-blue-600  hover:border-2 border-blue-600">Register</a>
                 </div>
@@ -74,10 +77,9 @@
     </section>
 
     @yield('content')
-
     <section class="bg-black/50">
         <div class="w-11/12 md:w-5/6 mx-auto md:flex justify-between py-6">
-            <div class="md:w-3/6">
+            <div class="md:w-3/6" data-aos="zoom-in-left">
                 <h2 class="font-semibold text-white">About</h2>
                 <hr class="w-4/5 my-2">
                 <img src="{{ asset('images/front/logo.png') }}" alt="" class="inline w-3/6"> <span
@@ -86,7 +88,7 @@
                     quisquam minima, ad culpa illo ratione debitis.</span>
             </div>
 
-            <div class="md:w-3/6">
+            <div class="md:w-3/6" data-aos="zoom-in">
                 <h2 class="font-semibold text-white">Navigation</h2>
                 <hr class="w-4/5 my-2">
                 <a href=""
@@ -100,7 +102,7 @@
                     class=" rounded block px-6 py-3 hover:bg-white text-black">Jobs</a>
             </div>
 
-            <div class="md:w-3/6">
+            <div class="md:w-3/6" data-aos="zoom-in-right">
                 <h2 class="font-semibold text-white">Contact</h2>
                 <hr class="w-4/5 my-2">
                 <p class="my-5"><i class="fa-solid fa-phone"></i> +234 813 123 4567</p>
@@ -135,7 +137,10 @@
         button.addEventListener('click', () => {
             mobile_menu.classList.toggle('hidden');
         });
+
+         AOS.init();
     </script>
+    </section>
 </body>
 
 </html>

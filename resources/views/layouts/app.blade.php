@@ -90,14 +90,14 @@
                 <h2 class="font-semibold text-white">Navigation</h2>
                 <hr class="w-4/5 my-2">
                 <a href=""
-                    class=" rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Home</a>
+                    class=" rounded block px-6 py-3 hover:bg-white text-black">Home</a>
                 <a href=""
-                    class=" rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">About
+                    class=" rounded block px-6 py-3 hover:bg-white text-black">About
                     Us</a>
                 <a href=""
-                    class=" rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Services</a>
+                    class=" rounded block px-6 py-3 hover:bg-white text-black">Services</a>
                 <a href=""
-                    class=" rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-600">Jobs</a>
+                    class=" rounded block px-6 py-3 hover:bg-white text-black">Jobs</a>
             </div>
 
             <div class="md:w-3/6">

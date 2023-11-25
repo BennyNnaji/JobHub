@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [FrontpageController::class, 'index'])->name('index');
+Route::get('/login', [FrontpageController::class, 'login'])->name('login');
+Route::get('/register', [FrontpageController::class, 'register'])->name('register');
 Route::get('/seeker/register', [FrontpageController::class, 'seeker_register'])->name('seeker_register');
 Route::get('/seeker/login', [FrontpageController::class, 'seeker_login'])->name('seeker_login');
 Route::get('/seeker/login-reset', [FrontpageController::class, 'seeker_login_reset'])->name('seeker_login_reset');

@@ -11,7 +11,21 @@ class FrontpageController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $title = 'Home';
+        return view('index', compact('title'));
+    }
+    
+
+    public function register()
+    {
+        $title = "Register";
+        return view('register', compact('title'));
+    }
+
+    public function login()
+    {
+        $title = "Login";
+        return view('login', compact('title'));
     }
     public function seeker_register()
     {

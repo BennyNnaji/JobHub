@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ env('APP_NAME') }}</title>
+    <title>{{ $title }} | {{ env('APP_NAME') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
@@ -45,9 +45,9 @@
                     </div>
                     <div class="hidden md:block">
 
-                        <a href=""
+                        <a href="{{ route('login') }}"
                             class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Login</a><a
-                            href=""
+                            href="{{ route('register') }}"
                             class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Register</a>
                     </div>
 
@@ -67,9 +67,9 @@
                     class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Companies</a>
                 <div class="flex justify-between w-8/12 mx-auto my-4">
 
-                    <a href=""
+                    <a href="{{ route('login') }}"
                         class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100 border-2 border-blue-600">Login</a>
-                    <a href=""
+                    <a href="{{ route('register') }}"
                         class="mx-2 rounded px-6 py-3 bg-blue-600 text-blue-200 hover:bg-blue-200 hover:text-blue-600  hover:border-2 border-blue-600">Register</a>
                 </div>
             </div>

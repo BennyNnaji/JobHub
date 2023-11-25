@@ -14,9 +14,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
-
 <body class=" bg-gray-200">
-
     <section
         style="background-image: url('https://cdn.pixabay.com/photo/2018/03/03/20/02/laptop-3196481_1280.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
         <section class="bg-white/50 min-h-screen flex flex-col items-center justify-center">
@@ -29,7 +27,6 @@
                     <h1 class="text-2xl font-semibold text-blue-600 text-left">Seeker Password Reset</h1>
                     <p class="text-xs italic capitalize text-center"> Please enter your email address below to receive password reset link</p>
                 </div>
-
                 <form action="" method="post" class="mt-3 w-5/6 mx-auto my-10">
                     @csrf
                     <div class="w-4/6 mx-auto">
@@ -43,7 +40,6 @@
                     </div>
                     <button type="submit"
                         class="w-full hover:bg-blue-600 bg-blue-500 text-white p-2 rounded  my-5">Send Code</button>
-
                 </form>
             </section>
         </section>

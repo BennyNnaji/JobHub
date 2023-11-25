@@ -14,7 +14,8 @@
                         <option value="">Category 3</option>
                         <option value="">Category 4</option>
                         <option value="">Category 5</option>
-
+                        <option value="">Category 6</option>
+                        <option value="">Category 7</option>
                     </select>
                     <input type="text" name="location" id="location" placeholder="Location" class="w-full">
                     <button type="submit" class="w-full hover:bg-blue-600 bg-blue-500 text-white p-2 rounded mt-2">Search</button>

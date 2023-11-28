@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [FrontpageController::class, 'index'])->name('index');
+Route::get('/seeker/register', [FrontpageController::class, 'seeker_register'])->name('seeker_register');
+Route::get('/seeker/login', [FrontpageController::class, 'seeker_login'])->name('seeker_login');
+
+Route::get('/company/register', [FrontpageController::class, 'company_register'])->name('company_register');
+Route::get('/company/login', [FrontpageController::class, 'company_login'])->name('company_login');
+
+
 
 Route::get('/welcome', function () {
     return view('welcome');

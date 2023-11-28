@@ -13,7 +13,40 @@ class FrontpageController extends Controller
     {
         return view('index');
     }
+    public function seeker_register()
+    {
+        return view('seeker.register');
+    }
 
+    public function seeker_login()
+    {
+        return view('seeker.login');
+    }
+    public function company_register()
+    {
+        return view('company.register');
+    }
+    public function company_login()
+    {
+        return view('company.login');
+    }
+   
+     
+         
+     
+        // if(!session()->has('seeker_id') && !session()->has('company_id')){
+        //     return redirect('/');
+        // }
+        // if(session()->has('seeker_id')){
+        //     return redirect('/seeker/dashboard');
+        // }elseif(session()->has('company_id')){
+        //     return redirect('/company/dashboard');
+        // }else{
+        //     return redirect('/');
+        // }
+
+    
+ 
     /**
      * Show the form for creating a new resource.
      */

@@ -36,17 +36,34 @@
                         <label for="email"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                         <input type="email" name="email" id="email" class="w-full"
+<<<<<<< HEAD
                             placeholder="Enter your email">
+=======
+                            placeholder="Enter your email" value="{{ old('email') }}">
+                            @error('email')
+                                <div class="text-red-700">{{ $message }}</div>
+                            @enderror
+>>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
                     <div class="w-4/6 mx-auto">
                         <label for="password"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                         <input type="password" name="password" id="password" class="w-full"
                             placeholder="Enter your password">
+<<<<<<< HEAD
                     </div>
 
                     <div class="flex justify-between">
                         <a href="" class="text-blue-600 ml-3">Forgot Password?</a>
+=======
+                            @error('password')
+                                <div class="text-red-700">{{ $message }}</div>
+                            @enderror
+                    </div>
+
+                    <div class="flex justify-between">
+                        <a href="{{ route('seeker_login_reset') }}" class="text-blue-600 ml-3">Forgot Password?</a>
+>>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                         <a href="{{ route('seeker_register') }}" class="text-blue-600 ml-3">Don't Have Account?
                             Register</a>
                     </div>

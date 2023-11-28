@@ -15,11 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [FrontpageController::class, 'index'])->name('index');
+<<<<<<< HEAD
 Route::get('/seeker/register', [FrontpageController::class, 'seeker_register'])->name('seeker_register');
 Route::get('/seeker/login', [FrontpageController::class, 'seeker_login'])->name('seeker_login');
 
 Route::get('/company/register', [FrontpageController::class, 'company_register'])->name('company_register');
 Route::get('/company/login', [FrontpageController::class, 'company_login'])->name('company_login');
+=======
+Route::get('/login', [FrontpageController::class, 'login'])->name('login');
+Route::get('/register', [FrontpageController::class, 'register'])->name('register');
+Route::get('/seeker/register', [FrontpageController::class, 'seeker_register'])->name('seeker_register');
+Route::get('/seeker/login', [FrontpageController::class, 'seeker_login'])->name('seeker_login');
+Route::get('/seeker/login-reset', [FrontpageController::class, 'seeker_login_reset'])->name('seeker_login_reset');
+
+Route::get('/company/register', [FrontpageController::class, 'company_register'])->name('company_register');
+Route::get('/company/login', [FrontpageController::class, 'company_login'])->name('company_login');
+Route::get('/company/login-reset', [FrontpageController::class, 'company_login_reset'])->name('company_login_reset');
+>>>>>>> 12ad778570f98332ec0128a554668a4168f758da
 
 
 

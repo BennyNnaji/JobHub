@@ -36,53 +36,38 @@
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full
                             Name</label>
                         <input type="text" name="name" id="name" class="w-full"
-<<<<<<< HEAD
-                            placeholder="Enter your name">
-=======
                             placeholder="Enter your name" value="{{ old('name') }}">
                             @error('name')
                                 <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
 
                     <div class="w-4/6 mx-auto">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
                             address</label>
                         <input type="email" name="email" id="email" class="w-full"
-<<<<<<< HEAD
-                            placeholder="Enter your email">
-=======
                             placeholder="Enter your email" value="{{ old('email') }}">
                             @error('email')
                                 <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
                     <div class="w-4/6 mx-auto">
                         <label for="phone"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
                         <input type="tel" name="phone" id="phone" class="w-full"
-<<<<<<< HEAD
-                            placeholder="Enter your phone">
-=======
                             placeholder="Enter your phone" value="{{ old('phone') }}">
                             @error('phone')
                                 <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
                     <div class="w-4/6 mx-auto">
                         <label for="password"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                         <input type="password" name="password" id="password" class="w-full"
                             placeholder="Enter your password">
-<<<<<<< HEAD
-=======
                             @error('password')
                                 <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
 
                     <div class="w-4/6 mx-auto">
@@ -91,13 +76,10 @@
                             Password</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="w-full"
                             placeholder="Enter your password again">
-<<<<<<< HEAD
-=======
                             @error('password_confirmation')
                             <div class="text-red-700">{{ $message }}</div>
                         @enderror
 
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
 
                     <a href="{{ route('seeker_login') }}" class="text-blue-600 ml-3">Already have an Account? Login</a>

@@ -11,10 +11,6 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
 
     // Show admin login form
     public function showLoginForm()
@@ -56,7 +52,20 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|password_confirmation|min:8',
+            'phone' => 'required',
+        ]);
+        $company = Company::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'website' => $request->website,
+        ]);
+        return redirect()->route('company_login');
     }
 
     /**

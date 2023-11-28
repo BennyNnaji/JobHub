@@ -26,19 +26,16 @@ class FrontpageController extends Controller
         return view('seeker.register');
     }
 
-<<<<<<< HEAD
-=======
     public function login()
     {
         $title = "Login";
         return view('login', compact('title'));
     }
-    public function seeker_register()
-    {
-        return view('seeker.register');
-    }
+    // public function seeker_register()
+    // {
+    //     return view('seeker.register');
+    // }
 
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
     public function seeker_login()
     {
         return view('seeker.login');
@@ -51,8 +48,6 @@ class FrontpageController extends Controller
     {
         return view('company.login');
     }
-<<<<<<< HEAD
-=======
     public function company_login_reset()
     {
         return view('company.reset');
@@ -61,7 +56,6 @@ class FrontpageController extends Controller
     {
         return view('seeker.reset');
     }
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
    
      
          

@@ -29,62 +29,46 @@
                     <a href="{{ route('seeker_register') }}" class="text-blue-600 ml-3">Seeker? Register Here</a>
                 </div>
 
-                <form action="" method="post" class="mt-3 w-5/6 mx-auto my-10">
+                <form action="{{ route('company_store') }}" method="post" class="mt-3 w-5/6 mx-auto my-10">
                     @csrf
                     <div class="w-4/6 mx-auto">
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company Name</label>
                         <input type="text" name="name" id="name" class="w-full"
-<<<<<<< HEAD
-                            placeholder="Enter name of your company">
-=======
                             placeholder="Enter name of your company" value="{{ old('name') }}">
                             @error('name')
                                 <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
 
                     <div class="w-4/6 mx-auto">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
                             address</label>
                         <input type="email" name="email" id="email" class="w-full"
-<<<<<<< HEAD
-                            placeholder="Enter email of your company">
-=======
                             placeholder="Enter email of your company" value="{{ old('email') }}">
                             @error('email')
                                 <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
 
                     <div class="w-4/6 mx-auto">
                         <label for="website"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Website</label>
                         <input type="url" name="website" id="website" class="w-full"
-<<<<<<< HEAD
-                            placeholder="Enter your website">
-=======
                             placeholder="Enter your website" value="{{ old('website') }}">
                             @error('website')
                             <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
 
                     <div class="w-4/6 mx-auto">
                         <label for="phone"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
                         <input type="tel" name="phone" id="phone" class="w-full"
-<<<<<<< HEAD
-                            placeholder="Enter your phone">
-=======
                             placeholder="Enter your phone" value="{{ old('phone') }}">
                             @error('phone')
                             <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
 
                     <div class="w-4/6 mx-auto">
@@ -92,12 +76,9 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                         <input type="password" name="password" id="password" class="w-full"
                             placeholder="Enter your password">
-<<<<<<< HEAD
-=======
                             @error('password')
                             <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
 
                     <div class="w-4/6 mx-auto">
@@ -106,12 +87,9 @@
                             Password</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="w-full"
                             placeholder="Enter your password again">
-<<<<<<< HEAD
-=======
                             @error('password_confirmation')
                             <div class="text-red-700">{{ $message }}</div>
                             @enderror
->>>>>>> 12ad778570f98332ec0128a554668a4168f758da
                     </div>
 
                     <a href="{{ route('company_login') }}" class="text-blue-600 ml-3">Already have an Account? Login</a>

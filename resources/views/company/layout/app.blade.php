@@ -39,20 +39,45 @@
 
     <section class=" flex ">
         {{-- Vertical Menu --}}
-        <div class="bg-blue-600 h-screen w-1/6 text-white px-5">
-            <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3">Menu Here</a>
-            <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3">Menu Here</a>
-            <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3">Menu Here</a>
-            <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3">Menu Here</a>
-            <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3">Menu Here</a>
+        <div class="bg-blue-600 h-screen w-2/6 md:w-1/6 text-white px-5 flex justify-between">
+            {{-- Mobile Icon --}}
+            <div class="md:hidden order-2" id="button"><i
+                    class="fa-solid fa-bars hover:bg-blue-600  hover:text-blue-200 text-blue-100  cursor-pointer"></i>
+            </div>
+            <div>
+                {{-- mobile menu --}}
+                <div class="bg-blue-600 md:hidden" id="hidden">
+                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
+                            class="fa-regular fa-user "></i></a>
+                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
+                            class="fa-regular fa-user"></i></a>
+                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
+                            class="fa-regular fa-user "></i></a>
+                </div>
+                {{-- Desktop Menu --}}
+                <div class="hidden md:block" id="desk_menu">
+                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
+                            class="fa-regular fa-user "></i> Home</a>
+                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
+                            class="fa-regular fa-user"></i> Home</a>
+                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
+                            class="fa-regular fa-user "></i> Home</a>
+                </div>
+            </div>
+
         </div>
+
         <div class="w-5/6 p-2 bg-gray-300">
             @yield('content')
         </div>
     </section>
 
-    </section>
     <script>
+        let button = document.getElementById('button');
+        let mobile_menu = document.getElementById('desk_menu');
+        button.addEventListener('click', () => {
+            mobile_menu.classList.toggle('hidden');
+        });
         AOS.init();
     </script>
     @if (session('error'))

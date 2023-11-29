@@ -9,6 +9,7 @@ class CompanyDashboardController extends Controller
 {
     public function company_dashboard()
     {
-        return view('company.dashboard');
+        $title = "Company Dashboard";
+        return view('company.dashboard', compact('title'));
     }
 }

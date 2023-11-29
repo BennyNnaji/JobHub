@@ -1,3 +1,6 @@
+@extends('company.layout.app')
+@section('content')
+    
 Welcome to company dashboard!!! <br>
 @php
 $company = Auth::guard('company')->user();
@@ -11,10 +14,10 @@ $company->phone == ''
 )
 
 
-    {{ Auth::guard('company')->user()->name }} please update your profile. <br> 
+    {{ $company->name }} please update your profile. <br> 
     <a href="//" class="text-blue-600 ml-3 ">Update</a>
 @else
-    {{ Auth::guard('company')->user()->email }} welcome. <br>
+    {{ $company->email }} welcome. <br>
 
 @endif
     
@@ -37,3 +40,5 @@ $company->phone == ''
     {{ Auth::guard('company')->user()->email }} welcome. <br>
 
 @endif --}}
+
+@endsection

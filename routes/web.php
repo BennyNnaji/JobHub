@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Company\Auth\CompanyAuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontpageController;
+use App\Http\Controllers\Company\Auth\CompanyAuthController;
+use App\Http\Controllers\Company\CompanyDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,14 @@ Route::get('/company/register', [CompanyAuthController::class, 'company_register
 Route::post('/company/register', [CompanyAuthController::class, 'company_store'])->name('company_store');
 Route::get('/company/login', [CompanyAuthController::class, 'company_login'])->name('company_login');
 Route::post('/company/login', [CompanyAuthController::class, 'company_login_post'])->name('company_login_post');
-Route::get('/company/dashboard', [CompanyAuthController::class, 'company_dashboard'])->name('company_dashboard');
 Route::get('/company/login-reset', [CompanyAuthController::class, 'company_login_reset'])->name('company_login_reset');
+
+    // Protected Company Routes
+Route::middleware(['company'])->group(function(){
+Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
+});
+
+
 
 
 

@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" href="{{ asset('images/front/fav.png') }}">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class=" bg-gray-200">
@@ -21,7 +22,8 @@
         style="background-image: url('https://cdn.pixabay.com/photo/2013/03/02/02/41/alley-89197_1280.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
         <section class="bg-white/50 min-h-screen flex flex-col items-center justify-center">
             <div class="w-11/12 md:w-3/6 mx-auto">
-                <a href="{{ route('index') }}"><img src="{{ asset('images/front/logo.png') }}" alt="" class="w-2/6 mx-auto"></a>
+                <a href="{{ route('index') }}"><img src="{{ asset('images/front/logo.png') }}" alt=""
+                        class="w-2/6 mx-auto"></a>
             </div>
             <section data-aos="zoom-in"
                 class="w-11/12 md:w-3/6 mx-auto border-2 border-blue-600 rounded bg-white px-3 py-5">
@@ -37,18 +39,18 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                         <input type="email" name="email" id="email" class="w-full"
                             placeholder="Enter your email" value="{{ old('email') }}">
-                            @error('email')
+                        @error('email')
                             <div class="text-red-700">{{ $message }}</div>
-                            @enderror
+                        @enderror
                     </div>
                     <div class="w-4/6 mx-auto">
                         <label for="password"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                         <input type="password" name="password" id="password" class="w-full"
                             placeholder="Enter your password">
-                            @error('password')
+                        @error('password')
                             <div class="text-red-700">{{ $message }}</div>
-                            @enderror
+                        @enderror
                     </div>
 
                     <div class="flex justify-between">
@@ -67,6 +69,25 @@
     <script>
         AOS.init();
     </script>
+    @if (session('error'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('error') }}"
+            });
+        </script>
+    @endif
 
 </body>
 

@@ -45,17 +45,15 @@ class CompanyAuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('company')->attempt($credentials)) {
-            // Authentication passed for admin
+            // Authentication passed for company
             return redirect()->route('company_dashboard')->with('success', 'Login successful');
         }
 
-        // Authentication failed for admin
+        // Authentication failed for company
         return back()->withErrors(['email' => 'Invalid credentials', 'password' => 'Invalid credentials'])->withInput($request->only('email'));
     }
 
-    public function company_dashboard(){
-        return view('company.dashboard');
-    }
+
     
 
 }

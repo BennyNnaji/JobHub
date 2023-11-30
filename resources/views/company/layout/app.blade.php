@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,58 +15,43 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body class="bg-gray-600">
 
     <section class="">
-        <div class="flex justify-between bg-blue-600 items-center md:px-5 px-auto">
+        <div class="flex justify-between  items-center md:px-5 px-auto" data-aos="fade-down">
             {{-- logo here --}}
-            <div class="md:w-2/12  w-4/12 ">
+            <div class="md:w-2/12  w-4/12 hidden md:block">
                 <a href="{{ route('index') }}" class=""><img src="{{ asset('images/front/logo.png') }}"
                         class="md:w-11/12 w-5/6" /></a>
+            </div>
+            {{-- Mobile Icon --}}
+            <div class="md:hidden ml-5" id="button"><i
+                    class="fa-solid fa-bars fa-2x   text-gray-100  cursor-pointer"></i>
             </div>
             <div class="md:w-1/12  w-2/12 text-center ">
                 <img src="https://dummyimage.com/150x150/000/fff" alt="Company Logo"
                     class="md:w-5/12 w-3/6 rounded-full mx-auto">
                 <div class="text-white font-semibold capitalize">{{ $company->name }}</div>
-
             </div>
-
         </div>
-
-
     </section>
 
-    <section class=" flex ">
-        {{-- Vertical Menu --}}
-        <div class="bg-blue-600 h-screen w-2/6 md:w-1/6 text-white px-5 flex justify-between">
-            {{-- Mobile Icon --}}
-            <div class="md:hidden order-2" id="button"><i
-                    class="fa-solid fa-bars hover:bg-blue-600  hover:text-blue-200 text-blue-100  cursor-pointer"></i>
-            </div>
+    <section class=" flex  ">
+        {{-- Desktop Menu --}}
+        <div class="bg-gray-600  h-screen w-2/6 md:w-1/6 md:block hidden text-white px-5 relative z-10 md:static"
+            id="desk_menu" data-aos="fade-right">
             <div>
-                {{-- mobile menu --}}
-                <div class="bg-blue-600 md:hidden" id="hidden">
-                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
-                            class="fa-regular fa-user "></i></a>
-                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
-                            class="fa-regular fa-user"></i></a>
-                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
-                            class="fa-regular fa-user "></i></a>
-                </div>
-                {{-- Desktop Menu --}}
-                <div class="hidden md:block" id="desk_menu">
-                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
-                            class="fa-regular fa-user "></i> Home</a>
-                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
-                            class="fa-regular fa-user"></i> Home</a>
-                    <a href="" class="block px-4 py-2 rounded hover:border-2 border-blue-400 my-3"><i
-                            class="fa-regular fa-user "></i> Home</a>
-                </div>
+                <div> <a href="" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                            class="fa-regular fa-user "></i> Home</a> </div>
+                <a href="" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                        class="fa-regular fa-user"></i> Home</a>
+                <a href="" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                        class="fa-regular fa-user "></i> Home</a>
             </div>
-
         </div>
 
-        <div class="w-5/6 p-2 bg-gray-300">
+        <div class="w-full p-2 bg-gray-200 absolute top-28 md:static inset-0 min-h-screen rounded-t-3xl border-t-4 border-x-4 md:border-red-500 border-gray-600"
+            data-aos="flip-right">
             @yield('content')
         </div>
     </section>
@@ -119,5 +103,6 @@
         </script>
     @endif
 </body>
+
 
 </html>

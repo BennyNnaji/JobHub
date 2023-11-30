@@ -24,7 +24,7 @@ class CompanyMiddleware
                 return redirect()->route('company_login')->with('error', 'Account not active');
         }
 
-        return redirect()->route('company_login')->with('error', 'Access denied');
+        return redirect()->route('company_login')->with('error', 'Session expired. Please login again');
     }
 
 }

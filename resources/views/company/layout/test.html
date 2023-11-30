@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Example</title>
+
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="font-sans flex items-center justify-center h-screen bg-gray-100">
+  <!-- Button to Open Modal -->
+  <button id="openModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Open Modal
+  </button>
+
+  <!-- Modal Background -->
+  <div id="modalBackdrop" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden"></div>
+
+  <!-- Modal Content -->
+  <div id="myModal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md shadow-md hidden">
+    <h2 class="text-xl font-bold mb-4">Modal Title</h2>
+    <p class="w-3/5">This is some modal content. You can put any content you want here
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum, voluptas molestias vel quo cum id nulla dolores fugiat error adipisci repellendus magni porro tempore unde blanditiis dignissimos nam consectetur libero!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam illum quod maiores repellat excepturi esse, assumenda qui aut hic incidunt ab deleniti ea similique. Deserunt reprehenderit rerum provident ratione nam ipsam quidem, praesentium dolor reiciendis minus maxime. Consequuntur sed voluptates velit sunt quisquam maiores? Minima aliquid rerum commodi repudiandae atque explicabo eum magni rem aspernatur, quam adipisci reiciendis ipsam eveniet ea, corrupti officiis placeat veniam magnam maxime? Aliquid ullam ut vel voluptate, corporis voluptatem ducimus assumenda provident obcaecati cumque beatae sequi placeat sunt nemo soluta illo delectus reprehenderit. Illo eos temporibus, neque deleniti error molestias veniam quis excepturi doloremque quam accusamus mollitia quia dolorem atque ad a beatae, ab reprehenderit voluptates suscipit earum ipsa magni autem dignissimos? Asperiores, illum! Dolor ut non quam unde id! Quo maiores, repellendus molestias dolorum iusto deleniti harum quae nihil adipisci at aut, distinctio fuga corporis sapiente, autem cumque corrupti eaque tempora optio unde consequuntur! Asperiores saepe ex ullam magnam reprehenderit minima nam aliquid autem consequatur aperiam? Animi recusandae blanditiis nostrum veritatis! In, unde omnis, aliquid nihil aliquam quia obcaecati commodi mollitia ut ducimus magni eaque debitis rem nobis vero quasi? Laboriosam repellendus quod natus, nulla officia ut recusandae, assumenda nam earum quo quidem alias?
+        .</p>
+    <button id="closeModal" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+      Close Modal
+    </button>
+  </div>
+
+  <script>
+    // JavaScript to handle modal functionality
+    document.addEventListener('DOMContentLoaded', function () {
+      const openModalButton = document.getElementById('openModal');
+      const closeModalButton = document.getElementById('closeModal');
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const modal = document.getElementById('myModal');
+
+      // Open modal
+      openModalButton.addEventListener('click', function () {
+        modal.classList.remove('hidden');
+        modalBackdrop.classList.remove('hidden');
+      });
+
+      // Close modal
+      closeModalButton.addEventListener('click', function () {
+        modal.classList.add('hidden');
+        modalBackdrop.classList.add('hidden');
+      });
+
+      // Close modal when clicking outside of it
+      modalBackdrop.addEventListener('click', function () {
+        modal.classList.add('hidden');
+        modalBackdrop.classList.add('hidden');
+      });
+    });
+  </script>
+</body>
+</html>

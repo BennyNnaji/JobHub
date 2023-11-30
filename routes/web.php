@@ -32,9 +32,9 @@ Route::get('/company/login-reset', [CompanyAuthController::class, 'company_login
 
     // Protected Company Routes
 Route::middleware(['company'])->group(function(){
-Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
+//Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
 });
-
+Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
 
 
 

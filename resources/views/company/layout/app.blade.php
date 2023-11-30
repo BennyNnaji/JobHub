@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,9 @@
 </head>
 
 <body class="bg-gray-600">
-
+    @php
+        $company = Auth::guard('company')->user();
+    @endphp
     <section class="">
         <div class="flex justify-between  items-center md:px-5 px-auto" data-aos="fade-down">
             {{-- logo here --}}
@@ -29,9 +32,9 @@
                     class="fa-solid fa-bars fa-2x   text-gray-100  cursor-pointer"></i>
             </div>
             <div class="md:w-1/12  w-2/12 text-center ">
-                <img src="https://dummyimage.com/150x150/000/fff" alt="Company Logo"
+                <img src="https://dummyimage.com/150x150/fff/000" alt="Company Logo"
                     class="md:w-5/12 w-3/6 rounded-full mx-auto">
-                <div class="text-white font-semibold capitalize">{{ '$company->name '}}</div>
+                <div class="text-white font-semibold capitalize">{{ $company->name }}</div>
             </div>
         </div>
     </section>
@@ -41,10 +44,14 @@
         <div class="bg-gray-600  h-screen w-2/6 md:w-1/6 md:block hidden text-white px-5 relative z-10 md:static"
             id="desk_menu" data-aos="fade-right">
             <div>
-                <div> <a href="" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
-                            class="fa-regular fa-user "></i> Home</a> </div>
-                <a href="" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
-                        class="fa-regular fa-user"></i> Home</a>
+                 <a href="{{ route('company_dashboard') }}"
+                    class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                        class="fa-regular fa-user"></i> Dashboard</a>
+               
+                    <a href="{{ route('company_profile') }}"
+                        class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                            class="fa-regular fa-user "></i> My Profile</a>
+                
                 <a href="" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
                         class="fa-regular fa-user "></i> Home</a>
             </div>

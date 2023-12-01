@@ -14,6 +14,8 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tiny.cloud/1/6216wbng5cbdfeqd1pkwh8m5hymacgkbzx3etbiache8b5sj/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
 </head>
 
 <body class="bg-gray-600">
@@ -44,14 +46,14 @@
         <div class="bg-gray-600  h-screen w-2/6 md:w-1/6 md:block hidden text-white px-5 relative z-10 md:static"
             id="desk_menu" data-aos="fade-right">
             <div>
-                 <a href="{{ route('company_dashboard') }}"
+                <a href="{{ route('company_dashboard') }}"
                     class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
                         class="fa-regular fa-user"></i> Dashboard</a>
-               
-                    <a href="{{ route('company_profile') }}"
-                        class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
-                            class="fa-regular fa-user "></i> My Profile</a>
-                
+
+                <a href="{{ route('company_profile') }}"
+                    class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                        class="fa-regular fa-user "></i> My Profile</a>
+
                 <a href="" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
                         class="fa-regular fa-user "></i> Home</a>
             </div>
@@ -108,7 +110,15 @@
                 title: "{{ session('success') }}"
             });
         </script>
+   >
     @endif
+        <script>
+            tinymce.init({
+                selector: 'textarea',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+            });
+        </script>
 </body>
 
 

@@ -36,6 +36,9 @@ Route::get('/company/login-reset', [CompanyAuthController::class, 'company_login
 Route::middleware(['company'])->group(function () {
     Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
     Route::get('/company/profile', [CompanyProfileController::class, 'index'])->name('company_profile');
+    Route::post('/company/profile', [CompanyProfileController::class, 'profile_update'])->name('profile_update');
+
+    
 });
 //Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
 

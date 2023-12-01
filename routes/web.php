@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontpageController;
 use App\Http\Controllers\Company\Auth\CompanyAuthController;
 use App\Http\Controllers\Company\CompanyDashboardController;
+use App\Http\Controllers\Company\ProfileController as CompanyProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,7 @@ use App\Http\Controllers\Company\CompanyDashboardController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/', [FrontpageController::class, 'index'])->name('index');
 Route::get('/login', [FrontpageController::class, 'login'])->name('login');
 Route::get('/register', [FrontpageController::class, 'register'])->name('register');
@@ -30,11 +32,12 @@ Route::get('/company/login', [CompanyAuthController::class, 'company_login'])->n
 Route::post('/company/login', [CompanyAuthController::class, 'company_login_post'])->name('company_login_post');
 Route::get('/company/login-reset', [CompanyAuthController::class, 'company_login_reset'])->name('company_login_reset');
 
-    // Protected Company Routes
-Route::middleware(['company'])->group(function(){
-Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
+// Protected Company Routes
+Route::middleware(['company'])->group(function () {
+    Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
+    Route::get('/company/profile', [CompanyProfileController::class, 'index'])->name('company_profile');
 });
-
+//Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
 
 
 
@@ -53,4 +56,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

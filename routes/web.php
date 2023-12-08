@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontpageController;
 use App\Http\Controllers\Company\Auth\CompanyAuthController;
 use App\Http\Controllers\Company\CompanyDashboardController;
 use App\Http\Controllers\Company\ProfileController as CompanyProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,14 +33,16 @@ Route::post('/company/register', [CompanyAuthController::class, 'company_store']
 Route::get('/company/login', [CompanyAuthController::class, 'company_login'])->name('company_login');
 Route::post('/company/login', [CompanyAuthController::class, 'company_login_post'])->name('company_login_post');
 Route::get('/company/login-reset', [CompanyAuthController::class, 'company_login_reset'])->name('company_login_reset');
+Route::post('/company/logout', [CompanyAuthController::class, 'company_logout'])->name('company_logout');
+
 
 // Protected Company Routes
 Route::middleware(['company'])->group(function () {
     Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
     Route::get('/company/profile', [CompanyProfileController::class, 'index'])->name('company_profile');
+    Route::get('/company/profile/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry']);
+    Route::get('/company/profile/cities/{countryCode}/{stateCode}', [CompanyProfileController::class, 'getCitiesByState']);
     Route::post('/company/profile', [CompanyProfileController::class, 'profile_update'])->name('profile_update');
-
-    
 });
 //Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
 
@@ -60,3 +64,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+
+Route::get('/company/profiles/', [CountryController::class, 'showCountryDropdown'])->name('test');
+Route::get('/company/profiles/states/{countryCode}', [CountryController::class, 'getStatesByCountry']);
+Route::get('/company/profiles/cities/{countryCode}/{stateCode}', [CountryController::class, 'getCitiesByState']);

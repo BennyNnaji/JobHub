@@ -17,6 +17,7 @@ class Company extends Model implements Authenticatable
         'phone',
         'password',
         'logo',
+        'banner',
         'description',
         'address',
         'city',

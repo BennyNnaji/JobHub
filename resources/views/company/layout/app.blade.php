@@ -16,9 +16,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tiny.cloud/1/6216wbng5cbdfeqd1pkwh8m5hymacgkbzx3etbiache8b5sj/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</head>
 </head>
 
 <body class="bg-gray-600">
+    @include('layouts.preloader')
+
     @php
         $company = Auth::guard('company')->user();
     @endphp
@@ -33,15 +38,38 @@
             <div class="md:hidden ml-5" id="button"><i
                     class="fa-solid fa-bars fa-2x   text-gray-100  cursor-pointer"></i>
             </div>
-            <div class="md:w-1/12  w-2/12 text-center ">
-                <img src="https://dummyimage.com/150x150/fff/000" alt="Company Logo"
-                    class="md:w-5/12 w-3/6 rounded-full mx-auto">
-                <div class="text-white font-semibold capitalize">{{ $company->name }}</div>
+
+
+            <div class="md:w-1/12 w-2/12 relative group">
+                <button class="flex items-center justify-center w-full h-full focus:outline-none" id="dropdownButton">
+                    <img src="{{ asset('storage/company/Images/' . $company->logo) }}" alt="Company Logo"
+                        class="md:w-5/12 w-3/6 rounded-full mx-auto">
+                    <div class="text-white font-semibold capitalize text-center">{{ $company->name }}</div>
+                </button>
+                <div class="absolute hidden bg-white text-gray-800 shadow-md rounded-md mt-2 space-y-2 right-0 z-10"
+                    id="dropdownContent">
+                    <a href="{{ route('company_dashboard') }}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+                    <a href="{{ route('company_profile') }}" class="block px-4 py-2 hover:bg-gray-100">My Profile</a>
+                    <form action="{{ route('company_logout') }}" method="post" class="block px-4 py-2">
+                        @csrf
+                        <button type="submit">Logout</button>
+                    </form>
+                </div>
             </div>
+
+
+
+
+
         </div>
     </section>
 
+
+
+
+
     <section class=" flex  ">
+
         {{-- Desktop Menu --}}
         <div class="bg-gray-600  h-screen w-2/6 md:w-1/6 md:block hidden text-white px-5 relative z-10 md:static"
             id="desk_menu" data-aos="fade-right">
@@ -54,17 +82,31 @@
                     class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
                         class="fa-regular fa-user "></i> My Profile</a>
 
-                <a href="" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                <a href="{{ route('test') }}" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
                         class="fa-regular fa-user "></i> Home</a>
-            </div>
-        </div>
 
-        <div class="w-full p-2 bg-gray-200 absolute top-28 md:static inset-0 min-h-screen rounded-t-3xl border-t-4 border-x-4 md:border-red-500 border-gray-600"
+
+
+            </div>
+
+
+
+
+        </div>
+ <div class="w-full p-2 bg-gray-200 absolute top-28 md:static inset-0 min-h-screen rounded-t-3xl border-t-4 border-x-4 md:border-red-500 border-gray-600"
             data-aos="flip-right">
             @yield('content')
         </div>
     </section>
+    <script>
+        let button = document.getElementById("dropdownBtn");
+        let mobile_menu = document.getElementById("dropdownContent");
 
+
+        dropdownBtn.addEventListener("click", () => {
+            mobile_menu.classList.toggle("hidden");
+        });
+    </script>
     <script>
         let button = document.getElementById('button');
         let mobile_menu = document.getElementById('desk_menu');
@@ -110,15 +152,103 @@
                 title: "{{ session('success') }}"
             });
         </script>
-   >
+        >
     @endif
-        <script>
-            tinymce.init({
-                selector: 'textarea',
-                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#countryDropdown').on('change', function() {
+                var selectedCountryCode = $(this).val();
+                var stateDropdown = $('#stateDropdown');
+                var cityDropdown = $('#cityDropdown');
+                var spinner = $('#spinner');
+
+                // Disable state and city dropdowns while loading
+                stateDropdown.prop('disabled', true);
+                cityDropdown.prop('disabled', true);
+
+                // Show the spinner while loading states
+                spinner.show();
+
+                // Make an AJAX request to get states based on the selected country
+                $.ajax({
+                    url: '/company/profiles/states/' + selectedCountryCode,
+                    type: 'GET',
+                    success: function(data) {
+                        // Populate the state dropdown with the fetched states
+                        stateDropdown.empty();
+                        stateDropdown.append('<option value="">Select a state</option>');
+
+                        $.each(data, function(index, state) {
+                            stateDropdown.append('<option value="' + state['iso2'] +
+                                '">' + state['name'] + '</option>');
+                        });
+
+                        // Enable state dropdown and hide the spinner after successfully loading states
+                        stateDropdown.prop('disabled', false);
+                        spinner.hide();
+                    },
+                    error: function(error) {
+                        console.error('Error fetching states:', error);
+                        // Enable state dropdown and hide the spinner in case of an error
+                        stateDropdown.prop('disabled', false);
+                        spinner.hide();
+                    }
+                });
             });
-        </script>
+
+            $('#stateDropdown').on('change', function() {
+                var selectedCountryCode = $('#countryDropdown').val();
+                var selectedStateCode = $(this).val();
+                var cityDropdown = $('#cityDropdown');
+                var spinner = $('#spinner');
+
+                // Disable city dropdown while loading
+                cityDropdown.prop('disabled', true);
+
+                // Show the spinner while loading cities
+                spinner.show();
+
+                // Make an AJAX request to get cities based on the selected country and state
+                $.ajax({
+                    url: '/company/profiles/cities/' + selectedCountryCode + '/' +
+                        selectedStateCode,
+                    type: 'GET',
+                    success: function(data) {
+                        // Populate the city dropdown with the fetched cities
+                        cityDropdown.empty();
+                        cityDropdown.append('<option value="">Select a city</option>');
+
+                        $.each(data, function(index, city) {
+                            cityDropdown.append('<option value="' + city['id'] + '">' +
+                                city['name'] + '</option>');
+                        });
+
+                        // Enable city dropdown and hide the spinner after successfully loading cities
+                        cityDropdown.prop('disabled', false);
+                        spinner.hide();
+                    },
+                    error: function(error) {
+                        console.error('Error fetching cities:', error);
+                        // Enable city dropdown and hide the spinner in case of an error
+                        cityDropdown.prop('disabled', false);
+                        spinner.hide();
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+
 </body>
 
 

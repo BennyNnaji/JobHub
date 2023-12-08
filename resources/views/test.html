@@ -1,1 +1,37 @@
-company/logo/Nnaji Benjamin XX-logo.png
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Dropdown Example</title>
+</head>
+<body>
+
+
+    <div class="relative">
+        <div id="app" class="relative">
+            <div class="container mx-auto">
+                <button id="dropdownBtn" class="bg-blue-800 text-blue-200 px-4 py-2 rounded">
+                    Profile Menu
+                </button>
+            </div>
+
+            <div class="hidden absolute  bg-gray-300" id="dropdownContent">
+                <a href="#" class="block px-6 py-3 rounded hover:bg-blue-600 hover:text-blue-200">Profile</a>
+                <a href="#" class="block px-6 py-3 rounded hover:bg-blue-600 hover:text-blue-200">Settings</a>
+                <a href="#" class="block px-6 py-3 rounded hover:bg-blue-600 hover:text-blue-200">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropdown = document.getElementById("dropdownContent");
+        const dropdownBtn = document.getElementById("dropdownBtn");
+
+        dropdownBtn.addEventListener("click", () => {
+            dropdown.classList.toggle("hidden");
+        });
+    </script>
+</body>
+</html>

@@ -18,8 +18,8 @@
             <input type="hidden" name="country" id="selectedCountry" value="{{ $company->country }}">
             <input type="hidden" name="state" id="selectedState" value="{{ $company->state }}">
             <input type="hidden" name="city" id="selectedCity" value="{{ $company->city }}">
-                <div class="w-full">
-                    <div class="relative mb-48 ">
+                <div class="w-full ">
+                    <div class="relative mb-48 z-10">
                         <div class="relative ">
                             <div class="w-full h-['60px']">
                                 <img src="{{ asset('storage/company/Images/' . $company->banner ?? '') }}" alt=""

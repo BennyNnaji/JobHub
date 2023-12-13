@@ -7,7 +7,7 @@ use App\Http\Controllers\FrontpageController;
 use App\Http\Controllers\Company\Auth\CompanyAuthController;
 use App\Http\Controllers\Company\CompanyDashboardController;
 use App\Http\Controllers\Company\ProfileController as CompanyProfileController;
-
+use App\Http\Controllers\Company\JobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,8 +43,12 @@ Route::middleware(['company'])->group(function () {
     Route::get('/company/profile/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry']);
     Route::get('/company/profile/cities/{countryCode}/{stateCode}', [CompanyProfileController::class, 'getCitiesByState']);
     Route::post('/company/profile', [CompanyProfileController::class, 'profile_update'])->name('profile_update');
+    Route::get('/company/jobs', [JobController::class, 'index'])->name('company_jobs');
+    Route::get('/company/jobs/add', [JobController::class, 'create'])->name('company_jobs.add');
+    Route::post('/company/jobs/add', [JobController::class, 'store'])->name('company_jobs.store');
+    
 });
-//Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
+
 
 
 
@@ -66,6 +70,6 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 
-Route::get('/company/profiles/', [CountryController::class, 'showCountryDropdown'])->name('test');
-Route::get('/company/profiles/states/{countryCode}', [CountryController::class, 'getStatesByCountry']);
-Route::get('/company/profiles/cities/{countryCode}/{stateCode}', [CountryController::class, 'getCitiesByState']);
+// Route::get('/company/profiles/', [CountryController::class, 'showCountryDropdown'])->name('test');
+// Route::get('/company/profiles/states/{countryCode}', [CountryController::class, 'getStatesByCountry']);
+// Route::get('/company/profiles/cities/{countryCode}/{stateCode}', [CountryController::class, 'getCitiesByState']);

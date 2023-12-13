@@ -37,6 +37,7 @@
                                 class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Jobs</a>
                             <a href=""
                                 class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Companies</a>
+                     
                         </div>
                     </div>
                     <div class="">
@@ -44,22 +45,22 @@
                                 class="fa-solid fa-bars hover:bg-blue-600  hover:text-blue-200 text-blue-100 fa-2x cursor-pointer"></i>
                         </div>
                         <div class="hidden md:block">
-
-                            @auth
-                                @if (Auth::guard('company')->user())
-                                    <a href="{{ route('company.dashboard') }}"
+                         
+                            @auth('company')	
+                           
+                                    <a href="{{ route('company_dashboard') }}"
                                         class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Dashboard</a>
-                                @else
-                                    <a href="{{ route('seeker.dashboard') }}"
+                                @elseauth('seeker')
+                                    <a href="{{ route('seeker_dashboard') }}"
                                         class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Dashboard</a>
-                                @endif
-                            @endauth
-                            @guest
+                            
+                           
+                            @else
                                 <a href="{{ route('login') }}"
                                     class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Login</a><a
                                     href="{{ route('register') }}"
                                     class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Register</a>
-                            @endguest
+                            @endauth
                         </div>
 
                     </div>
@@ -77,7 +78,7 @@
                     <a href=""
                         class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Companies</a>
                     <div class="flex justify-between w-8/12 mx-auto my-4">
-
+                        {{ Auth::guest() ? 'Welcome, Guest' : Auth::user()->name }}
                         @auth
                             @if (Auth::guard('company')->user())
                                 <a href="{{ route('company.dashboard') }}"

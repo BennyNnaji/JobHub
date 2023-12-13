@@ -75,7 +75,7 @@ class ProfileController extends Controller
     
     public function profile_update(Request $request)
     {
-        //dd($request->all());
+ 
         $company = $request->validate([
             'name' => 'required',
             'email' => 'required|email',

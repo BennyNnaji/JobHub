@@ -9,37 +9,45 @@
                         class="w-full"></a>
             </div>
         </div>
-
-                <div class="w-11/12 md:w-5/6 mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-3">
-            <!-- Dummy Grid -->
-            <a href="">
-                <div class="bg-gray-200 p-4 border-2 border-red-600/50 rounded ">
-                    <h2 class="text-lg text-left font-semibold">Senior Frontend Developer</h2>
-                    <p class="text-xs italic text-gray-400">
-                        <span>
-                            <i class="fa-solid fa-location-dot"></i>Abuja, Nigeria
-                        </span>
-                        <span>
-                            <i class="fa-solid fa-clock"></i> 2 days ago
-                        </span>
-                        <span>
-                            <i class="fa-solid fa-money-bill"></i> $9/Hr
-                        </span>
-                    </p>
-                    <p class="px-4 py-2 w-3/6 rounded "> Eric Ltd</p>
-                    <div>
-                        <ul class="list-disc list-inside text-sm italic ">
-                            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. </li>
-                            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. </li>
-                        </ul>
-                        <p class="bg-red-500 text-white p-2 rounded my-2 w-3/6 text-center hover:bg-red-600">Intern</p>
-                    </div>
-                </div>
-            </a>
-    
-  
+        @if (count($jobs)> 0)
         
+        <div class="w-11/12 md:w-5/6 mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-3">
+            <!-- Dummy Grid -->
+            @foreach ($jobs as $job)
+                <a href="">
+                    <div class="bg-gray-200 p-4 border-2 border-red-600/50 rounded ">
+                        <h2 class="text-lg text-left font-semibold">{{ $job->job_title }}</h2>
+                        <p class="text-xs italic text-gray-400">
+                            <span>
+                                <i class="fa-solid fa-location-dot"></i>{{ $job->job_location }}
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-clock"></i> {{ $job->created_at->diffForHumans() }}
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-money-bill"></i> ${{ $job->max_salary }} - ${{ $job->max_salary }}
+                            </span>
+                        </p>
+
+                        <div>
+                            <p class="italic text-xs"> {!! Str::limit($job->job_description, 100, '...') !!}</p>
+
+                            <p class="bg-red-500 text-white p-2 rounded my-2 w-3/6 text-center hover:bg-red-600">
+                                {{ $job->job_type }}</p>
+                        </div>
+                    </div>
+                </a>
+            @endforeach
+
+
+
+
         </div>
+            
+        @else
+            <div class="w-1/4 mx-auto text-center italic text-2xl my-8">No Jobs</div>
+        @endif
+
         @if (session('error'))
             <script>
                 const Toast = Swal.mixin({

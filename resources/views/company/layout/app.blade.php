@@ -122,7 +122,7 @@
         button1.addEventListener('click', () => {
             mobile_menu.classList.toggle('hidden');
         });
-        // AOS.init();
+
     </script>
     @if (session('error'))
         <script>

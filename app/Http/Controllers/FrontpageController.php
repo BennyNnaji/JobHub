@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use Illuminate\Http\Request;
 
 class FrontpageController extends Controller
@@ -11,8 +12,9 @@ class FrontpageController extends Controller
      */
     public function index()
     {
+        $jobs = Job::orderBy('created_at', 'desc')->paginate(10);
         $title = 'Home';
-        return view('index', compact('title'));
+        return view('index', compact('title', 'jobs'));
     }
     
 

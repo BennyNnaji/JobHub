@@ -19,7 +19,8 @@ class Job extends Model
         'deadline',
         'responsibility',
         'benefits',
-        'job_status'
+        'job_status',
+        'slug'
     ];
     public function company()
     {

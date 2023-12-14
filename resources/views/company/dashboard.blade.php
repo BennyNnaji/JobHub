@@ -23,7 +23,7 @@
             </div>
             <div class="text-gray-300">
                 <p class="text-center font-bold">Jobs Posted</p>
-                <p class="text-center text-6xl">0</p>
+                <p class="text-center text-6xl">{{ count($jobs) }}</p>
             </div>        
         </div>
         <div class="px-10 py-5 elevation-10 bg-gray-400 rounded-b flex justify-between items-center">

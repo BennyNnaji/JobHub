@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Company;
 
 use App\Models\Job;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +15,9 @@ class JobController extends Controller
      */
     public function index()
     {
+        $jobs = Job::where('company_id', Auth::guard('company')->user()->id)->paginate(10);
         $title = 'Jobs';
-        return view('company.jobs.index', compact('title'));
+        return view('company.jobs.index', compact('title', 'jobs'));
     }
 
     /**
@@ -34,7 +36,7 @@ class JobController extends Controller
     {
         
       $validated =   $request->validate([
-            'company_id' => 'required',
+           
             'job_title' => 'required',
             'job_type' => 'required',
             'job_description' => 'required',
@@ -47,10 +49,12 @@ class JobController extends Controller
             'job_status' => 'required',
                 ]);
   
+                
         
            $job = Job::create([
                 'company_id' => Auth::guard('company')->user()->id,
                 'job_title' => $request->job_title,
+                'slug' => Str::slug($request->job_title),
                 'job_type' => $request->job_type,
                 'job_description' => $request->job_description,
                 'min_salary' => $request->min_salary,
@@ -61,12 +65,8 @@ class JobController extends Controller
                 'benefits' => $request->benefits,
                 'job_status' => $request->job_status,
             ]);
-            //dd($job);
-            if ($job) {
+        
             return redirect()->route('company_jobs')->with('success', 'Job created successfully');
-            }else {
-            return redirect()->route('company_profile')->with('error', 'error ocurred');
-            }
            
     }
 
@@ -75,7 +75,9 @@ class JobController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $job = Job::where('id', $id)->findOrFail();
+        $title = $job->job_title;
+        return view('company.jobs.show', compact('title', 'job'));
     }
 
     /**

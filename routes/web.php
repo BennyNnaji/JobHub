@@ -46,6 +46,7 @@ Route::middleware(['company'])->group(function () {
     Route::get('/company/jobs', [JobController::class, 'index'])->name('company_jobs');
     Route::get('/company/jobs/add', [JobController::class, 'create'])->name('company_jobs.add');
     Route::post('/company/jobs/add', [JobController::class, 'store'])->name('company_jobs.store');
+    Route::get('/company/jobs/{id}', [JobController::class, 'show'])->name('company_jobs.show');
     
 });
 

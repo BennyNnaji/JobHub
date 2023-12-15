@@ -40,10 +40,10 @@ class JobController extends Controller
             'job_title' => 'required',
             'job_type' => 'required',
             'job_description' => 'required',
-            'min_salary' => 'required',
-            'max_salary' => 'required',
+            'min_salary' => 'required|numeric',
+            'max_salary' => 'required|numeric|gt:min_salary',
             'job_location' => 'required',
-            'deadline' => 'required',
+            'deadline' => 'required|date|after:today',
             'responsibility' => 'required',
             'benefits' => 'required',
             'job_status' => 'required',
@@ -75,9 +75,7 @@ class JobController extends Controller
      */
     public function show(string $id)
     {
-        $job = Job::where('id', $id)->findOrFail();
-        $title = $job->job_title;
-        return view('company.jobs.show', compact('title', 'job'));
+    
     }
 
     /**
@@ -85,7 +83,9 @@ class JobController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $job = Job::where('id', $id)->findOrFail($id);
+        $title = $job->job_title;
+        return view('company.jobs.show', compact('title', 'job'));
     }
 
     /**
@@ -93,7 +93,35 @@ class JobController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+
+            'job_title' => 'required',
+            'job_type' => 'required',
+            'job_description' => 'required',
+            'min_salary' => 'required|numeric',
+            'max_salary' => 'required|numeric|gt:min_salary',
+            'job_location' => 'required',
+            'deadline' => 'required|date|after:today',
+            'responsibility' => 'required',
+            'benefits' => 'required',
+            'job_status' => 'required',
+        ]);
+        $update = Job::where('id', $id)->findOrFail($id);
+         $update->update ([
+            'company_id' => Auth::guard('company')->user()->id,
+            'job_title' => $request->job_title,
+            'slug' => Str::slug($request->job_title),
+            'job_type' => $request->job_type,
+            'job_description' => $request->job_description,
+            'min_salary' => $request->min_salary,
+            'max_salary' => $request->max_salary,
+            'job_location' => $request->job_location,
+            'deadline' => $request->deadline,
+            'responsibility' => $request->responsibility,
+            'benefits' => $request->benefits,
+            'job_status' => $request->job_status,
+        ]);
+        return redirect()->route('company_jobs')->with('success', 'Job updated successfully');
     }
 
     /**
@@ -101,6 +129,8 @@ class JobController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $job = Job::where('id', $id)->findOrFail($id);
+        $job->delete();
+        return redirect()->route('company_jobs')->with('success', 'Job Deleted Successfully');
     }
 }

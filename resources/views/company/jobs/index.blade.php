@@ -9,12 +9,10 @@
                         class="w-full"></a>
             </div>
         </div>
-        @if (count($jobs)> 0)
-        
-        <div class="w-11/12 md:w-5/6 mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-3">
-            <!-- Dummy Grid -->
-            @foreach ($jobs as $job)
-                <a href="">
+        @if (count($jobs) > 0)
+            <div class="w-11/12 md:w-5/6 mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-3">
+                <!-- Dummy Grid -->
+                @foreach ($jobs as $job)
                     <div class="bg-gray-200 p-4 border-2 border-red-600/50 rounded ">
                         <h2 class="text-lg text-left font-semibold">{{ $job->job_title }}</h2>
                         <p class="text-xs italic text-gray-400">
@@ -32,18 +30,29 @@
                         <div>
                             <p class="italic text-xs"> {!! Str::limit($job->job_description, 100, '...') !!}</p>
 
-                            <p class="bg-red-500 text-white p-2 rounded my-2 w-3/6 text-center hover:bg-red-600">
-                                {{ $job->job_type }}</p>
+                            <p class="text-red-500">
+                                {{ $job->job_type }}</p> <br>
+
+                            <a href="{{ route('company_jobs.show', $job->id) }}"
+                                class="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 ">Edit</a>
+
+                            <form id="deleteForm{{ $job->id }}" action="{{ route('company_jobs.delete', $job->id) }}"
+                                method="post" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white hover:bg-red-600 rounded px-4 py-2"
+                                    data-job-id="{{ $job->id }}">Delete</button>
+                            </form>
+
+
                         </div>
                     </div>
-                </a>
-            @endforeach
+                @endforeach
 
 
 
 
-        </div>
-            
+            </div>
         @else
             <div class="w-1/4 mx-auto text-center italic text-2xl my-8">No Jobs</div>
         @endif
@@ -86,4 +95,28 @@
                 });
             </script>
         @endif
+        <script>
+            document.querySelectorAll('[data-job-id]').forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const jobId = this.getAttribute('data-job-id');
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You won\'t be able to revert this!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('deleteForm' + jobId).submit();
+                        }
+                    });
+                });
+            });
+        </script>
+
     @endsection

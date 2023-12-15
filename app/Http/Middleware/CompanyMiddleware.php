@@ -18,7 +18,7 @@ class CompanyMiddleware
     {
         if (Auth::guard('company')->check()) {
                 $user = Auth::guard('company')->user();
-                if ($user->status == 2) {
+                if ($user->status == 1) {
                     return $next($request);
                 }
                 return redirect()->route('company_login')->with('error', 'Account not active');

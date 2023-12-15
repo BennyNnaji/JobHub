@@ -21,6 +21,7 @@ use App\Http\Controllers\Company\JobController;
 */
 
 Route::get('/', [FrontpageController::class, 'index'])->name('index');
+Route::get('/jobs/{id}', [FrontpageController::class, 'show'])->name('jobs.show');
 Route::get('/login', [FrontpageController::class, 'login'])->name('login');
 Route::get('/register', [FrontpageController::class, 'register'])->name('register');
 Route::get('/seeker/register', [FrontpageController::class, 'seeker_register'])->name('seeker_register');
@@ -46,8 +47,9 @@ Route::middleware(['company'])->group(function () {
     Route::get('/company/jobs', [JobController::class, 'index'])->name('company_jobs');
     Route::get('/company/jobs/add', [JobController::class, 'create'])->name('company_jobs.add');
     Route::post('/company/jobs/add', [JobController::class, 'store'])->name('company_jobs.store');
-    Route::get('/company/jobs/{id}', [JobController::class, 'show'])->name('company_jobs.show');
-    
+    Route::get('/company/jobs/{id}', [JobController::class, 'edit'])->name('company_jobs.show');
+    Route::post('/company/jobs/{id}/edit', [JobController::class, 'update'])->name('company_jobs.update');
+    Route::delete('/company/jobs/{id}', [JobController::class, 'destroy'])->name('company_jobs.delete');
 });
 
 

@@ -33,7 +33,7 @@
             <!-- Dummy Grid -->
             @if (count($jobs) > 0)
                 @foreach ($jobs as $job)
-                    <a href="">
+                    <a href="{{ route('jobs.show', $job->id) }}">
                         <div class="bg-gray-200 p-4 border-2 border-blue-600/50 rounded ">
                             <h2 class="text-lg text-left font-semibold">{{ $job->job_title }}</h2>
                             <p class="text-xs italic text-gray-400">
@@ -55,13 +55,15 @@
                         </div>
                     </a>
                 @endforeach
-            @else
-                <div>No Job</div>
-            @endif
+        
 
 
 
         </div>
+                {{ $jobs->links() }}
+            @else
+                <div>No Job</div>
+            @endif
 
     </section>
 @endsection

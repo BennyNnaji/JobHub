@@ -96,7 +96,9 @@ class FrontpageController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $job = Job::where('id', $id)->findOrFail($id);
+        $title = $job->job_title;
+        return view('jobs', compact('title', 'job'));
     }
 
     /**

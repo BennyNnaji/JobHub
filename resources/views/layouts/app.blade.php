@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" href="{{ asset('images/front/fav.png') }}">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=657c6ebc3bcaed00121fcd7a&product=sop' async='async'></script>
 </head>
 
 <body class=" bg-gray-200">
@@ -133,19 +134,17 @@
                     <div>
                         <p class="my-5">
                             <a href="https://facebook.com/BennyNnaji" target="_blank"> <i
-                                    class="fa-brands fa-facebook fa-2x"> </i></a>
+                                    class="fa-brands fa-facebook fa-2x text-[#1877F2]"> </i></a>
                             <a href="https://twitter.com/BennyNnaji" target="_blank"><i
-                                    class="fa-brands fa-twitter fa-2x"> </i></a>
+                                    class="fa-brands fa-twitter fa-2x text-[#1DA1F2]"> </i></a>
                             <a href="https://instagram.com/BennyNnaji" target="_blank"><i
-                                    class="fa-brands fa-instagram fa-2x"></i></a>
+                                    class="fa-brands fa-instagram fa-2x text-[#cd486b]"></i></a>
                             <a href="https://ng.linkedin.com/BennyNnaji" target="_blank"><i
-                                    class="fa-brands fa-linkedin fa-2x"></i></a>
+                                    class="fa-brands fa-linkedin fa-2x text-[#0077b5]"></i></a>
                             <a href="https://wa.me/2348103938317" target="_blank"><i
-                                    class="fa-brands fa-whatsapp fa-2x"> </i></a>
+                                    class="fa-brands fa-whatsapp fa-2x text-[#128c7e]"> </i></a>
 
 
-
-                        </p>
                     </div>
 
                 </div>

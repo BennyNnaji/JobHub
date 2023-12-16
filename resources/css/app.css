@@ -2,8 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-.body{
-    
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+

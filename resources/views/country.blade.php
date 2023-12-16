@@ -1,35 +1,3 @@
-<<<<<<< HEAD
-@extends('company.layout.app')
-@section('content')
-<section>
-        @php
-$company = Auth::guard('company')->user();
-@endphp
-    <div class="w-full rounded-t-2xl bg-gray-400 text-gray-200 font-semibold text-3xl p-4">
-        Profile Details
-    </div>
-    <div class="w-full">
-        <div class="relative mb-48 ">
-            <div class="relative border-b-2 border-red-500 ">
-               <div class="w-full h-['60px']">
-                 <img src="https://dummyimage.com/1200x600/ccc/fff" alt="" class="w-full object-cover">
-               </div>
-                <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 border-red-500/70 w-56 h-56  mx-auto rounded-full">
-                    <img src="https://dummyimage.com/150x150/ccc/fff" alt="" class="w-full rounded-full">
-                   <p class="text-3xl font-bold text-gray-500 text-center">{{ $company->name }}</p>
-                </div>
-
-            </div>
-        </div>
-
-<div class="w-full">
- 
-</div>
-    </div>
-</section>
-    
-@endsection
-=======
     @extends('company.layout.app')
     @section('content')
         <section>
@@ -46,12 +14,8 @@ $company = Auth::guard('company')->user();
             </div>
             <form action="{{ route('profile_update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <!-- Hidden input fields to store selected country, state, and city -->
-            <input type="hidden" name="country" id="selectedCountry" value="{{ $company->country }}">
-            <input type="hidden" name="state" id="selectedState" value="{{ $company->state }}">
-            <input type="hidden" name="city" id="selectedCity" value="{{ $company->city }}">
-                <div class="w-full ">
-                    <div class="relative mb-48 z-10">
+                <div class="w-full">
+                    <div class="relative mb-48 ">
                         <div class="relative ">
                             <div class="w-full h-['60px']">
                                 <img src="{{ asset('storage/company/Images/' . $company->banner ?? '') }}" alt=""
@@ -109,14 +73,19 @@ $company = Auth::guard('company')->user();
                             <div class="md:w-3/6 md:mx-2">
 
                                 <label for="countryDropdown" class="text-2xl block text-gray-400">Select a country:</label>
-                                <select id="countryDropdown" name="countrys"
+                                <select id="countryDropdown" name="countryCode"
                                     class="w-full border-b-4 border-gray-400 rounded text-gray-400">
-                                    @if ($company->country)
-                                        <option value="{{ $company->country }}">{{ $company->country }}</option>
-                                        
-                                    @else
-                                        <option value="">Select Country</option>
-                                    @endif
+                                    @php
+
+                                        if (!$company->country) {
+                                            echo '<option value="">Select a country</option>';
+                                        } else {
+                                            echo '<option value="{{ $company->country }}">' . $company->country . '</option>';
+                                        }
+
+                                    @endphp
+
+
                                     @foreach ($countries as $countryData)
                                         <option value="{{ $countryData['iso2'] }}">{{ $countryData['name'] }}</option>
                                     @endforeach
@@ -129,37 +98,21 @@ $company = Auth::guard('company')->user();
                         <div class="md:flex justify-between items-center">
                             <div class="md:w-3/6 md:mx-2">
                                 <label for="stateDropdown" class="text-2xl block text-gray-400">Select a state:</label>
-                                <select id="stateDropdown" name="states" class="w-full border-b-4 border-gray-400 rounded text-gray-400">
-                                    @if ($company->state)
-                                        <option value="{{ $company->state }}">{{ $company->state }}</option>
-                                    @else
-                                        <option value="">Select a state</option>
-                                        
-                                    @endif
+                                <select id="stateDropdown" name="state" class="w-full border-b-4 border-gray-400 rounded text-gray-400">
+                                    <option value="">Select a state</option>
                                 </select>
                             </div>
 
                             <div class="md:w-3/6 md:mx-2">
                                 <label for="cityDropdown" class="text-2xl block text-gray-400">Select a city:</label>
-                                <select id="cityDropdown" name="citys" class="w-full border-b-4 border-gray-400 rounded text-gray-400">
-                                   
-
-                                    @if ($company->city)
-                                        <option value="{{ $company->city }}">{{ $company->city }}</option>
-                                        
-                                    @else
-
-                                        <option value="">Select a city</option>
-                                        
-                                    @endif
-
-                                 
+                                <select id="cityDropdown" name="city" class="w-full border-b-4 border-gray-400 rounded text-gray-400">
+                                    <option value="">Select a city</option>
                                 </select>
                             </div>
                         </div>
-                        <div id="spinner" style="display: none;" class="w-2/6 mx-auto h-auto relative">
+                        <div id="spinner" style="display: none;">
                             <!-- Add your spinner image or animated GIF here -->
-                                 <img src="{{ asset('images/front/6.gif') }}" alt="" class="relative w-6/12 mx-auto">
+                            Loading...
                         </div>
 
                        <div>
@@ -223,45 +176,159 @@ $company = Auth::guard('company')->user();
                 </div>
             </form>
 
+            {{-- <script>
+                $(document).ready(function() {
+                    $('#countryDropdown').on('change', function() {
+                        var selectedCountryCode = $(this).val();
+                        var stateDropdown = $('#stateDropdown');
+                        var cityDropdown = $('#cityDropdown');
+                        var spinner = $('#spinner');
 
-    @if (session('error'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
+                        // Show the spinner while loading states
+                        spinner.show();
+
+                        // Make an AJAX request to get states based on the selected country
+                        $.ajax({
+                            url: '/company/profiles/states/' + selectedCountryCode,
+                            type: 'GET',
+                            success: function(data) {
+                                // Populate the state dropdown with the fetched states
+                                stateDropdown.empty();
+                                stateDropdown.append('<option value="">Select a state</option>');
+
+                                $.each(data, function(index, state) {
+                                    stateDropdown.append('<option value="' + state['iso2'] +
+                                        '">' + state['name'] + '</option>');
+                                });
+
+                                // Hide the spinner after successfully loading states
+                                spinner.hide();
+                            },
+                            error: function(error) {
+                                console.error('Error fetching states:', error);
+                                // Hide the spinner in case of an error
+                                spinner.hide();
+                            }
+                        });
+                    });
+
+                    $('#stateDropdown').on('change', function() {
+                        var selectedCountryCode = $('#countryDropdown').val();
+                        var selectedStateCode = $(this).val();
+                        var cityDropdown = $('#cityDropdown');
+                        var spinner = $('#spinner');
+
+                        // Show the spinner while loading cities
+                        spinner.show();
+
+                        // Make an AJAX request to get cities based on the selected country and state
+                        $.ajax({
+                            url: '/company/profiles/cities/' + selectedCountryCode + '/' +
+                                selectedStateCode,
+                            type: 'GET',
+                            success: function(data) {
+                                // Populate the city dropdown with the fetched cities
+                                cityDropdown.empty();
+                                cityDropdown.append('<option value="">Select a city</option>');
+
+                                $.each(data, function(index, city) {
+                                    cityDropdown.append('<option value="' + city['id'] + '">' +
+                                        city['name'] + '</option>');
+                                });
+
+                                // Hide the spinner after successfully loading cities
+                                spinner.hide();
+                            },
+                            error: function(error) {
+                                console.error('Error fetching cities:', error);
+                                // Hide the spinner in case of an error
+                                spinner.hide();
+                            }
+                        });
+                    });
+                });
+            </script> --}}
+            <script>
+    $(document).ready(function() {
+        $('#countryDropdown').on('change', function() {
+            var selectedCountryCode = $(this).val();
+            var stateDropdown = $('#stateDropdown');
+            var cityDropdown = $('#cityDropdown');
+            var spinner = $('#spinner');
+
+            // Disable state and city dropdowns while loading
+            stateDropdown.prop('disabled', true);
+            cityDropdown.prop('disabled', true);
+
+            // Show the spinner while loading states
+            spinner.show();
+
+            // Make an AJAX request to get states based on the selected country
+            $.ajax({
+                url: '/company/profiles/states/' + selectedCountryCode,
+                type: 'GET',
+                success: function(data) {
+                    // Populate the state dropdown with the fetched states
+                    stateDropdown.empty();
+                    stateDropdown.append('<option value="">Select a state</option>');
+
+                    $.each(data, function(index, state) {
+                        stateDropdown.append('<option value="' + state['iso2'] +
+                            '">' + state['name'] + '</option>');
+                    });
+
+                    // Enable state dropdown and hide the spinner after successfully loading states
+                    stateDropdown.prop('disabled', false);
+                    spinner.hide();
+                },
+                error: function(error) {
+                    console.error('Error fetching states:', error);
+                    // Enable state dropdown and hide the spinner in case of an error
+                    stateDropdown.prop('disabled', false);
+                    spinner.hide();
                 }
             });
-            Toast.fire({
-                icon: "error",
-                title: "{{ session('error') }}"
-            });
-        </script>
-    @endif
-    @if (session('success'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
+        });
+
+        $('#stateDropdown').on('change', function() {
+            var selectedCountryCode = $('#countryDropdown').val();
+            var selectedStateCode = $(this).val();
+            var cityDropdown = $('#cityDropdown');
+            var spinner = $('#spinner');
+
+            // Disable city dropdown while loading
+            cityDropdown.prop('disabled', true);
+
+            // Show the spinner while loading cities
+            spinner.show();
+
+            // Make an AJAX request to get cities based on the selected country and state
+            $.ajax({
+                url: '/company/profiles/cities/' + selectedCountryCode + '/' +
+                    selectedStateCode,
+                type: 'GET',
+                success: function(data) {
+                    // Populate the city dropdown with the fetched cities
+                    cityDropdown.empty();
+                    cityDropdown.append('<option value="">Select a city</option>');
+
+                    $.each(data, function(index, city) {
+                        cityDropdown.append('<option value="' + city['id'] + '">' +
+                            city['name'] + '</option>');
+                    });
+
+                    // Enable city dropdown and hide the spinner after successfully loading cities
+                    cityDropdown.prop('disabled', false);
+                    spinner.hide();
+                },
+                error: function(error) {
+                    console.error('Error fetching cities:', error);
+                    // Enable city dropdown and hide the spinner in case of an error
+                    cityDropdown.prop('disabled', false);
+                    spinner.hide();
                 }
             });
-            Toast.fire({
-                icon: "success",
-                title: "{{ session('success') }}"
-            });
-        </script>
-        
-    @endif
+        });
+    });
+</script>
         @endsection
->>>>>>> 4cc77ce292d0365cb0627a4c51a418df7389c61b

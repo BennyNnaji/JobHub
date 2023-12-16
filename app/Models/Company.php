@@ -17,6 +17,7 @@ class Company extends Model implements Authenticatable
         'phone',
         'password',
         'logo',
+        'banner',
         'description',
         'address',
         'city',
@@ -53,5 +54,9 @@ class Company extends Model implements Authenticatable
     public function getRememberTokenName()
     {
         return 'remember_token';
+    }
+    
+    public function jobs(){
+        return $this->hasMany(Job::class);
     }
 }

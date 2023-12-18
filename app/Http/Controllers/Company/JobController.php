@@ -85,7 +85,7 @@ class JobController extends Controller
     {
         $job = Job::where('id', $id)->findOrFail($id);
         $title = $job->job_title;
-        return view('company.jobs.show', compact('title', 'job'));
+        return view('company.jobs.edit', compact('title', 'job'));
     }
 
     /**

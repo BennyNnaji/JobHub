@@ -50,10 +50,14 @@ class SeekerAuthController extends Controller
 
         if (Auth::guard('seeker')->attempt($credentials)) {
             // Authentication passed for seeker
-            return redirect()->route('seeker_dashboard')->with('success', 'Login successful');
+            return redirect()->route('index')->with('success', 'Login successful');
         }
 
         // Authentication failed for seeker
         return back()->withErrors(['email' => 'Invalid credentials', 'password' => 'Invalid credentials'])->withInput($request->only('email'));
+    }
+    public function seeker_logout(){
+        Auth::guard('seeker')->logout();
+        return redirect()->route('seeker_login')->with('success', 'Logout Successful');
     }
 }

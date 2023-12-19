@@ -34,11 +34,12 @@ Route::post('/seeker/register', [SeekerAuthController::class, 'seeker_reg_store'
 Route::get('/seeker/login', [SeekerAuthController::class, 'seeker_login'])->name('seeker_login');
 Route::post('/seeker/login', [SeekerAuthController::class, 'seeker_login_post'])->name('seeker_login_post');
 Route::get('/seeker/login-reset', [SeekerAuthController::class, 'seeker_login_reset'])->name('seeker_login_reset');
+Route::post('/seeker/logout', [SeekerAuthController::class, 'seeker_logout'])->name('seeker_logout');
 
 
 // Protected Seeker Routes
 Route::middleware(['seeker'])->group(function () {
-    Route::get('/seeker/dashboard', [SeekerController::class, 'seeker_dashboard'])->name('seeker_dashboard');
+    Route::get('/seeker/profile', [SeekerController::class, 'seeker_profile'])->name('seeker_profile');
 });
 
 // Company Routes

@@ -13,12 +13,22 @@ class SeekerAuthController extends Controller
 
     public function seeker_login()
     {
-        return view('seeker.login');
+        if (Auth::guard('seeker')->check()) {
+            return redirect()->route('seeker_profile');
+        }else{
+            return view('seeker.login');
+        }
     }
 
     public function seeker_register()
     {
-        return view('seeker.register');
+        if (Auth::guard('seeker')->check()) {
+            return redirect()->route('seeker_profile');
+        } else {
+            return view('seeker.register');
+        }
+        
+       
     }
     public function seeker_reg_store(Request $request)
     {
@@ -42,7 +52,13 @@ class SeekerAuthController extends Controller
 
     public function seeker_login_reset()
     {
-        return view('seeker.reset');
+        if (Auth::guard('seeker')->check()) {
+            return redirect()->route('seeker_profile');
+        } else {
+            return view('seeker.reset');
+        }
+        
+     
     }
 
     public function seeker_login_post(Request $request){

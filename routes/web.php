@@ -26,7 +26,7 @@ Route::get('/', [FrontpageController::class, 'index'])->name('index');
 Route::get('/jobs/{id}', [FrontpageController::class, 'show'])->name('jobs.show');
 Route::get('/login', [FrontpageController::class, 'login'])->name('login');
 Route::get('/register', [FrontpageController::class, 'register'])->name('register');
-
+Route::get('/{pages}', [FrontpageController::class, 'pages'])->name('pages');
 
 // Seeker Routes
 Route::get('/seeker/register', [SeekerAuthController::class, 'seeker_register'])->name('seeker_register');

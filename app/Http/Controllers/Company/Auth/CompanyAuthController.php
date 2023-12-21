@@ -60,7 +60,11 @@ class CompanyAuthController extends Controller
         return back()->withErrors(['email' => 'Invalid credentials', 'password' => 'Invalid credentials'])->withInput($request->only('email'));
     }
     public function company_login_reset(){
-        return view('company.reset');
+        if (Auth::guard('company')->check()) {
+            return redirect()->route('company_dashboard');
+        }else {
+            return view('company.reset');
+        }
     }
 
 

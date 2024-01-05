@@ -38,9 +38,11 @@
                 <div class="my-2 first-letter:text-4xl">{!! $job->benefits !!}</div>
 
 
-                <button type="submit"
+                @if (!Auth::guard('company')->check())
+                    <button type="submit"
                     class="w-2/6 bg-red-500 rounded px-6 py-3 hover:bg-red-600 text-center text-red-200 hover:text-red-200">Apply
                     Now</button>
+               @endif
             </form>
             <div>
                 <h2>Share This Job</h2>

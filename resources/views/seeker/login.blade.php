@@ -30,7 +30,7 @@
                     <a href="{{ route('company_login') }}" class="text-blue-600 ml-3">Recruiter? Login Here</a>
                 </div>
 
-                <form action="" method="post" class="mt-3 w-5/6 mx-auto my-10">
+                <form action="{{ route('seeker_login_post') }}" method="post" class="mt-3 w-5/6 mx-auto my-10">
                     @csrf
                     <div class="w-4/6 mx-auto">
                         <label for="email"

@@ -1,37 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <title>Dropdown Example</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailwind CSS Modals with Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-100 p-8">
+  <!-- Centered Modal Trigger -->
+  <button class="bg-green-500 text-white p-2 rounded" onclick="openCenteredModal()">Open Centered Modal</button>
 
+  <!-- Centered Modal -->
+  <div id="centeredModal" class="fixed inset-0 flex items-center justify-center hidden bg-gray-500 bg-opacity-50" onclick="closeCenteredModal()">
+    <div class="bg-white p-8 rounded shadow-lg" onclick="event.stopPropagation()">
+      <h3 class="mb-2 text-2xl font-bold text-gray-800">Add Career</h3>
 
-    <div class="relative">
-        <div id="app" class="relative">
-            <div class="container mx-auto">
-                <button id="dropdownBtn" class="bg-blue-800 text-blue-200 px-4 py-2 rounded">
-                    Profile Menu
-                </button>
+      <!-- Form -->
+      <div class="text-left w-full ">
+        <form action="" method="post">
+          <label for="position" class="block text-left">Position</label>
+          <input type="text" name="position" id="position" class="rounded p-3 w-full ">
+
+          <label for="compqny" class="block text-left">Company</label>
+          <input type="text" name="compqny" id="compqny" class="rounded p-3 w-full ">
+
+          <div class="flex w-full gap-x-9">
+            <div>
+              <label for="start_month" class="block text-left">Start</label>
+              <input type="month" name="start_month" id="start_month" class="rounded p-3 w-full">
             </div>
-
-            <div class="hidden absolute  bg-gray-300" id="dropdownContent">
-                <a href="#" class="block px-6 py-3 rounded hover:bg-blue-600 hover:text-blue-200">Profile</a>
-                <a href="#" class="block px-6 py-3 rounded hover:bg-blue-600 hover:text-blue-200">Settings</a>
-                <a href="#" class="block px-6 py-3 rounded hover:bg-blue-600 hover:text-blue-200">Logout</a>
+            <div>
+              <label for="end_month" class="block text-left">End</label>
+              <input type="month" name="end_month" id="end_month" class="rounded p-3 w-full">
             </div>
-        </div>
+          </div>
+
+          <label for="description" class="block text-left">Description <span class="text-xs italic">(Optional)</span></label>
+          <textarea name="description" id="description" class="rounded p-3 w-full"></textarea>
+        </form>
+      </div>
+
+      <button class="mt-4 bg-red-500 text-white p-2 rounded" onclick="closeCenteredModal()">Close</button>
     </div>
+  </div>
 
-    <script>
-        const dropdown = document.getElementById("dropdownContent");
-        const dropdownBtn = document.getElementById("dropdownBtn");
 
-        dropdownBtn.addEventListener("click", () => {
-            dropdown.classList.toggle("hidden");
-        });
-    </script>
+
+  <!-- JavaScript for Modals -->
+  <script>
+
+    // Centered Modal
+    function openCenteredModal() {
+      document.getElementById('centeredModal').classList.remove('hidden');
+    }
+    function closeCenteredModal() {
+      document.getElementById('centeredModal').classList.add('hidden');
+    }
+  </script>
+
 </body>
 </html>

@@ -30,7 +30,7 @@
                     <a href="{{ route('company_register') }}" class="text-blue-600 ml-3">Recruiter? Register Here</a>
                 </div>
 
-                <form action="" method="post" class="mt-3 w-5/6 mx-auto my-10">
+                <form action="{{ route('seeker_register_post') }}" method="post" class="mt-3 w-5/6 mx-auto my-10">
                     @csrf
                     <div class="w-4/6 mx-auto">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full

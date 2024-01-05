@@ -52,8 +52,19 @@
                                     <a href="{{ route('company_dashboard') }}"
                                         class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Dashboard</a>
                                 @elseauth('seeker')
-                                    <a href="{{ route('seeker_dashboard') }}"
-                                        class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Dashboard</a>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <a href="{{ route('seeker_profile') }}"
+                                        class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100 ">Profile</a>
+                                    </div>
+                                    <div>
+                                        <form action="{{ route('seeker_logout') }}" method="post" class="">
+                                            @csrf
+                                            <input type="submit" value="Logout"  class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">
+                                        
+                                        </form>
+                                    </div>
+                                </div>
                             
                            
                             @else
@@ -85,8 +96,8 @@
                                 <a href="{{ route('company.dashboard') }}"
                                     class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Dashboard</a>
                             @else
-                                <a href="{{ route('seeker.dashboard') }}"
-                                    class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Dashboard</a>
+                            <a href="{{ route('seeker_profile') }}"
+                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Profile</a>
                             @endif
                         @else
                       

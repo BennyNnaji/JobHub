@@ -40,6 +40,8 @@ Route::post('/seeker/logout', [SeekerAuthController::class, 'seeker_logout'])->n
 // Protected Seeker Routes
 Route::middleware(['seeker'])->group(function () {
     Route::get('/seeker/profile', [SeekerController::class, 'seeker_profile'])->name('seeker_profile');
+    Route::get('/seeker/profile/edit', [SeekerController::class, 'update_profile_summary_form'])->name('seeker_profile_basic');
+    Route::post('/seeker/profile/edit', [SeekerController::class, 'update_profile_summary'])->name('seeker_profile_basic_update');
 });
 
 // Company Routes

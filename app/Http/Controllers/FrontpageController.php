@@ -13,7 +13,7 @@ class FrontpageController extends Controller
      */
     public function index()
     {
-        $jobs = Job::orderBy('created_at', 'desc')->paginate(10);
+        $jobs = Job::orderBy('created_at', 'desc')->paginate(12);
         $title = 'Home';
         return view('index', compact('title', 'jobs'));
     }

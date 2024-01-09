@@ -17,11 +17,21 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone');
+            $table->dateTime('birthday')->nullable();
+            $table->enum('gender', ['male', 'female']);
+            $table->text('address')->nullable();
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
             $table->string('status')->default(0);
+            $table->text('summary')->nullable();
+            $table->json('career')->nullable();
+            $table->json('education')->nullable();
+            $table->json('license')->nullable();
+            $table->json('skill')->nullable();
+            $table->json('language')->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

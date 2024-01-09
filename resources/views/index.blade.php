@@ -47,7 +47,7 @@
                                     <i class="fa-solid fa-money-bill"></i> ${{ $job->min_salary }} - ${{ $job->max_salary }}
                                 </span>
                             </p>
-                            <p class="px-4 py-2 w-3/6 rounded "> {{ $job->company->name}}</p>
+                            <p class="px-4 py-2 w-full rounded "> {{ $job->company->name}}</p>
                             <div>
                             <p>{!!Str::limit($job->job_description, 200, '...')!!}</p>
                                 <p class="bg-blue-600 text-white p-2 rounded my-2 w-3/6 text-center">{{ $job->job_type }}</p>

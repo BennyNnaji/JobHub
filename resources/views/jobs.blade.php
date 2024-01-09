@@ -6,9 +6,15 @@
                 <div class="bg-red-600 p-3 text-white font-bold ">Job Details</div>
                 <div class="flex justify-between">
                     <div class=" flex justify-start space-x-2 items-center my-2">
-                        <div class="h-10 w-10 rounded-full "><img
-                                src="{{ asset('storage/company/Images/' . $job->company->logo) }}" alt="Company logo"></div>
-                        <div class="text-2xl mx-2">{{ $job->company->name }}</div>
+                        <div class="w-1/5 ">
+                            @if (!$job->company->logo) 
+                            
+                            <img src="https://picsum.photos/200" alt="Company logo" class="w-full rounded-full">
+                            @else
+                                  <img src="{{ asset('storage/company/Images/' . $job->company->logo) }}" alt="Company logo">
+                            @endif
+                        </div>
+                        <div class="text-2xl mx-2 w-4/5">{{ $job->company->name }}</div>
                     </div>
                     <div class="my-2">
                         <p class="cursor-pointer bg-green-500 px-3 py-2 rounded-t text-white my-1"> <i class="fa-solid fa-heart"></i> Save</p>

@@ -13,7 +13,20 @@ class Seeker extends Model implements Authenticatable
         'name',
         'email',
         'phone',
-        'password'
+        'password',
+        'address',
+        'country',
+        'state',
+        'city',
+        'gender',
+        'birthday',
+        'summary',
+        'education',
+        'career',
+        'skill',
+        'license',
+        'language',
+
     ];
 
     public function getAuthIdentifierName()

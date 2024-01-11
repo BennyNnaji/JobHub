@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Seeker extends Model implements Authenticatable
 {
     use HasFactory;
+
     protected $fillable = [
-        'name',
+      
         'email',
         'phone',
         'password',
@@ -23,12 +24,15 @@ class Seeker extends Model implements Authenticatable
         'summary',
         'education',
         'career',
+        'name',
         'skill',
         'license',
         'language',
 
     ];
-
+    protected $casts = [
+        'career' => 'array',
+    ];
     public function getAuthIdentifierName()
     {
         return 'id'; // Change this if your primary key column name is different

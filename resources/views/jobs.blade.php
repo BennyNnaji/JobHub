@@ -3,7 +3,7 @@
     <section class="md:flex w-11/12 md:w-5/6 mx-auto">
         <div class="md:w-3/5 mb-5">
             <form action="" method="post">
-                <div class="bg-red-600 p-3 text-white font-bold ">Job Details</div>
+                <div class="bg-red-500 p-3 text-white font-bold ">Job Details</div>
                 <div class="flex justify-between">
                     <div class=" flex justify-start space-x-2 items-center my-2">
                         <div class="w-1/5 ">
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="md:w-2/5 mx-3">
-            <div class="bg-red-600 p-3 text-white">Related Jobs</div>
+            <div class="bg-red-500 p-3 text-white">Related Jobs</div>
             <div class="my-3">
                 <a href="{{ route('jobs.show', $job->id) }}">
                     <div class="bg-gray-200 p-4 border-2 border-red-600/50 rounded ">
@@ -87,7 +87,7 @@
                                 quas iusto omnis animi quasi nostrum, nisi obcaecati tempore! Voluptatibus soluta at
                                 numquam. Magni libero atque ab quibusdam fugit alias, sint nostrum? Sit aliquam magni, natus
                                 repudiandae laboriosam dolore maiores, ex culpa reprehenderit fugit hic quaerat facere?</p>
-                            <p class="bg-red-600 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
+                            <p class="bg-red-500 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
                         </div>
                     </div>
                 </a>
@@ -113,7 +113,7 @@
                                 quas iusto omnis animi quasi nostrum, nisi obcaecati tempore! Voluptatibus soluta at
                                 numquam. Magni libero atque ab quibusdam fugit alias, sint nostrum? Sit aliquam magni, natus
                                 repudiandae laboriosam dolore maiores, ex culpa reprehenderit fugit hic quaerat facere?</p>
-                            <p class="bg-red-600 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
+                            <p class="bg-red-500 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
                         </div>
                     </div>
                 </a>
@@ -139,7 +139,7 @@
                                 quas iusto omnis animi quasi nostrum, nisi obcaecati tempore! Voluptatibus soluta at
                                 numquam. Magni libero atque ab quibusdam fugit alias, sint nostrum? Sit aliquam magni, natus
                                 repudiandae laboriosam dolore maiores, ex culpa reprehenderit fugit hic quaerat facere?</p>
-                            <p class="bg-red-600 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
+                            <p class="bg-red-500 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
                         </div>
                     </div>
                 </a>
@@ -165,7 +165,7 @@
                                 quas iusto omnis animi quasi nostrum, nisi obcaecati tempore! Voluptatibus soluta at
                                 numquam. Magni libero atque ab quibusdam fugit alias, sint nostrum? Sit aliquam magni, natus
                                 repudiandae laboriosam dolore maiores, ex culpa reprehenderit fugit hic quaerat facere?</p>
-                            <p class="bg-red-600 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
+                            <p class="bg-red-500 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
                         </div>
                     </div>
                 </a>
@@ -191,7 +191,7 @@
                                 quas iusto omnis animi quasi nostrum, nisi obcaecati tempore! Voluptatibus soluta at
                                 numquam. Magni libero atque ab quibusdam fugit alias, sint nostrum? Sit aliquam magni, natus
                                 repudiandae laboriosam dolore maiores, ex culpa reprehenderit fugit hic quaerat facere?</p>
-                            <p class="bg-red-600 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
+                            <p class="bg-red-500 text-white p-2 rounded my-2 w-3/6 text-center">Internship</p>
                         </div>
                     </div>
                 </a>

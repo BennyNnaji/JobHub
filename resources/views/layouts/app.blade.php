@@ -14,53 +14,75 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=657c6ebc3bcaed00121fcd7a&product=sop' async='async'></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.tiny.cloud/1/6216wbng5cbdfeqd1pkwh8m5hymacgkbzx3etbiache8b5sj/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
 </head>
 
 <body class=" bg-gray-200">
+         @if (session('success'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "{{ session('success') }}"
+                });
+            </script>
+        @endif
     <section data-aos="zoom-in">
         <section>
-            <div class=" bg-blue-500 py-3">
+            <div class=" bg-red-500 py-3">
                 <div class="w-11/12 md:w-5/6 mx-auto flex justify-between items-center">
                     <div class="flex items-center  justify-start">
-                        <div class="md:w-2/12  w-4/12">
+                        <div class="md:w-2/12  w-4/12 border-2 border-white rounded bg-red-300 p-3">
                             <a href="{{ route('index') }}" class=""><img
                                     src="{{ asset('images/front/logo.png') }}" class="md:w-11/12 w-5/6" /></a>
                         </div>
                         <div class="hidden md:block sm:hidden">
                             <a href=""
-                                class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Home</a>
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Home</a>
                             <a href=""
-                                class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">About
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">About
                                 Us</a>
                             <a href=""
-                                class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Services</a>
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Services</a>
                             <a href=""
-                                class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Jobs</a>
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Jobs</a>
                             <a href=""
-                                class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Companies</a>
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Companies</a>
                      
                         </div>
                     </div>
                     <div class="">
                         <div class="md:hidden" id="button"><i
-                                class="fa-solid fa-bars hover:bg-blue-600  hover:text-blue-200 text-blue-100 fa-2x cursor-pointer"></i>
+                                class="fa-solid fa-bars hover:bg-red-600  hover:text-red-200 text-red-100 fa-2x cursor-pointer"></i>
                         </div>
                         <div class="hidden md:block">
                          
                             @auth('company')	
                            
                                     <a href="{{ route('company_dashboard') }}"
-                                        class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Dashboard</a>
+                                        class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Dashboard</a>
                                 @elseauth('seeker')
                                 <div class="flex justify-between items-center">
                                     <div>
                                         <a href="{{ route('seeker_profile') }}"
-                                        class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100 ">Profile</a>
+                                        class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100 ">Profile</a>
                                     </div>
                                     <div>
                                         <form action="{{ route('seeker_logout') }}" method="post" class="">
                                             @csrf
-                                            <input type="submit" value="Logout"  class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">
+                                            <input type="submit" value="Logout"  class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">
                                         
                                         </form>
                                     </div>
@@ -69,9 +91,9 @@
                            
                             @else
                                 <a href="{{ route('login') }}"
-                                    class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Login</a><a
+                                    class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Login</a><a
                                     href="{{ route('register') }}"
-                                    class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Register</a>
+                                    class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Register</a>
                             @endauth
                         </div>
 
@@ -79,32 +101,32 @@
                 </div>
                 <div class="hidden" id="mobile_menu">
                     <a href=""
-                        class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Home</a>
+                        class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Home</a>
                     <a href=""
-                        class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">About
+                        class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">About
                         Us</a>
                     <a href=""
-                        class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Services</a>
+                        class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Services</a>
                     <a href=""
-                        class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Jobs</a>
+                        class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Jobs</a>
                     <a href=""
-                        class="mx-2 rounded block px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Companies</a>
+                        class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Companies</a>
                     <div class="flex justify-between w-8/12 mx-auto my-4">
                         {{ Auth::guest() ? 'Welcome, Guest' : Auth::user()->name }}
                         @auth
                             @if (Auth::guard('company')->user())
                                 <a href="{{ route('company.dashboard') }}"
-                                    class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Dashboard</a>
+                                    class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Dashboard</a>
                             @else
                             <a href="{{ route('seeker_profile') }}"
-                            class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Profile</a>
+                            class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Profile</a>
                             @endif
                         @else
                       
                             <a href="{{ route('login') }}"
-                                class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Login</a><a
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Login</a><a
                                 href="{{ route('register') }}"
-                                class="mx-2 rounded px-6 py-3 hover:bg-blue-600 hover:text-blue-200 text-blue-100">Register</a>
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Register</a>
                         @endauth
                     </div>
                 </div>
@@ -175,6 +197,13 @@
 
             AOS.init();
         </script>
+            <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+    </script>
     </section>
 </body>
 

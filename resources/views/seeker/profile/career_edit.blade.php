@@ -66,7 +66,7 @@
                                         @enderror
 
                                         <div class="flex w-full gap-x-9">
-                                            <div>
+                                            <div id="fromDate">
                                                 <label for="from" class="block text-left">Start</label>
                                                 <input type="date" name="from" id="from"
                                                     class="rounded p-3 w-full"
@@ -76,7 +76,7 @@
                                                         {{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div>
+                                            <div id="toDate">
                                                 <label for="to" class="block text-left">End</label>
                                                 <input type="date" name="to" id="to"
                                                     value="{{ $career['to'] }}"
@@ -86,8 +86,12 @@
                                                         {{ $message }}</div>
                                                 @enderror
                                             </div>
-                                        </div>
+                                            <div class="py-3">
+                                                <label for="current"> Currently Working</label>
+                                                <input type="checkbox" name="current" id="current">
+                                            </div>
 
+                                        </div>
                                         <label for="description" class="block text-left">Description <span
                                                 class="text-xs italic">(Optional)</span></label>
                                         <textarea name="description" id="description" class="rounded p-3 w-full"> {{ $career['description'] }}</textarea>
@@ -134,6 +138,20 @@
     </div>
     <!-- JavaScript for Modals -->
     <script>
+        const toDate = document.getElementById('toDate');
+        const current = document.getElementById('current');
+        const fromDate = document.getElementById('fromDate');
+
+        current.addEventListener('change', function() {
+            if (current.checked) {
+                toDate.classList.add('hidden');
+                toDate.value = 'null';
+                fromDate.classList.add('w-full');
+            } else {
+                toDate.classList.remove('hidden');
+                fromDate.classList.remove('w-full');
+            }
+        });
     
         // Career
         function openCareer() {

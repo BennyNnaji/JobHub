@@ -4,13 +4,11 @@
 
 </p>
 {{-- Modal Trigger Button --}}
-<button
-    class="bg-green-500 text-white px-5 py-3 rounded-full h-10 w-10 flex items-center justify-center "
+<button class="bg-green-500 text-white px-5 py-3 rounded-full h-10 w-10 flex items-center justify-center "
     onclick="openSkill()"> <i class="fa-solid fa-plus"></i></button>
 
 <!-- Centered Modal -->
-<div id="skill"
-    class="fixed inset-0 flex items-center justify-center hidden bg-gray-500 bg-opacity-50 z-50 rounded"
+<div id="skill" class="fixed inset-0 flex items-center justify-center hidden bg-gray-500 bg-opacity-50 z-50 rounded"
     onclick="closeSkill()">
     <div class="bg-white p-8 rounded shadow-lg w-4/5 md:w-3/5" onclick="event.stopPropagation()">
         <h3 class="mb-2 text-2xl font-bold text-gray-800">Add Skill</h3>
@@ -27,13 +25,11 @@
                 <div class="flex w-full gap-x-9">
                     <div>
                         <label for="start_month" class="block text-left">Start</label>
-                        <input type="month" name="start_month" id="start_month"
-                            class="rounded p-3 w-full">
+                        <input type="month" name="start_month" id="start_month" class="rounded p-3 w-full">
                     </div>
                     <div>
                         <label for="end_month" class="block text-left">End</label>
-                        <input type="month" name="end_month" id="end_month"
-                            class="rounded p-3 w-full">
+                        <input type="month" name="end_month" id="end_month" class="rounded p-3 w-full">
                     </div>
                 </div>
 
@@ -52,3 +48,13 @@
     </div>
 </div>
 {{-- /Modal Content --}}
+<script>
+    // Skill
+    function openSkill() {
+        document.getElementById('skill').classList.remove('hidden');
+    }
+
+    function closeSkill() {
+        document.getElementById('skill').classList.add('hidden');
+    }
+</script>

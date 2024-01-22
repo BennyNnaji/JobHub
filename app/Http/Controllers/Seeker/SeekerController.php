@@ -10,6 +10,11 @@ use Termwind\Components\Dd;
 
 class SeekerController extends Controller
 {
+    /**
+     * seeker_profile function description.
+     *
+     * @return \Illuminate\View\View
+     */
     public function seeker_profile()
     {
         $title = 'My Profile';
@@ -21,12 +26,24 @@ class SeekerController extends Controller
             return view('seeker.profile', compact('title', 'seeker'));
         }
     }
+    /**
+     * Update the basic profile form.
+     *
+     * @return view
+     */
     public function update_profile_basic_form()
     {
         $title = "Update Profile";
         $seeker = Seeker::where('id',  Auth::guard('seeker')->user()->id)->first();
-        return view('seeker.editprofile', compact('title', 'seeker'));
+        return view('seeker.profile_edit', compact('title', 'seeker'));
     }
+    /**
+     * Update the basic profile information.
+     *
+     * @param Request $request the HTTP request
+     * @throws \Illuminate\Validation\ValidationException description of exception
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update_profile_basic(Request $request)
     {
         //validate the request
@@ -42,6 +59,13 @@ class SeekerController extends Controller
         $seeker->update($profile);
         return redirect()->route('seeker_profile')->with('success', 'Profile Updated');
     }
+    /**
+     * Process the profile summary from the request.
+     *
+     * @param Request $request The request instance
+     * @throws ValidationException description of exception
+     * @return RedirectResponse
+     */
     public function profile_summary(Request $request)
     {
         $summary = $request->validate([
@@ -53,6 +77,13 @@ class SeekerController extends Controller
 
         return redirect()->route('seeker_profile')->with('success', 'Profile Updated');
     }
+    /**
+     * Profile career function to add new career entry to user's profile.
+     *
+     * @param Request $request The HTTP request data
+     * @throws 
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function profile_career(Request $request)
     {
         $request->validate([
@@ -88,6 +119,12 @@ class SeekerController extends Controller
   
 
 
+/**
+ * Edit the career information for the specified index.
+ *
+ * @param int $careerIndex The index of the career to be edited
+ * @return \Illuminate\View\View
+ */
 public function profile_career_edit($careerIndex)
 {
     $title = "Update Career";
@@ -97,7 +134,7 @@ public function profile_career_edit($careerIndex)
 
     if (is_array($careerArray) && array_key_exists($careerIndex, $careerArray)) {
         $career = $careerArray[$careerIndex];
-        return view('seeker.editcareer', compact('seeker', 'careerIndex', 'career', 'title'));
+        return view('seeker.profile.career_edit', compact('seeker', 'careerIndex', 'career', 'title'));
     } else {
         // Handle the case where the careers array or the specified index does not exist
         return redirect()->route('seeker_profile')->with('error', 'Invalid career index');
@@ -105,6 +142,14 @@ public function profile_career_edit($careerIndex)
 }
 
 
+/**
+ * Update the career details of the seeker's profile.
+ *
+ * @param Request $request The HTTP request
+ * @param int $careerIndex The index of the career to update
+ * @throws ValidationException if the request data is invalid
+ * @return \Illuminate\Http\RedirectResponse after updating the career details
+ */
 public function profile_career_update(Request $request, $careerIndex)
 {
     $seeker = Auth::guard('seeker')->user();
@@ -123,7 +168,7 @@ public function profile_career_update(Request $request, $careerIndex)
             'company' => $request->input('company'),
             'position' => $request->input('position'),
             'from' => $request->input('from'),
-            'to' => $request->input('to'),
+            'to' => $request->input('current') ? null : $request->input('to'),
             'description' => $request->input('description'),
         ];
 
@@ -136,6 +181,12 @@ public function profile_career_update(Request $request, $careerIndex)
 }
 
 
+/**
+ * Delete a career entry from the seeker's profile.
+ *
+ * @param datatype $careerIndex The index of the career entry to be deleted
+ * @return \Illuminate\Http\RedirectResponse with success or error message
+ */
 public function profile_career_delete($careerIndex)
     {
         $seeker = Auth::guard('seeker')->user();
@@ -156,4 +207,5 @@ public function profile_career_delete($careerIndex)
             return redirect()->route('seeker_profile')->with('error', 'Invalid career index');
         }
     }
+    
 }

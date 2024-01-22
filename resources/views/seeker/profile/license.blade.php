@@ -3,8 +3,7 @@
     {!! nl2br($user->summary) !!}
 </p>
 {{-- Modal Trigger Button --}}
-<button
-    class="bg-green-500 text-white px-5 py-3 rounded-full h-10 w-10 flex items-center justify-center "
+<button class="bg-green-500 text-white px-5 py-3 rounded-full h-10 w-10 flex items-center justify-center "
     onclick="openLicence()"> <i class="fa-solid fa-plus"></i></button>
 
 <!-- Centered Modal -->
@@ -34,8 +33,10 @@
                 </label>
 
 
-                <input type="checkbox" name="never" id="never_exp" onchange="toggleExpiryDate()">
-                <label for="never_exp">Doesn't Expire</label>
+                <div class="my-3">
+                    <input type="checkbox" name="never" id="never_exp">
+                    <label for="never_exp">Doesn't Expire</label>
+                </div>
 
                 <label for="description" class="block text-left">Description <span
                         class="text-xs italic">(Optional)</span></label>
@@ -54,3 +55,26 @@
     </div>
 </div>
 {{-- /Modal Content --}}
+
+<script>
+    // Licence modal functions
+    function openLicence() {
+        document.getElementById('licence').classList.remove('hidden');
+    }
+
+    function closeLicence() {
+        document.getElementById('licence').classList.add('hidden');
+    }
+
+    // Toggle Expiry Date
+    const neverExpCheckbox = document.getElementById('never_exp');
+    const expDateInput = document.getElementById('exp_date');
+
+    neverExpCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            expDateInput.classList.add('hidden');
+        } else {
+            expDateInput.classList.remove('hidden');
+        }
+    });
+</script>

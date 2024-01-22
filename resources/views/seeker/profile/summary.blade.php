@@ -40,3 +40,13 @@
             </form>
         </div>
     </div>
+    <script>
+        // Profile Summary
+        function openSummary() {
+            document.getElementById('summary').classList.remove('hidden');
+        }
+
+        function closeSummary() {
+            document.getElementById('summary').classList.add('hidden');
+        }
+    </script>

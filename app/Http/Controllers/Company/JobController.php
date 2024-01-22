@@ -54,7 +54,6 @@ class JobController extends Controller
            $job = Job::create([
                 'company_id' => Auth::guard('company')->user()->id,
                 'job_title' => $request->job_title,
-                'slug' => Str::slug($request->job_title),
                 'job_type' => $request->job_type,
                 'job_description' => $request->job_description,
                 'min_salary' => $request->min_salary,

@@ -23,58 +23,69 @@ use App\Http\Controllers\Company\ProfileController as CompanyProfileController;
 */
 
 Route::get('/', [FrontpageController::class, 'index'])->name('index');
+Route::get('/jobs', [FrontpageController::class, 'jobs'])->name('jobs');
 Route::get('/jobs/{id}', [FrontpageController::class, 'show'])->name('jobs.show');
 Route::get('/login', [FrontpageController::class, 'login'])->name('login');
 Route::get('/register', [FrontpageController::class, 'register'])->name('register');
 Route::get('/{pages}', [FrontpageController::class, 'pages'])->name('pages');
 
 // Seeker Routes
-Route::get('/seeker/register', [SeekerAuthController::class, 'seeker_register'])->name('seeker_register');
-Route::post('/seeker/register', [SeekerAuthController::class, 'seeker_reg_store'])->name('seeker_register_post');
-Route::get('/seeker/login', [SeekerAuthController::class, 'seeker_login'])->name('seeker_login');
-Route::post('/seeker/login', [SeekerAuthController::class, 'seeker_login_post'])->name('seeker_login_post');
-Route::get('/seeker/login-reset', [SeekerAuthController::class, 'seeker_login_reset'])->name('seeker_login_reset');
-Route::post('/seeker/logout', [SeekerAuthController::class, 'seeker_logout'])->name('seeker_logout');
+Route::prefix('/seeker/')->group(function () {
+    Route::get('register', [SeekerAuthController::class, 'seeker_register'])->name('seeker_register');
+    Route::post('register', [SeekerAuthController::class, 'seeker_reg_store'])->name('seeker_register_post');
+    Route::get('login', [SeekerAuthController::class, 'seeker_login'])->name('seeker_login');
+    Route::post('login', [SeekerAuthController::class, 'seeker_login_post'])->name('seeker_login_post');
+    Route::get('login-reset', [SeekerAuthController::class, 'seeker_login_reset'])->name('seeker_login_reset');
+    Route::post('logout', [SeekerAuthController::class, 'seeker_logout'])->name('seeker_logout');
+});
+
 
 
 // Protected Seeker Routes
-Route::middleware(['seeker'])->group(function () {
-    Route::get('/seeker/profile', [SeekerController::class, 'seeker_profile'])->name('seeker_profile');
-    Route::get('/seeker/profile/edit', [SeekerController::class, 'update_profile_basic_form'])->name('seeker_profile_basic');
-    Route::post('/seeker/profile/edit', [SeekerController::class, 'update_profile_basic'])->name('seeker_profile_basic_update');
-    Route::post('/seeker/profile', [SeekerController::class, 'profile_summary'])->name('profile_summary');
-    Route::post('/seeker/profile/career', [SeekerController::class, 'profile_career'])->name('profile_career');
-
+Route::middleware(['seeker'])->prefix('/seeker/profile/')->group(function () {
+    Route::get('', [SeekerController::class, 'seeker_profile'])->name('seeker_profile');
+    Route::get('edit', [SeekerController::class, 'update_profile_basic_form'])->name('seeker_profile_basic');
+    Route::post('edit', [SeekerController::class, 'update_profile_basic'])->name('seeker_profile_basic_update');
+    Route::post('profile', [SeekerController::class, 'profile_summary'])->name('profile_summary');
+    //Route::post('/seeker/profile/career', [SeekerController::class, 'profile_career'])->name('profile_career');
+    // Route::get('/seeker/profile/career/{careerIndex}/edit', [SeekerController::class, 'profile_career_edit'])->name('profile_career_edit');
+    Route::put('career/{careerIndex}', [SeekerController::class, 'profile_career_update'])->name('profile_career_update');
+    Route::post('career/{careerIndex?}', [SeekerController::class, 'profile_career'])->name('profile_career');
+    Route::get('career/{careerIndex}/edit', [SeekerController::class, 'profile_career_edit'])->name('profile_career_edit');
+    Route::delete('career/{careerIndex}', [SeekerController::class, 'profile_career_delete'])->name('profile_career_delete');
 });
 
 // Company Routes
-Route::get('/company/register', [CompanyAuthController::class, 'company_register'])->name('company_register');
-Route::post('/company/register', [CompanyAuthController::class, 'company_store'])->name('company_store');
-Route::get('/company/login', [CompanyAuthController::class, 'company_login'])->name('company_login');
-Route::post('/company/login', [CompanyAuthController::class, 'company_login_post'])->name('company_login_post');
-Route::get('/company/login-reset', [CompanyAuthController::class, 'company_login_reset'])->name('company_login_reset');
-Route::post('/company/logout', [CompanyAuthController::class, 'company_logout'])->name('company_logout');
+Route::prefix('/company/')->group(function () {
+    Route::get('register', [CompanyAuthController::class, 'company_register'])->name('company_register');
+    Route::post('register', [CompanyAuthController::class, 'company_store'])->name('company_store');
+    Route::get('login', [CompanyAuthController::class, 'company_login'])->name('company_login');
+    Route::post('login', [CompanyAuthController::class, 'company_login_post'])->name('company_login_post');
+    Route::get('login-reset', [CompanyAuthController::class, 'company_login_reset'])->name('company_login_reset');
+    Route::post('logout', [CompanyAuthController::class, 'company_logout'])->name('company_logout');
+});
+
 
 
 // Protected Company Routes
-Route::middleware(['company'])->group(function () {
-    Route::get('/company/dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
-    Route::get('/company/profile', [CompanyProfileController::class, 'index'])->name('company_profile');
-    Route::get('/company/profile/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry']);
-    Route::get('/company/profile/cities/{countryCode}/{stateCode}', [CompanyProfileController::class, 'getCitiesByState']);
-    Route::post('/company/profile', [CompanyProfileController::class, 'profile_update'])->name('profile_update');
+Route::middleware(['company'])->prefix('/company/')->group(function () {
+    Route::get('dashboard', [CompanyDashboardController::class, 'company_dashboard'])->name('company_dashboard');
+    Route::get('profile', [CompanyProfileController::class, 'index'])->name('company_profile');
+    Route::get('profile/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry']);
+    Route::get('profile/cities/{countryCode}/{stateCode}', [CompanyProfileController::class, 'getCitiesByState']);
+    Route::post('profile', [CompanyProfileController::class, 'profile_update'])->name('profile_update');
 
-    Route::get('/company/profile/update', [CompanyProfileController::class, 'update_profile'])->name('company_profile.u');
-    Route::get('/company/profile/update/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry.u']);
-    Route::get('/company/profile/update/cities/{countryCode}/{stateCode}', [CompanyProfileController::class, 'getCitiesByState.u']);
-    Route::post('/company/profile/update', [CompanyProfileController::class, 'profile_update'])->name('profile_update');
+    Route::get('profile/update', [CompanyProfileController::class, 'update_profile'])->name('company_profile.u');
+    Route::get('profile/update/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry.u']);
+    Route::get('profile/update/cities/{countryCode}/{stateCode}', [CompanyProfileController::class, 'getCitiesByState.u']);
+    Route::post('profile/update', [CompanyProfileController::class, 'profile_update'])->name('profile_update');
 
-    Route::get('/company/jobs', [JobController::class, 'index'])->name('company_jobs');
-    Route::get('/company/jobs/add', [JobController::class, 'create'])->name('company_jobs.add');
-    Route::post('/company/jobs/add', [JobController::class, 'store'])->name('company_jobs.store');
-    Route::get('/company/jobs/{id}', [JobController::class, 'edit'])->name('company_jobs.show');
-    Route::post('/company/jobs/{id}/edit', [JobController::class, 'update'])->name('company_jobs.update');
-    Route::delete('/company/jobs/{id}', [JobController::class, 'destroy'])->name('company_jobs.delete');
+    Route::get('jobs', [JobController::class, 'index'])->name('company_jobs');
+    Route::get('jobs/add', [JobController::class, 'create'])->name('company_jobs.add');
+    Route::post('jobs/add', [JobController::class, 'store'])->name('company_jobs.store');
+    Route::get('jobs/{id}', [JobController::class, 'edit'])->name('company_jobs.show');
+    Route::post('jobs/{id}/edit', [JobController::class, 'update'])->name('company_jobs.update');
+    Route::delete('jobs/{id}', [JobController::class, 'destroy'])->name('company_jobs.delete');
 });
 
 

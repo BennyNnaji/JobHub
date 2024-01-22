@@ -20,7 +20,6 @@ class Job extends Model
         'responsibility',
         'benefits',
         'job_status',
-        'slug'
     ];
     public function company()
     {

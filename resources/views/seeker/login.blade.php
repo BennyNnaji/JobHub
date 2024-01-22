@@ -13,10 +13,48 @@
     <link rel="icon" type="image/png" href="{{ asset('images/front/fav.png') }}">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class=" bg-gray-200">
-
+    @if (session('error'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "error",
+            title: "{{ session('error') }}"
+        });
+    </script>
+@endif
+@if (session('success'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "{{ session('success') }}"
+        });
+        </script>
+        @endif
     <section
         style="background-image: url('https://cdn.pixabay.com/photo/2017/11/11/21/55/freedom-2940655_960_720.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
         <section class="bg-white/50 min-h-screen flex flex-col items-center justify-center">
@@ -63,11 +101,12 @@
             </section>
         </section>
     </section>
-
     <script>
         AOS.init();
     </script>
-
+<script>
+    
+</script>
 </body>
 
 </html>

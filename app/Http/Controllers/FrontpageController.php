@@ -17,6 +17,13 @@ class FrontpageController extends Controller
         $title = 'Home';
         return view('index', compact('title', 'jobs'));
     }
+
+    public function jobs()
+    {
+        $jobs = Job::orderBy('created_at', 'desc')->paginate(12);
+        $title = 'Jobs';
+        return view('jobs', compact('title', 'jobs'));
+    }
     /**
      * Display the specified resource.
      */
@@ -24,7 +31,7 @@ class FrontpageController extends Controller
     {
         $job = Job::where('id', $id)->findOrFail($id);
         $title = $job->job_title;
-        return view('jobs', compact('title', 'job'));
+        return view('job_details', compact('title', 'job'));
     }
     
 

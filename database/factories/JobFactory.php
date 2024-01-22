@@ -17,8 +17,8 @@ class JobFactory extends Factory
      */
     public function definition(): array
     {
-        $company_id = ['1','2','3', '9'];
-        $selected_company_id = $this->faker->randomElement($company_id);
+        $company_id = $this->faker->numberBetween(1, 65);
+        //$selected_company_id = $this->faker->randomElement($company_id);
         $job_title = $this->faker->jobTitle;
         $job_type = ['Internship', 'Part Time', 'Full Time'];
         $selected_job_type = $this->faker->randomElement($job_type);
@@ -29,7 +29,7 @@ class JobFactory extends Factory
         $location = $state . ', ' . $country;
 
         return [
-        'company_id' => $this->faker->numberBetween(1, 30),
+        'company_id' => $this->faker->numberBetween(1, 65),
         'job_title' => $job_title,
         'job_type' => $selected_job_type,
         'job_description' => $this->faker->sentence(510),

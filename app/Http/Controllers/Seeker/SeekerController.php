@@ -10,75 +10,150 @@ use Termwind\Components\Dd;
 
 class SeekerController extends Controller
 {
-    public function seeker_profile(){
+    public function seeker_profile()
+    {
         $title = 'My Profile';
-        $seeker =  Seeker::find( Auth::guard('seeker')->user()->id);
-         //$seeker = auth('seeker')->user();
-        $seeker->career = json_decode($seeker->career, true) ?? [];
-    return view('seeker.profile', compact('title', 'seeker'));
-}
-    public function update_profile_basic_form(){
+        $seeker =  Seeker::find(Auth::guard('seeker')->user()->id);
+        if ($seeker->status != 1) {
+            return redirect()->route('seeker_login')->with('error', 'Account not activated');
+        } else {
+            $seeker->career = json_decode($seeker->career, true) ?? [];
+            return view('seeker.profile', compact('title', 'seeker'));
+        }
+    }
+    public function update_profile_basic_form()
+    {
         $title = "Update Profile";
         $seeker = Seeker::where('id',  Auth::guard('seeker')->user()->id)->first();
         return view('seeker.editprofile', compact('title', 'seeker'));
     }
-    public function update_profile_basic(Request $request){
+    public function update_profile_basic(Request $request)
+    {
         //validate the request
         $profile = $request->validate([
             'phone' => 'required',
-            'address'=>'required|string',
-            'gender'=>'required',
-            'birthday'=>'required',
-            'country' =>'required',
+            'address' => 'required|string',
+            'gender' => 'required',
+            'birthday' => 'required',
+            'country' => 'required',
             'state' => 'required',
         ]);
-        $seeker = Seeker::find( Auth::guard('seeker')->user()->id)->first();
+        $seeker = Seeker::find(Auth::guard('seeker')->user()->id)->first();
         $seeker->update($profile);
-        return redirect()->route('seeker_profile')->with('success', 'Profile Updated');     
-        
+        return redirect()->route('seeker_profile')->with('success', 'Profile Updated');
     }
-    public function profile_summary(Request $request) {
-       $summary = $request->validate([
-        'summary'=>'required|string',
-       ]);
-       $seeker=Seeker::where('id', Auth::guard('seeker')->user()->id)->first();
-         $seeker->update($summary);
+    public function profile_summary(Request $request)
+    {
+        $summary = $request->validate([
+            'summary' => 'required|string',
+        ]);
+        $seeker = Seeker::where('id', Auth::guard('seeker')->user()->id)->first();
+        $seeker->update($summary);
 
-       
-       return redirect()->route('seeker_profile')->with('success', 'Profile Updated');
+
+        return redirect()->route('seeker_profile')->with('success', 'Profile Updated');
     }
-public function profile_career(Request $request)
+    public function profile_career(Request $request)
+    {
+        $request->validate([
+            'company' => 'required',
+            'position' => 'required',
+            'from' => 'required|date|before:today',
+            'to' => 'nullable|date|after_or_equal:from|before_or_equal:today',
+            'description' => 'nullable',
+        ]);
+
+        $newCareer = [
+            'company' => $request->company,
+            'position' => $request->position,
+            'from' => date("Y-m-d", strtotime($request->from)),
+            'to' => $request->to ? date("Y-m-d", strtotime($request->to)) : null,
+            'description' => $request->description,
+        ];
+
+        $seeker = auth('seeker')->user();
+
+        $currentCareers = json_decode($seeker->career, true) ?? [];
+
+        // Ensure $currentCareers is an array
+        $currentCareers = is_array($currentCareers) ? $currentCareers : [];
+
+        // Add the new career entry to the existing array of careers
+        $currentCareers[] = $newCareer;
+
+        $seeker->update(['career' => json_encode($currentCareers)]);
+
+        return redirect()->route('seeker_profile')->with('success', 'Career Added Successfully');
+    }
+  
+
+
+public function profile_career_edit($careerIndex)
 {
-$request->validate([
-    'company' => 'required',
-    'position' => 'required',
-    'from' => 'required|date|before:today',
-    'to' => 'nullable|date|after_or_equal:from|before_or_equal:today',
-    'description' => 'nullable',
-]);
+    $title = "Update Career";
+    $seeker = Auth::guard('seeker')->user();
 
+    $careerArray = json_decode($seeker->career, true);
 
-    $newCareer = [
-        'company' => $request->company,
-        'position' => $request->position,
-        'from' => date("Y-m-d", strtotime($request->from)),
-        'to' => $request->to ? date("Y-m-d", strtotime($request->to)) : null,
-        'description' => $request->description,
-    ];
-
-    $seeker = auth('seeker')->user();
-
-    $currentCareers = json_decode($seeker->career, true) ?? [];
-
-    // Ensure $currentCareers is an array
-    $currentCareers = is_array($currentCareers) ? $currentCareers : [];
-
-    // Add the new career entry to the existing array of careers
-    $currentCareers[] = $newCareer;
-
-    $seeker->update(['career' => json_encode($currentCareers)]);
-
-    return redirect()->route('seeker_profile')->with('success', 'Profile Updated');
+    if (is_array($careerArray) && array_key_exists($careerIndex, $careerArray)) {
+        $career = $careerArray[$careerIndex];
+        return view('seeker.editcareer', compact('seeker', 'careerIndex', 'career', 'title'));
+    } else {
+        // Handle the case where the careers array or the specified index does not exist
+        return redirect()->route('seeker_profile')->with('error', 'Invalid career index');
+    }
 }
 
+
+public function profile_career_update(Request $request, $careerIndex)
+{
+    $seeker = Auth::guard('seeker')->user();
+    $careerArray = json_decode($seeker->career, true);
+
+    if (is_array($careerArray) && array_key_exists($careerIndex, $careerArray)) {
+        $request->validate([
+            'company' => 'required',
+            'position' => 'required',
+            'from' => 'required|date',
+            'to' => 'nullable|date|after_or_equal:from',
+            'description' => 'nullable',
+        ]);
+
+        $careerArray[$careerIndex] = [
+            'company' => $request->input('company'),
+            'position' => $request->input('position'),
+            'from' => $request->input('from'),
+            'to' => $request->input('to'),
+            'description' => $request->input('description'),
+        ];
+
+        $seeker->update(['career' => json_encode($careerArray)]);
+
+        return redirect()->route('seeker_profile')->with('success', 'Career updated successfully');
+    } else {
+        return redirect()->route('seeker_profile')->with('error', 'Invalid career index');
+    }
+}
+
+
+public function profile_career_delete($careerIndex)
+    {
+        $seeker = Auth::guard('seeker')->user();
+        $careerArray = json_decode($seeker->career, true);
+
+        if (is_array($careerArray) && array_key_exists($careerIndex, $careerArray)) {
+            // Remove the career entry from the array
+            unset($careerArray[$careerIndex]);
+
+            // Reindex the array to maintain consecutive keys
+            $careerArray = array_values($careerArray);
+
+            // Update the seeker's career field
+            $seeker->update(['career' => json_encode($careerArray)]);
+
+            return redirect()->route('seeker_profile')->with('success', 'Career deleted successfully');
+        } else {
+            return redirect()->route('seeker_profile')->with('error', 'Invalid career index');
+        }
+    }
 }

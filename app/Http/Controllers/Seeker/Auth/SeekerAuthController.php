@@ -14,8 +14,12 @@ class SeekerAuthController extends Controller
     public function seeker_login()
     {
         if (Auth::guard('seeker')->check()) {
-            return redirect()->route('seeker_profile');
-        }else{
+            if (Auth::guard('seeker')->user()->status != 1) {
+                return view('seeker.login')->with('error', 'Account Not Active');
+            } else {
+                return redirect()->route('seeker_profile');
+            }
+        } else {
             return view('seeker.login');
         }
     }
@@ -27,8 +31,6 @@ class SeekerAuthController extends Controller
         } else {
             return view('seeker.register');
         }
-        
-       
     }
     public function seeker_reg_store(Request $request)
     {
@@ -57,11 +59,10 @@ class SeekerAuthController extends Controller
         } else {
             return view('seeker.reset');
         }
-        
-     
     }
 
-    public function seeker_login_post(Request $request){
+    public function seeker_login_post(Request $request)
+    {
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('seeker')->attempt($credentials)) {
@@ -72,7 +73,8 @@ class SeekerAuthController extends Controller
         // Authentication failed for seeker
         return back()->withErrors(['email' => 'Invalid credentials', 'password' => 'Invalid credentials'])->withInput($request->only('email'));
     }
-    public function seeker_logout(){
+    public function seeker_logout()
+    {
         Auth::guard('seeker')->logout();
         return redirect()->route('seeker_login')->with('success', 'Logout Successful');
     }

@@ -39,6 +39,25 @@
                 });
             </script>
         @endif
+        @if (session('error'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('error') }}"
+            });
+        </script>
+    @endif
     <section data-aos="zoom-in">
         <section>
             <div class=" bg-red-500 py-3">
@@ -49,14 +68,14 @@
                                     src="{{ asset('images/front/logo.png') }}" class="md:w-11/12 w-5/6" /></a>
                         </div>
                         <div class="hidden md:block sm:hidden">
-                            <a href=""
+                            <a href="{{ route('index') }}"
                                 class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Home</a>
                             <a href=""
                                 class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">About
                                 Us</a>
                             <a href=""
                                 class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Services</a>
-                            <a href=""
+                            <a href="{{ route('jobs') }}"
                                 class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Jobs</a>
                             <a href=""
                                 class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Companies</a>
@@ -100,14 +119,14 @@
                     </div>
                 </div>
                 <div class="hidden" id="mobile_menu">
-                    <a href=""
+                    <a href="{{ route('index') }}"
                         class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Home</a>
                     <a href=""
                         class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">About
                         Us</a>
                     <a href=""
                         class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Services</a>
-                    <a href=""
+                    <a href="{{ route('jobs') }}"
                         class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Jobs</a>
                     <a href=""
                         class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Companies</a>
@@ -149,11 +168,11 @@
                 <div class="md:w-3/6" data-aos="zoom-in">
                     <h2 class="font-semibold text-white">Navigation</h2>
                     <hr class="w-4/5 my-2">
-                    <a href="" class=" rounded block px-6 py-3 hover:bg-white text-black">Home</a>
+                    <a href="{{ route("index") }}" class=" rounded block px-6 py-3 hover:bg-white text-black">Home</a>
                     <a href="" class=" rounded block px-6 py-3 hover:bg-white text-black">About
                         Us</a>
                     <a href="" class=" rounded block px-6 py-3 hover:bg-white text-black">Services</a>
-                    <a href="" class=" rounded block px-6 py-3 hover:bg-white text-black">Jobs</a>
+                    <a href="{{ route("jobs") }}" class=" rounded block px-6 py-3 hover:bg-white text-black">Jobs</a>
                 </div>
 
                 <div class="md:w-3/6" data-aos="zoom-in-right">

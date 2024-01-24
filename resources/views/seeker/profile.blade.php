@@ -82,5 +82,26 @@
     </div>
     </div>
     <!-- JavaScript for Modals -->
-
+<script>
+        // // Delete Confirmation
+        // function confirmDelete(index) {
+        //     Swal.fire({
+        //         title: "Are you sure?",
+        //         text: "This is irreversible!",
+        //         icon: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonColor: "#d33",
+        //         cancelButtonColor: "#3085d6",
+        //         confirmButtonText: "Yes, delete it!"
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             // If confirmed, submit the form
+        //             document.getElementById('deleteForm' + index).submit();
+        //         } else {
+        //             // If canceled, show a message (optional)
+        //             Swal.fire("Canceled", "Your entry was not deleted", "info");
+        //         }
+        //     });
+        // }
+</script>
 @endsection

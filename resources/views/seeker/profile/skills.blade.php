@@ -1,10 +1,27 @@
-<h2 class="text-lg text-gray-400">Skills</h2>
-<p class="font-medium break-words leading-normal pt-2 ">
-    {!! nl2br($user->summary) !!}
+<h2 class="text-lg text-gray-400 mb-3">Skills</h2>
+@if (!empty($seeker->skill) && is_array($seeker->skill))
+<div class="grid grid-cols-4 gap-5 text-center">
+    @foreach ($seeker->skill as $index => $skill)
+        <span class=" border-2 border-gray-200 rounded p-2 ">
+            {{ $skill['skill_name'] }}
 
-</p>
+            <form id="skillDelete{{ $index }}" class="inline"
+                action="{{ route('profile_skills_delete', ['skillIndex' => $index]) }}" method="post">
+                @csrf
+                @method('delete')
+
+                <button type="button" onclick="skillDelete({{ $index }});" title="Delete"><i
+                        class="fa-solid fa-trash text-red-500"></i></button>
+            </form>
+        </span>
+    @endforeach
+</div>
+@else
+    <p>No skill information available</p>
+@endif
+
 {{-- Modal Trigger Button --}}
-<button class="bg-green-500 text-white px-5 py-3 rounded-full h-10 w-10 flex items-center justify-center "
+<button class="bg-green-500 text-white px-5 py-3 mt-3 rounded-full h-10 w-10 flex items-center justify-center "
     onclick="openSkill()"> <i class="fa-solid fa-plus"></i></button>
 
 <!-- Centered Modal -->
@@ -15,31 +32,18 @@
 
         <!-- Form -->
         <div class="w-full ">
-            <form action="" method="post">
-                <label for="position" class="block text-left">Position</label>
-                <input type="text" name="position" id="position" class="rounded p-3 w-full ">
+            <form action="{{ route('profile_skills') }}" method="post">
+                @csrf
+                <label for="skill_name" class="block text-left">Skill</label>
+                <input type="text" name="skill_name" id="skill_name" class="rounded p-3 w-full ">
+                @error('skill_name')
+                    <div class="text-red-500"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
+                @enderror
 
-                <label for="compqny" class="block text-left">Company</label>
-                <input type="text" name="compqny" id="compqny" class="rounded p-3 w-full ">
-
-                <div class="flex w-full gap-x-9">
-                    <div>
-                        <label for="start_month" class="block text-left">Start</label>
-                        <input type="month" name="start_month" id="start_month" class="rounded p-3 w-full">
-                    </div>
-                    <div>
-                        <label for="end_month" class="block text-left">End</label>
-                        <input type="month" name="end_month" id="end_month" class="rounded p-3 w-full">
-                    </div>
-                </div>
-
-                <label for="description" class="block text-left">Description <span
-                        class="text-xs italic">(Optional)</span></label>
-                <textarea name="description" id="description" class="rounded p-3 w-full"></textarea>
                 <div class="flex justify-between my-3">
                     <button type="submit"
                         class="bg-green-500 hover:bg-green-600 px-5 py-3 rounded focus:ring-green-600 text-green-200 hover:text-green-300">Add
-                        Career</button>
+                        Skill</button>
                     <p class="cursor-pointer bg-red-500 hover:bg-red-600 text-red-200 hover:text-red-300 px-5 py-3 rounded"
                         onclick="closeSkill()">Close</p>
                 </div>
@@ -47,6 +51,7 @@
         </div>
     </div>
 </div>
+
 {{-- /Modal Content --}}
 <script>
     // Skill
@@ -57,4 +62,24 @@
     function closeSkill() {
         document.getElementById('skill').classList.add('hidden');
     }
+    // Delete Confirmation
+    function skillDelete(index) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This is irreversible!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, submit the form
+                    document.getElementById('skillDelete' + index).submit();
+                } else {
+                    // If canceled, show a message (optional)
+                    Swal.fire("Canceled", "Your entry was not deleted", "info");
+                }
+            });
+        }
 </script>

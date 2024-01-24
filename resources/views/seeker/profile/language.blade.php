@@ -1,7 +1,24 @@
 <h2 class="text-lg text-gray-400">Languages</h2>
-<p class="font-medium break-words leading-normal pt-2  ">
-    {!! nl2br($user->summary) !!}
-</p>
+@if (!empty($seeker->language) && is_array($seeker->language))
+<div class="grid grid-cols-4 gap-5 text-center">
+    @foreach ($seeker->language as $index => $language)
+        <span class=" border-2 border-gray-200 rounded p-2 ">
+            {{ $language['language'] }}
+
+            <form id="langDelete{{ $index }}" class="inline"
+                action="{{ route('profile_languages_delete', ['langIndex' => $index]) }}" method="post">
+                @csrf
+                @method('delete')
+
+                <button type="button" onclick="langDelete({{ $index }});" title="Delete"><i
+                        class="fa-solid fa-trash text-red-500"></i></button>
+            </form>
+        </span>
+    @endforeach
+</div>
+@else
+    <p>No language information available</p>
+@endif
 {{-- Modal Trigger Button --}}
 <button class="bg-green-500 text-white px-5 py-3 rounded-full h-10 w-10 flex items-center justify-center "
     onclick="openLanguage()"> <i class="fa-solid fa-plus"></i></button>
@@ -14,7 +31,8 @@
 
         <!-- Form -->
         <div class="w-full ">
-            <form action="" method="post">
+            <form action="{{ route('profile_languages') }}" method="post">
+                @csrf
                 <label for="language" class="block text-left">Language</label>
                 <input type="text" name="language" id="language" class="rounded p-3 w-full ">
                 <div class="flex justify-between my-3">
@@ -38,4 +56,25 @@
     function closeLanguage() {
         document.getElementById('language').classList.add('hidden');
     }
+
+        // Delete Confirmation
+        function langDelete(index) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This is irreversible!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, submit the form
+                    document.getElementById('langDelete' + index).submit();
+                } else {
+                    // If canceled, show a message (optional)
+                    Swal.fire("Canceled", "Your entry was not deleted", "info");
+                }
+            });
+        }
 </script>

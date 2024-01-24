@@ -20,6 +20,8 @@
 </head>
 
 <body class=" bg-gray-200">
+    {{-- Preloader --}}
+    @include('layouts.preloader')
          @if (session('success'))
             <script>
                 const Toast = Swal.mixin({

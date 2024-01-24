@@ -21,6 +21,8 @@
 </head>
 
 <body class="bg-gray-600 ">
+    {{-- Preloader --}}
+    @include('layouts.preloader')
     @php
         $seeker = Auth::guard('seeker')->user();
     @endphp
@@ -42,7 +44,8 @@
             <div class="text-white">{{ $seeker->name }}</div>
         </div>
         <div class="flex ">
-            <div class="bg-gray-600  h-screen w-2/6 md:w-1/6 md:block hidden text-white px-5 relative z-30 md:static py-0 md:py-5">
+            <div
+                class="bg-gray-600  h-screen w-2/6 md:w-1/6 md:block hidden text-white px-5 relative z-30 md:static py-0 md:py-5">
                 <a href="" class="block">Dashboard</a>
                 <a href="" class="block">Dashboard</a>
                 <a href="" class="block">Dashboard</a>

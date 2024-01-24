@@ -22,6 +22,7 @@
 </head>
 
 <body class="bg-gray-600">
+    {{-- Preloader --}}
     @include('layouts.preloader')
 
     @php
@@ -45,7 +46,8 @@
 
 
             <div class="md:w-1/12 w-2/12 relative ">
-                <button class="flex flex-col items-center justify-center w-full h-full focus:outline-none" id="dropdownBtn">
+                <button class="flex flex-col items-center justify-center w-full h-full focus:outline-none"
+                    id="dropdownBtn">
                     <img src="{{ asset('storage/company/Images/' . $company->logo) }}" alt="Company Logo"
                         class="md:w-5/12 w-3/6 rounded-full mx-auto">
                     <div class="text-white font-semibold capitalize text-center">{{ $company->name }}</div>
@@ -80,18 +82,23 @@
             id="desk_menu" data-aos="fade-right">
             <div>
                 <a href="{{ route('company_dashboard') }}"
-                    class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+                    class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                        class="fa-solid fa-gauge-high"></i> Dashboard</a>
 
                 <a href="{{ route('company_profile') }}"
                     class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
                         class="fa-solid fa-user "></i> My Profile</a>
 
-                <a href="{{ route('company_jobs') }}" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i class="fa-solid fa-briefcase"></i> Jobs</a>
-                <a href="{{ route('company_jobs.add') }}" class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i class="fa-solid fa-briefcase"></i> Add Jobs</a>
-                                    <form action="{{ route('company_logout') }}" method="post" class="block px-4 py-2">
-                        @csrf
-                        <button type="submit">Logout</button>
-                    </form>
+                <a href="{{ route('company_jobs') }}"
+                    class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                        class="fa-solid fa-briefcase"></i> Jobs</a>
+                <a href="{{ route('company_jobs.add') }}"
+                    class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                        class="fa-solid fa-briefcase"></i> Add Jobs</a>
+                <form action="{{ route('company_logout') }}" method="post" class="block px-4 py-2">
+                    @csrf
+                    <button type="submit">Logout</button>
+                </form>
 
 
             </div>
@@ -100,10 +107,10 @@
 
 
         </div>
-        {{--Main Content --}}
+        {{-- Main Content --}}
         <div class="w-full p-2 bg-gray-200 absolute z-10  md:static min-h-screen rounded-t-3xl border-t-4 border-x-4 md:border-red-500 border-gray-600"
             data-aos="flip-right">
-      
+
             @yield('content')
         </div>
     </section>
@@ -122,7 +129,6 @@
         button1.addEventListener('click', () => {
             mobile_menu.classList.toggle('hidden');
         });
-
     </script>
     @if (session('error'))
         <script>

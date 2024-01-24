@@ -1,6 +1,6 @@
 <h2 class="text-lg text-gray-400">Profile Summary</h2>
 @if ($user->summary)
-    <div class="font-medium break-words leading-normal pt-2  border-2 border-gray-200 rounded p-2">
+    <div class=" break-words leading-normal pt-2  border-2 border-gray-200 rounded p-2">
         {!! $user->summary !!}
     </div>
     <i class="fa-solid fa-pen  px-5 py-3 rounded-full h-10 w-10 flex items-center justify-center cursor-pointer text-green-500"

@@ -17,12 +17,12 @@
                 </div>
 
                 <div class="border-red-500 border-2 px-3 my-7 py-2 rounded hover:border-red-600 mx-1">
-                    <form id="deleteForm{{ $index }}"
+                    <form id="careerDelete{{ $index }}"
                         action="{{ route('profile_career_delete', ['careerIndex' => $index]) }}" method="post">
                         @csrf
                         @method('delete')
 
-                        <button type="button" onclick="confirmDelete({{ $index }});"
+                        <button type="button" onclick="careerDelete({{ $index }});"
                             title="Delete">Delete</button>
                     </form>
                 </div>
@@ -163,11 +163,11 @@
             });
         });
        
-        // Delete Confirmation
-        function confirmDelete(index) {
+          // Delete Confirmation
+          function careerDelete(index) {
             Swal.fire({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this career entry!",
+                text: "This is irreversible!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
@@ -176,10 +176,10 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // If confirmed, submit the form
-                    document.getElementById('deleteForm' + index).submit();
+                    document.getElementById('careerDelete' + index).submit();
                 } else {
                     // If canceled, show a message (optional)
-                    Swal.fire("Canceled", "Career entry was not deleted", "info");
+                    Swal.fire("Canceled", "Your entry was not deleted", "info");
                 }
             });
         }

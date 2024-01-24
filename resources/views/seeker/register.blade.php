@@ -16,6 +16,8 @@
 </head>
 
 <body class=" bg-gray-200">
+        {{-- Preloader --}}
+        @include('layouts.preloader')
 
     <section
         style="background-image: url('https://cdn.pixabay.com/photo/2018/08/06/19/49/design-3588214_1280.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">

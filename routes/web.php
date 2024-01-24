@@ -49,10 +49,27 @@ Route::middleware(['seeker'])->prefix('/seeker/profile/')->group(function () {
     Route::post('profile', [SeekerController::class, 'profile_summary'])->name('profile_summary');
     //Route::post('/seeker/profile/career', [SeekerController::class, 'profile_career'])->name('profile_career');
     // Route::get('/seeker/profile/career/{careerIndex}/edit', [SeekerController::class, 'profile_career_edit'])->name('profile_career_edit');
+
     Route::put('career/{careerIndex}', [SeekerController::class, 'profile_career_update'])->name('profile_career_update');
     Route::post('career/{careerIndex?}', [SeekerController::class, 'profile_career'])->name('profile_career');
     Route::get('career/{careerIndex}/edit', [SeekerController::class, 'profile_career_edit'])->name('profile_career_edit');
     Route::delete('career/{careerIndex}', [SeekerController::class, 'profile_career_delete'])->name('profile_career_delete');
+
+    Route::post('education/{eduIndex?}', [SeekerController::class, 'profile_education'])->name('profile_education');
+    Route::get('education/{eduIndex}/edit', [SeekerController::class, 'profile_education_edit'])->name('profile_education_edit');
+    Route::put('education/{eduIndex}', [SeekerController::class, 'profile_education_update'])->name('profile_education_update');
+    Route::delete('education/{eduIndex}', [SeekerController::class, 'profile_education_delete'])->name('profile_education_delete');
+
+    Route::post('license/{licenseIndex?}', [SeekerController::class, 'profile_license'])->name('profile_license');
+    Route::get('license/{licenseIndex}/edit', [SeekerController::class, 'profile_license_edit'])->name('profile_license_edit');
+    Route::put('license/{licenseIndex}', [SeekerController::class, 'profile_license_update'])->name('profile_license_update');
+    Route::delete('license/{licenseIndex}', [SeekerController::class, 'profile_license_delete'])->name('profile_license_delete');
+
+    Route::post('skills/{skillIndex?}', [SeekerController::class, 'profile_skills'])->name('profile_skills');
+    Route::delete('skills/{skillIndex}', [SeekerController::class, 'profile_skills_delete'])->name('profile_skills_delete');
+
+    Route::post('languages/{langIndex?}', [SeekerController::class, 'profile_languages'])->name('profile_languages');
+    Route::delete('languages/{langIndex}', [SeekerController::class, 'profile_languages_delete'])->name('profile_languages_delete');
 });
 
 // Company Routes

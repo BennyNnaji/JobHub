@@ -1,7 +1,36 @@
 <h2 class="text-lg text-gray-400">Education History</h2>
-<p class="font-medium break-words leading-normal pt-2 ">
-    {!! nl2br($user->summary) !!}
-</p>
+@if (!empty($seeker->education) && is_array($seeker->education))
+    @foreach ($seeker->education as $index => $education)
+        <div class="break-words leading-normal my-2  border-2 border-gray-200 rounded p-2">
+            <p class="font-medium break-words leading-normal pt-2 ">
+                {!! nl2br($education['institution']) !!}
+            </p>
+            <p class="italic text-sm"> {{ $education['qualification'] }}</p>
+            <p class="italic text-sm"> {{ date('F d, Y', strtotime($education['grad_year'])) }}</p>
+            <p class="my-3 text-sm italic"> {!! nl2br($education['edu_description']) !!}</p>
+
+            <div class="flex items-center">
+                <div class="border-green-500 border-2 px-3 my-7 py-2 rounded hover:border-green-600 mx-1" title="Edit">
+                    <a href="{{ route('profile_education_edit', ['eduIndex' => $index]) }}">Edit</a>
+                </div>
+
+                <div class="border-red-500 border-2 px-3 my-7 py-2 rounded hover:border-red-600 mx-1">
+                    <form id="eduDelete{{ $index }}"
+                        action="{{ route('profile_education_delete', ['eduIndex' => $index]) }}" method="post">
+                        @csrf
+                        @method('delete')
+
+                        <button type="button" onclick="eduDelete({{ $index }});"
+                            title="Delete">Delete</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    @endforeach
+@else
+    <p>No Education information available</p>
+@endif
 {{-- Modal Trigger Button --}}
 <button class="bg-green-500 text-white px-5 py-3 rounded-full h-10 w-10 flex items-center justify-center "
     onclick="openEducation()"> <i class="fa-solid fa-plus"></i></button>
@@ -14,7 +43,8 @@
 
         <!-- Form -->
         <div class="w-full ">
-            <form action="" method="post">
+            <form action="{{ route('profile_education') }}" method="post">
+                @csrf
                 <label for="institution" class="block text-left">Institution</label>
                 <input type="text" name="institution" id="institution" value="{{ old('institution') }}"
                     class="rounded p-3 w-full ">
@@ -32,7 +62,7 @@
 
 
                 <label for="grad_year" class="block text-left">Graduation Year</label>
-                <input type="month" name="grad_year" id="grad_year" class="rounded p-3 w-full">
+                <input type="date" name="grad_year" id="grad_year" class="rounded p-3 w-full">
                 @error('record')
                     <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -67,4 +97,25 @@
     function closeEducation() {
         document.getElementById('education').classList.add('hidden');
     }
+
+          // Delete Confirmation
+          function eduDelete(index) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This is irreversible!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, submit the form
+                    document.getElementById('eduDelete' + index).submit();
+                } else {
+                    // If canceled, show a message (optional)
+                    Swal.fire("Canceled", "Your entry was not deleted", "info");
+                }
+            });
+        }
 </script>

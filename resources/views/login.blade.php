@@ -7,13 +7,13 @@
             <div class="relative my-32 md:my-0">
                 <!-- Div with an image -->
                 <div class="w-full h-full relative">
-                    <img src="https://dummyimage.com/600x600/ccc/fff"
+                    <img src="https://picsum.photos/601/601"
                     role="img" alt="Sample Image" class="w-full h-full object-cover" />
                     <!-- Overlay div with text -->
                     <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/70 p-4 rounded border-dotted boder-2 border-blue-500">
                       <a href="{{ route('company_login') }}">
                         <h2 class="text-2xl font-bold mb-2">Company</h2>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p class="text-gray-700">login as a company to manage your jobs and applications </p>
                       </a>
                     </div>
                 </div>
@@ -21,13 +21,13 @@
             <div class="relative my-32 md:my-0">
                 <!-- Div with an image -->
                 <div class="w-full h-full relative">
-                    <img src="https://dummyimage.com/600x600/ccc/fff"
+                    <img src="https://picsum.photos/600/600"
                     role="img" alt="Sample Image" class="w-full h-full object-cover" />
                     <!-- Overlay div with text -->
                     <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/70 p-4 rounded shadow-md">
                        <a href="{{ route('seeker_login') }}">
                         <h2 class="text-2xl font-bold mb-2">Job Seeker</h2>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p class="text-gray-700">Login as a seeker to apply for jobs</p>
                     </a>
                     </div>
                 </div>

@@ -17,7 +17,6 @@
     <script src="https://cdn.tiny.cloud/1/6216wbng5cbdfeqd1pkwh8m5hymacgkbzx3etbiache8b5sj/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 </head>
 </head>
 
@@ -177,89 +176,7 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            $('#countryDropdown').on('change', function() {
-                var selectedCountryCode = $(this).val();
-                var stateDropdown = $('#stateDropdown');
-                var cityDropdown = $('#cityDropdown');
-                var spinner = $('#spinner');
 
-                // Disable state and city dropdowns while loading
-                stateDropdown.prop('disabled', true);
-                cityDropdown.prop('disabled', true);
-
-                // Show the spinner while loading states
-                spinner.show();
-
-                // Make an AJAX request to get states based on the selected country
-                $.ajax({
-                    url: '/company/profiles/states/' + selectedCountryCode,
-                    type: 'GET',
-                    success: function(data) {
-                        // Populate the state dropdown with the fetched states
-                        stateDropdown.empty();
-                        stateDropdown.append('<option value="">Select a state</option>');
-
-                        $.each(data, function(index, state) {
-                            stateDropdown.append('<option value="' + state['iso2'] +
-                                '">' + state['name'] + '</option>');
-                        });
-
-                        // Enable state dropdown and hide the spinner after successfully loading states
-                        stateDropdown.prop('disabled', false);
-                        spinner.hide();
-                    },
-                    error: function(error) {
-                        console.error('Error fetching states:', error);
-                        // Enable state dropdown and hide the spinner in case of an error
-                        stateDropdown.prop('disabled', false);
-                        spinner.hide();
-                    }
-                });
-            });
-
-            $('#stateDropdown').on('change', function() {
-                var selectedCountryCode = $('#countryDropdown').val();
-                var selectedStateCode = $(this).val();
-                var cityDropdown = $('#cityDropdown');
-                var spinner = $('#spinner');
-
-                // Disable city dropdown while loading
-                cityDropdown.prop('disabled', true);
-
-                // Show the spinner while loading cities
-                spinner.show();
-
-                // Make an AJAX request to get cities based on the selected country and state
-                $.ajax({
-                    url: '/company/profiles/cities/' + selectedCountryCode + '/' +
-                        selectedStateCode,
-                    type: 'GET',
-                    success: function(data) {
-                        // Populate the city dropdown with the fetched cities
-                        cityDropdown.empty();
-                        cityDropdown.append('<option value="">Select a city</option>');
-
-                        $.each(data, function(index, city) {
-                            cityDropdown.append('<option value="' + city['id'] + '">' +
-                                city['name'] + '</option>');
-                        });
-
-                        // Enable city dropdown and hide the spinner after successfully loading cities
-                        cityDropdown.prop('disabled', false);
-                        spinner.hide();
-                    },
-                    error: function(error) {
-                        console.error('Error fetching cities:', error);
-                        // Enable city dropdown and hide the spinner in case of an error
-                        cityDropdown.prop('disabled', false);
-                        spinner.hide();
-                    }
-                });
-            });
-        });
-    </script>
 
 
 

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <section class="w-11/12 md:w-5/6 mx-auto">
-    <h2 class="text-xl text-left">Latest Jobs</h2>
+    <h2 class="text-xl text-left"> Search Results</h2>
     <div class="md:flex justify-between items-center">
         <div class="bg-red-600 h-1 w-8/12">&nbsp;</div>
         <div class="md:w-4/12 mx-1">
@@ -11,10 +11,11 @@
             </form>
         </div>
     </div>
-
+    <p>Your search matches {{ count($jobs) }} {{ count($jobs) > 1 ? 'jobs' : 'job' }} </p>
 
     <div class="w-11/12 md:w-5/6 mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-3">
         <!-- Dummy Grid -->
+        
         @if (count($jobs) > 0)
             @foreach ($jobs as $job)
                 <a href="{{ route('jobs.show', $job->id) }}">
@@ -46,7 +47,7 @@
     </div>
             {{ $jobs->links() }}
         @else
-            <div>No Job</div>
+            <div>Sorry, your search did not match any job</div>
         @endif
 
 </section>

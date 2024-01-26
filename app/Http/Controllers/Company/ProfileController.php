@@ -20,7 +20,7 @@ class ProfileController extends Controller
         $title = "Company Profile";
         $social_media = json_decode($company->social_media, true);
 
-            $client = new Client();
+        $client = new Client();
 
         $response = $client->get('https://api.countrystatecity.in/v1/countries', [
             'headers' => [
@@ -29,12 +29,11 @@ class ProfileController extends Controller
         ]);
 
         $countries = json_decode($response->getBody(), true);
-
         // Sort countries by name
         usort($countries, function ($a, $b) {
             return strcmp($a['name'], $b['name']);
         });
-
+        //return view('test.profile', compact('countries'));
         return view('company.profile', compact('title', 'company', 'social_media', 'countries'));
     }
 
@@ -44,12 +43,14 @@ class ProfileController extends Controller
         $client = new Client();
 
         $response = $client->get("https://api.countrystatecity.in/v1/countries/{$countryCode}/states", [
+
             'headers' => [
                 'X-CSCAPI-KEY' => 'V2NiSDdQMWFjUU5UNzZUYXJBcVhuT2Rhc1dzTFRleVA4TXZFb2FVdQ==',
             ],
         ]);
 
         $states = json_decode($response->getBody(), true);
+        dd($states);
 
         return response()->json($states);
     }
@@ -72,10 +73,10 @@ class ProfileController extends Controller
 
 
 
-    
+
     public function profile_update(Request $request)
     {
- 
+
         $company = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -129,11 +130,8 @@ class ProfileController extends Controller
         ]);
         if ($updated) {
             return redirect()->back()->with('success', 'Profile updated successfully');
-
         } else {
             return redirect()->back()->with('error', 'Error ocurred. Please try again');
-
         }
-        
     }
 }

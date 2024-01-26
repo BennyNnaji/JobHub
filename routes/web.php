@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontpageController;
 use App\Http\Controllers\Company\JobController;
 use App\Http\Controllers\Seeker\SeekerController;
+use App\Http\Controllers\Seeker\ApplicationController;
 use App\Http\Controllers\Seeker\Auth\SeekerAuthController;
 use App\Http\Controllers\Company\Auth\CompanyAuthController;
 use App\Http\Controllers\Company\CompanyDashboardController;
@@ -24,10 +25,12 @@ use App\Http\Controllers\Company\ProfileController as CompanyProfileController;
 
 Route::get('/', [FrontpageController::class, 'index'])->name('index');
 Route::get('/jobs', [FrontpageController::class, 'jobs'])->name('jobs');
+Route::get('/search', [FrontpageController::class, 'job_search'])->name('jobs.search');
 Route::get('/jobs/{id}', [FrontpageController::class, 'show'])->name('jobs.show');
+Route::post('/jobs/{id}/save', [ApplicationController::class, 'save_job'])->name('save_job');
 Route::get('/login', [FrontpageController::class, 'login'])->name('login');
 Route::get('/register', [FrontpageController::class, 'register'])->name('register');
-Route::get('/{pages}', [FrontpageController::class, 'pages'])->name('pages');
+//Route::get('/{pages}', [FrontpageController::class, 'pages'])->name('pages');
 
 // Seeker Routes
 Route::prefix('/seeker/')->group(function () {
@@ -42,34 +45,37 @@ Route::prefix('/seeker/')->group(function () {
 
 
 // Protected Seeker Routes
-Route::middleware(['seeker'])->prefix('/seeker/profile/')->group(function () {
-    Route::get('', [SeekerController::class, 'seeker_profile'])->name('seeker_profile');
-    Route::get('edit', [SeekerController::class, 'update_profile_basic_form'])->name('seeker_profile_basic');
-    Route::post('edit', [SeekerController::class, 'update_profile_basic'])->name('seeker_profile_basic_update');
-    Route::post('profile', [SeekerController::class, 'profile_summary'])->name('profile_summary');
+Route::middleware(['seeker'])->prefix('/seeker/')->group(function () {
+    Route::get('profile/', [SeekerController::class, 'seeker_profile'])->name('seeker_profile');
+    Route::get('profile/edit', [SeekerController::class, 'update_profile_basic_form'])->name('seeker_profile_basic');
+    Route::post('profile/edit', [SeekerController::class, 'update_profile_basic'])->name('seeker_profile_basic_update');
+    Route::post('profile/profile', [SeekerController::class, 'profile_summary'])->name('profile_summary');
     //Route::post('/seeker/profile/career', [SeekerController::class, 'profile_career'])->name('profile_career');
     // Route::get('/seeker/profile/career/{careerIndex}/edit', [SeekerController::class, 'profile_career_edit'])->name('profile_career_edit');
 
-    Route::put('career/{careerIndex}', [SeekerController::class, 'profile_career_update'])->name('profile_career_update');
-    Route::post('career/{careerIndex?}', [SeekerController::class, 'profile_career'])->name('profile_career');
-    Route::get('career/{careerIndex}/edit', [SeekerController::class, 'profile_career_edit'])->name('profile_career_edit');
-    Route::delete('career/{careerIndex}', [SeekerController::class, 'profile_career_delete'])->name('profile_career_delete');
+    Route::put('profile/career/{careerIndex}', [SeekerController::class, 'profile_career_update'])->name('profile_career_update');
+    Route::post('profile/career/{careerIndex?}', [SeekerController::class, 'profile_career'])->name('profile_career');
+    Route::get('profile/career/{careerIndex}/edit', [SeekerController::class, 'profile_career_edit'])->name('profile_career_edit');
+    Route::delete('profile/career/{careerIndex}', [SeekerController::class, 'profile_career_delete'])->name('profile_career_delete');
 
-    Route::post('education/{eduIndex?}', [SeekerController::class, 'profile_education'])->name('profile_education');
-    Route::get('education/{eduIndex}/edit', [SeekerController::class, 'profile_education_edit'])->name('profile_education_edit');
-    Route::put('education/{eduIndex}', [SeekerController::class, 'profile_education_update'])->name('profile_education_update');
-    Route::delete('education/{eduIndex}', [SeekerController::class, 'profile_education_delete'])->name('profile_education_delete');
+    Route::post('profile/education/{eduIndex?}', [SeekerController::class, 'profile_education'])->name('profile_education');
+    Route::get('profile/education/{eduIndex}/edit', [SeekerController::class, 'profile_education_edit'])->name('profile_education_edit');
+    Route::put('profile/education/{eduIndex}', [SeekerController::class, 'profile_education_update'])->name('profile_education_update');
+    Route::delete('profile/education/{eduIndex}', [SeekerController::class, 'profile_education_delete'])->name('profile_education_delete');
 
-    Route::post('license/{licenseIndex?}', [SeekerController::class, 'profile_license'])->name('profile_license');
-    Route::get('license/{licenseIndex}/edit', [SeekerController::class, 'profile_license_edit'])->name('profile_license_edit');
-    Route::put('license/{licenseIndex}', [SeekerController::class, 'profile_license_update'])->name('profile_license_update');
-    Route::delete('license/{licenseIndex}', [SeekerController::class, 'profile_license_delete'])->name('profile_license_delete');
+    Route::post('profile/license/{licenseIndex?}', [SeekerController::class, 'profile_license'])->name('profile_license');
+    Route::get('profile/license/{licenseIndex}/edit', [SeekerController::class, 'profile_license_edit'])->name('profile_license_edit');
+    Route::put('profile/license/{licenseIndex}', [SeekerController::class, 'profile_license_update'])->name('profile_license_update');
+    Route::delete('profile/license/{licenseIndex}', [SeekerController::class, 'profile_license_delete'])->name('profile_license_delete');
 
-    Route::post('skills/{skillIndex?}', [SeekerController::class, 'profile_skills'])->name('profile_skills');
-    Route::delete('skills/{skillIndex}', [SeekerController::class, 'profile_skills_delete'])->name('profile_skills_delete');
+    Route::post('profile/skills/{skillIndex?}', [SeekerController::class, 'profile_skills'])->name('profile_skills');
+    Route::delete('profile/skills/{skillIndex}', [SeekerController::class, 'profile_skills_delete'])->name('profile_skills_delete');
 
-    Route::post('languages/{langIndex?}', [SeekerController::class, 'profile_languages'])->name('profile_languages');
-    Route::delete('languages/{langIndex}', [SeekerController::class, 'profile_languages_delete'])->name('profile_languages_delete');
+    Route::post('profile/languages/{langIndex?}', [SeekerController::class, 'profile_languages'])->name('profile_languages');
+    Route::delete('profile/languages/{langIndex}', [SeekerController::class, 'profile_languages_delete'])->name('profile_languages_delete');
+
+    Route::get('/jobs/{id}/apply', [ApplicationController::class, 'apply_job'])->name('apply_job');
+    Route::post('/jobs/{id}/apply', [ApplicationController::class, 'apply_job_store'])->name('apply_job_store');
 });
 
 // Company Routes
@@ -91,6 +97,7 @@ Route::middleware(['company'])->prefix('/company/')->group(function () {
     Route::get('profile/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry']);
     Route::get('profile/cities/{countryCode}/{stateCode}', [CompanyProfileController::class, 'getCitiesByState']);
     Route::post('profile', [CompanyProfileController::class, 'profile_update'])->name('profile_update');
+    
 
     Route::get('profile/update', [CompanyProfileController::class, 'update_profile'])->name('company_profile.u');
     Route::get('profile/update/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry.u']);
@@ -106,7 +113,9 @@ Route::middleware(['company'])->prefix('/company/')->group(function () {
 });
 
 
-
+Route::get('/company/test', [CompanyProfileController::class, 'index']);
+Route::get('/company/test/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry']);
+Route::get('/company/test/cities/{countryCode}/{stateCode}', [CompanyProfileController::class, 'getCitiesByState']);
 
 
 

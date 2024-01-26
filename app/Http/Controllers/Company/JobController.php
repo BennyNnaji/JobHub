@@ -39,6 +39,7 @@ class JobController extends Controller
            
             'job_title' => 'required',
             'job_type' => 'required',
+            'category' => 'required',
             'job_description' => 'required',
             'min_salary' => 'required|numeric',
             'max_salary' => 'required|numeric|gt:min_salary',
@@ -55,6 +56,7 @@ class JobController extends Controller
                 'company_id' => Auth::guard('company')->user()->id,
                 'job_title' => $request->job_title,
                 'job_type' => $request->job_type,
+                'category' => $request->category,
                 'job_description' => $request->job_description,
                 'min_salary' => $request->min_salary,
                 'max_salary' => $request->max_salary,
@@ -96,6 +98,7 @@ class JobController extends Controller
 
             'job_title' => 'required',
             'job_type' => 'required',
+            'category' => 'required',
             'job_description' => 'required',
             'min_salary' => 'required|numeric',
             'max_salary' => 'required|numeric|gt:min_salary',
@@ -109,7 +112,7 @@ class JobController extends Controller
          $update->update ([
             'company_id' => Auth::guard('company')->user()->id,
             'job_title' => $request->job_title,
-            'slug' => Str::slug($request->job_title),
+            'category' => $request->category,
             'job_type' => $request->job_type,
             'job_description' => $request->job_description,
             'min_salary' => $request->min_salary,

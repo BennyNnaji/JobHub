@@ -12,6 +12,7 @@ class Job extends Model
         'company_id',
         'job_title',
         'job_type',
+        'category',
         'job_description',
         'min_salary',
         'max_salary',
@@ -24,5 +25,11 @@ class Job extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+    public function applicants(){
+        return $this->hasMany(Application::class);
+    }
+    public function saved_jobs(){
+        return $this->hasMany(Saved_Job::class);
     }
 }

@@ -30,9 +30,16 @@ class Seeker extends Model implements Authenticatable
         'language',
 
     ];
-    protected $casts = [
-        'career' => 'array',
-    ];
+    public function applications(){
+        return $this->hasMany(Application::class);
+    }
+    public function saved_jobs(){
+        return $this->hasMany(Saved_Job::class);
+    }
+
+    // protected $casts = [
+    //     'career' => 'array',
+    // ];
     public function getAuthIdentifierName()
     {
         return 'id'; // Change this if your primary key column name is different

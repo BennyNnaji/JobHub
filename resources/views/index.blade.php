@@ -5,17 +5,31 @@
         <div class="bg-red-600/30 h-screen flex items-center">
             <div class="md:w-3/6 w-11/12 mx-auto p-5 border-2 border-black text-center rounded bg-white/50">
 
-                <form action="" method="get" class="py-4 px-2">
+                <form action="{{ route('jobs.search') }}" method="get" class="py-4 px-2">
                     <h2 class="text-xl text-left">Search Jobs</h2>
                     <input type="text" name="keyword" id="keyword " placeholder="Keyword" class="w-full">
                     <select name="category" id="category" class="w-full">
-                        <option value="">Category 1</option>
-                        <option value="">Category 2</option>
-                        <option value="">Category 3</option>
-                        <option value="">Category 4</option>
-                        <option value="">Category 5</option>
-                        <option value="">Category 6</option>
-                        <option value="">Category 7</option>
+                        <option value="">Select Category...</option>
+                        <option value="Construction and Architecture">Construction and Architecture</option>
+                        <option value="Creative Arts and Design">Creative Arts and Design</option>
+                        <option value="Customer Service">Customer Service</option>
+                        <option value="Education and Training">Education and Training</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Environmental and Sustainability">Environmental and Sustainability</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Government and Public Administration">Government and Public Administration</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Hospitality and Tourism">Hospitality and Tourism</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Legal">Legal</option>
+                        <option value="Logistics and Transportation">Logistics and Transportation</option>
+                        <option value="Manufacturing and Production">Manufacturing and Production</option>
+                        <option value="Research and Development">Research and Development</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Sales and Marketing">Sales and Marketing</option>
+                        <option value="Social Services">Social Services</option>
+                        <option value="Telecommunications">Telecommunications</option>
                     </select>
                     <input type="text" name="location" id="location" placeholder="Location" class="w-full">
                     <button type="submit"
@@ -47,23 +61,23 @@
                                     <i class="fa-solid fa-money-bill"></i> ${{ $job->min_salary }} - ${{ $job->max_salary }}
                                 </span>
                             </p>
-                            <p class="px-4 py-2 w-full rounded "> {{ $job->company->name}}</p>
+                            <p class="px-4 py-2 w-full rounded "> {{ $job->company->name }}</p>
                             <div>
-                            <p>{!!Str::limit($job->job_description, 200, '...')!!}</p>
+                                <p>{!! Str::limit($job->job_description, 200, '...') !!}</p>
                                 <p class="bg-red-600 text-white p-2 rounded my-2 w-3/6 text-center">{{ $job->job_type }}</p>
                             </div>
                         </div>
                     </a>
                 @endforeach
-        
+
 
 
 
         </div>
-                {{ $jobs->links() }}
-            @else
-                <div>No Job</div>
-            @endif
+        {{ $jobs->links() }}
+    @else
+        <div>No Job</div>
+        @endif
 
     </section>
 @endsection

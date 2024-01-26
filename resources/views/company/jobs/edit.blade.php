@@ -48,6 +48,37 @@
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+                <div class="w-11/12 md:w-5/6 mx-auto my-3">
+                    <label for="category" class="block text-sm font-bold text-gray-700">Category</label>
+                    <select name="category" id="category"
+                        class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-500">
+                        <option value="{{ $job->category }}">{{ $job->category }}</option>
+                        <option value="Construction and Architecture">Construction and Architecture</option>
+                        <option value="Creative Arts and Design">Creative Arts and Design</option>
+                        <option value="Customer Service">Customer Service</option>
+                        <option value="Education and Training">Education and Training</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Environmental and Sustainability">Environmental and Sustainability</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Government and Public Administration">Government and Public Administration</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Hospitality and Tourism">Hospitality and Tourism</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Legal">Legal</option>
+                        <option value="Logistics and Transportation">Logistics and Transportation</option>
+                        <option value="Manufacturing and Production">Manufacturing and Production</option>
+                        <option value="Research and Development">Research and Development</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Sales and Marketing">Sales and Marketing</option>
+                        <option value="Social Services">Social Services</option>
+                        <option value="Telecommunications">Telecommunications</option>
+                    </select>
+                    @error('category')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <div class="w-11/12 md:w-5/6 mx-auto">
                     <div class="w-full md:w-1/2 mx-2 mt-4">Annual Salary Range</div>
                 </div>

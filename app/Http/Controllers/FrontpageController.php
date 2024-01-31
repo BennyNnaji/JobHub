@@ -101,4 +101,9 @@ class FrontpageController extends Controller
         }
         return view($pages);
     }
+    // About
+    public function about(){
+        $title = "About Us";
+        return view('about', compact('title'));
+    }
 }

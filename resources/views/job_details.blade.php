@@ -5,11 +5,7 @@
 
             <div class="bg-red-500 p-3 text-white font-bold ">Job Details</div>
             <div class="flex justify-between">
-                @if(session('status'))
-                <div class="mt-4 p-2 bg-green-500 text-white rounded">
-                    {{ session('status') }}
-                </div>
-            @endif
+
                 <div class=" flex justify-start space-x-2 items-center my-2">
                     <div class="w-1/5 ">
                         @if (!$job->company->logo)
@@ -23,22 +19,54 @@
                 @if (!Auth::guard('company')->check())
                     @if (Auth::guard('seeker')->check())
                         <div class="my-2">
-                            {{-- <form action="{{ route('save_job', $job->id) }}" method="post"> --}}
-                            <!-- resources/views/jobs/show.blade.php -->
+                            <div class="fixed right-1/2 px-4 py-2 text-white bg-green-500 rounded-md shadow-md transition duration-150 ease-in-out hidden"
+                                id="success-alert"> <i class="fa-solid fa-check"></i>
+                                Job saved!
+                            </div>
+                            <div class="fixed right-1/2 px-4 py-2 text-white bg-red-500 rounded-md shadow-md transition duration-150 ease-in-out hidden"
+                                id="error-alert"> <i class="fa-solid fa-triangle-exclamation"></i>
+                                Job unsaved!
+                            </div>
+                            {{-- <div class="hidden fixed right-1/2 px-4 py-2 text-white bg-green-500/50 rounded-md shadow-md transition duration-150 ease-in-out" id="myAlert"> Lorem ipsum dolor sit amet.</div> --}}
+                            <form id="saveJobForm" action="{{ route('save_job', $job->id) }}" method="post">
+                                @csrf
+                                @php
+                                    $savedJobIds = Auth::guard('seeker')
+                                        ->user()
+                                        ->saved_jobs->pluck('job_id')
+                                        ->toArray();
+                                @endphp
+                                @if (in_array($job->id, $savedJobIds))
+                                    <button type="button" id="saveJobBtn"
+                                        class="cursor-pointer bg-green-500 px-3 py-2 rounded-t text-white my-1">
+                                        <i class="fa-solid fa-heart"></i> Saved
+                                    </button>
+                                @else
+                                    <button type="button" id="saveJobBtn"
+                                        class="cursor-pointer bg-green-500 px-3 py-2 rounded-t text-white my-1">
+                                        <i class="fa-solid fa-heart"></i> Save
+                                    </button>
+                                @endif
 
-                            <p id="saveJobBtn" class="cursor-pointer bg-green-500 px-3 py-2 rounded-t text-white my-1"
-                                onclick="saveJob()"> <i class="fa-solid fa-heart"></i> Save</p>
+                            </form>
 
-                            {{-- </form> --}}
-                            <p class="cursor-pointer bg-yellow-500 px-3 py-2 rounded-b text-white my-1"> <i
-                                    class="fa-solid fa-triangle-exclamation"></i> Report</p>
+
+                            <button onclick="openReport()"
+                                class="cursor-pointer bg-yellow-500 px-3 py-2 rounded-b text-white my-1"> <i
+                                    class="fa-solid fa-triangle-exclamation"></i> Report</button>
 
                         </div>
                     @endif
                 @endif
 
             </div>
-            <h2 class="font-semibold ">{{ $job->job_title }}</h2>
+            <h2 class="font-semibold ">{{ $job->job_title }} {!! $job->reported_jobs()->count() > 10 && $job->reported_jobs()->count() <= 15
+                ? '<i class=\'fa-solid fa-triangle-exclamation fa-2x text-yellow-500\' title="Reported job, be careful!"></i>'
+                : '' !!} {!! $job->reported_jobs()->count() > 15
+                ? '<i class=\'fa-solid fa-triangle-exclamation fa-2x text-red-500\' title="Massively Reported job, be careful!"></i>'
+                : '' !!}
+            </h2>
+
             <div>
                 <span class="block"><i class="fa-solid fa-location-dot"></i> {{ $job->job_location }}</span>
                 <span class="block"><i class="fa-solid fa-layer-group"></i> {{ $job->category }}</span>
@@ -63,9 +91,19 @@
 
             @if (!Auth::guard('company')->check())
                 @if (Auth::guard('seeker')->check())
-                    <a href="{{ route('apply_job', $job->id) }}"
-                        class="w-2/6 bg-red-500 rounded px-6 py-3 my-10 hover:bg-red-600 text-center text-red-200 hover:text-red-200">Apply
-                        Now</a>
+                    @php
+                        $appliedJobIds = Auth::guard('seeker')
+                            ->user()
+                            ->applications->pluck('job_id')
+                            ->toArray();
+                    @endphp
+                    @if (in_array($job->id, $appliedJobIds))
+                        <button disabled="disabled" class="w-2/6 bg-red-400 rounded px-6 py-3 my-10 text-center text-red-200 hover:text-red-200 cursor-not-allowed">Applied</button>
+                    @else
+                        <a href="{{ route('apply_job', $job->id) }}"
+                            class="w-2/6 bg-red-500 rounded px-6 py-3 my-10 hover:bg-red-600 text-center text-red-200 hover:text-red-200">Apply
+                            Now</a>
+                    @endif
                 @else
                     <a href="{{ route('seeker_login') }}"
                         class="w-2/6 bg-red-500 rounded px-6 py-3 my-10 hover:bg-red-600 text-center text-red-200 hover:text-red-200">Login
@@ -88,6 +126,55 @@
                     data-network="email"></i>
             </div>
         </div>
+        <!-- Centered Modal -->
+        <div id="report"
+            class="absolute top-0 inset-x-0 flex items-center justify-center hidden bg-gray-500 bg-opacity-50 z-50 rounded"
+            onclick="closeReport()">
+            <div class="bg-white p-8 rounded shadow-lg w-4/5 md:w-3/5" onclick="event.stopPropagation()">
+                <h3 class="mb-2 text-2xl font-bold text-gray-800">Report Job</h3>
+
+                <!-- Form -->
+                <div class="w-full  ">
+                    <form action="{{ route('report_job', $job->id) }}" method="post">
+                        @csrf
+                        <label for="reason" class="block text-sm font-medium text-gray-600">Select a reason for
+                            reporting:{{ $job->id }}</label>
+                        <select id="reason" name="reason" class="mt-1 p-2 w-full border rounded-md">
+                            <option value="misleading_information">Misleading Information</option>
+                            <option value="scams_and_fraud">Scams and Fraud</option>
+                            <option value="inappropriate_content">Inappropriate Content</option>
+                            <option value="violations_of_terms">Violations of Terms of Service</option>
+                            <option value="expired_or_duplicate_listings">Expired or Duplicate Listings</option>
+                            <option value="unethical_business_practices">Unethical Business Practices</option>
+                            <option value="user_feedback">User Feedback</option>
+                            <option value="non_compliance_with_regulations">Non-Compliance with Regulations</option>
+                            <option value="security_concerns">Security Concerns</option>
+                            <option value="other">Other (Please specify)</option>
+                        </select>
+                        @error('reason')
+                            <div class="text-red-500"><i class="fa-solid fa-circle-exclamation"></i>
+                                {{ $message }}</div>
+                        @enderror
+
+                        <label for="detail" class="block text-left">Detail <span
+                                class="text-xs italic">(Optional)</span></label>
+                        <textarea name="detail" id="details" class="rounded p-3 w-full"> {{ old('detail') }}</textarea>
+                        @error('detail')
+                            <div class="text-red-500"><i class="fa-solid fa-circle-exclamation"></i>
+                                {{ $message }}</div>
+                        @enderror
+                        <div class="flex justify-between my-3">
+                            <button type="submit"
+                                class="bg-green-500 hover:bg-green-600 px-5 py-3 rounded focus:ring-green-600 text-green-200 hover:text-green-300">Submit
+                                Report</button>
+                            <p class="cursor-pointer bg-red-500 hover:bg-red-600 text-red-200 hover:text-red-300 px-5 py-3 rounded"
+                                onclick="closeReport()">Close</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{-- /Modal Content --}}
         <div class="md:w-2/5 mx-3">
             <div class="bg-red-500 p-3 text-white">Related Jobs</div>
             @foreach ($related_jobs as $job)
@@ -118,17 +205,15 @@
                     </a>
                 </div>
             @endforeach
-
-
-
         </div>
+
 
     </section>
     <!-- Add this script to your view or include it in your assets -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
+    {{-- <script>
         function saveJob() {
-            var jobId = {{ $job->id }};
+            let jobId = {{ $job->id }};
     
             $.ajax({
                 type: 'POST',
@@ -152,8 +237,65 @@
                 }
             });
         }
-    </script>
-    
-    
+    </script> --}}
+    <script>
+        function openReport() {
+            document.getElementById('report').classList.remove('hidden');
+        }
 
+        function closeReport() {
+            document.getElementById('report').classList.add('hidden');
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('saveJobBtn').addEventListener('click', function() {
+                saveJob();
+            });
+        });
+
+        function saveJob() {
+            var form = document.getElementById('saveJobForm');
+            var formData = new FormData(form);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', form.action, true);
+            xhr.setRequestHeader('X-CSRF-TOKEN', formData.get('_token'));
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    var response = JSON.parse(xhr.responseText);
+                    handleResponse(response);
+                }
+            };
+
+            xhr.send(formData);
+        }
+
+        function handleResponse(response) {
+            if (response.success) {
+                successAlert();
+            } else {
+                errorAlert();
+            }
+        }
+
+        function successAlert() {
+            const alertElement = document.getElementById('success-alert');
+            alertElement.classList.remove('hidden');
+            document.getElementById('saveJobBtn').innerHTML = " <i class=\"fa-solid fa-heart\"></i> Saved";
+            setTimeout(() => {
+                alertElement.classList.add('hidden');
+            }, 5000); // Change 5000 to your desired duration in milliseconds
+        }
+
+        function errorAlert() {
+            const alertElement = document.getElementById('error-alert');
+            alertElement.classList.remove('hidden');
+            document.getElementById('saveJobBtn').innerHTML = " <i class=\"fa-solid fa-heart\"></i> Save";
+            setTimeout(() => {
+                alertElement.classList.add('hidden');
+            }, 5000); // Change 5000 to your desired duration in milliseconds
+        }
+    </script>
 @endsection

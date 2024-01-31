@@ -30,6 +30,9 @@ class Job extends Model
         return $this->hasMany(Application::class);
     }
     public function saved_jobs(){
-        return $this->hasMany(Saved_Job::class);
+        return $this->hasMany(SavedJob::class);
+    }
+    public function reported_jobs(){
+        return $this->hasMany(ReportJob::class);
     }
 }

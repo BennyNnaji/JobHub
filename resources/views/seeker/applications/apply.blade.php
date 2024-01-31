@@ -3,7 +3,7 @@
 @section('content')
     <section class=" w-11/12 md:w-5/6 mx-auto min-h-screen">
         <div>
-            <p class=" rounded-tl-lg my-2 rounded-br-lg bg-red-600 text-red-100 px-2 py-3">You are applying for the position
+            <p class=" rounded-tl-lg my-2 rounded-br-lg border-2 border-red-500 text-red-500 px-2 py-3">You are applying for the position
                 of <strong>{{ $job->job_title }} </strong> at <strong>{{ $job->company->name }}</strong></p>
         </div>
         <form action="{{ route('apply_job_store', $job->id) }}" method="post" class="md:w-4/6 mx-auto w-5/6" enctype="multipart/form-data">

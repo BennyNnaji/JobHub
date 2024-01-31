@@ -20,7 +20,7 @@
     <script src="https://cdn.tiny.cloud/1/6216wbng5cbdfeqd1pkwh8m5hymacgkbzx3etbiache8b5sj/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-   
+
 </head>
 
 <body class=" bg-gray-200">
@@ -75,8 +75,9 @@
                         </div>
                         <div class="hidden md:block sm:hidden">
                             <a href="{{ route('index') }}"
-                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Home</a>
-                            <a href=""
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100"> <i
+                                    class="fa-solid fa-house-chimney"></i> Home</a>
+                            <a href="{{ route('about') }}"
                                 class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">About
                                 Us</a>
                             <a href=""
@@ -99,18 +100,47 @@
                                     class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Dashboard</a>
                                 @elseauth('seeker')
                                 <div class="flex justify-between items-center">
-                                    <div>
-                                        <a href="{{ route('seeker_profile') }}"
-                                            class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100 ">Profile</a>
-                                    </div>
-                                    <div>
-                                        <form action="{{ route('seeker_logout') }}" method="post" class="">
-                                            @csrf
-                                            <input type="submit" value="Logout"
-                                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">
 
-                                        </form>
+                                    <div class="dropdown inline-block relative">
+                                        <span
+                                            class="mx-2 rounded px-6 py-5 hover:bg-red-600 hover:text-red-200 text-red-100 cursor-pointer ">
+                                            <i class="fa-solid fa-user-tie fa-2x"></i>
+                                        </span>
+                                        <div class="dropdown-content absolute hidden bg-red-500   mt-2 pb-4">
+                                            <div>
+                                                <a href="{{ route('seeker_profile') }}"
+                                                    class="block px-6 py-3 text-red-100 hover:bg-red-600 hover:text-red-200">Profile</a>
+                                            </div>
+                                            <div>
+                                                <a href="{{ route('saved_jobs') }}"
+                                                    class="block px-6 py-3 text-red-100 hover:bg-red-600 hover:text-red-200">Saved
+                                                    Jobs</a>
+                                            </div>
+                                            <div>
+                                                <a href="{{ route('seeker_profile') }}"
+                                                    class="block px-6 py-3 text-red-100 hover:bg-red-600 hover:text-red-200">Notifications</a>
+
+                                            </div>
+                                            <div>
+                                                <a href="{{ route('applied_jobs') }}"
+                                                    class="block px-6 py-3 text-red-100 hover:bg-red-600 hover:text-red-200">Applied&nbsp;Jobs</a>
+                                            </div>
+                                            <div>
+                                                <a href="{{ route('seeker_profile') }}"
+                                                    class="block px-6 py-3 text-red-100 hover:bg-red-600 hover:text-red-200">Password</a>
+                                            </div>
+                                            <div class="">
+                                                <form action="{{ route('seeker_logout') }}" method="post" class="">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="w-full text-left px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100 block">Logout
+                                                    </button>
+
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                             @else
                                 <a href="{{ route('login') }}"
@@ -122,10 +152,10 @@
 
                     </div>
                 </div>
-                <div class="hidden" id="mobile_menu">
+                <div class="hidden sm:hidden" id="mobile_menu">
                     <a href="{{ route('index') }}"
                         class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Home</a>
-                    <a href=""
+                    <a href="{{ route('about') }}"
                         class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">About
                         Us</a>
                     <a href=""
@@ -135,20 +165,24 @@
                     <a href=""
                         class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Companies</a>
                     <div class="flex justify-between w-8/12 mx-auto my-4">
-                        {{ Auth::guest() ? 'Welcome, Guest' : Auth::user()->name }}
-                        @auth
-                            @if (Auth::guard('company')->user())
-                                <a href="{{ route('company.dashboard') }}"
-                                    class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Dashboard</a>
-                            @else
-                                <a href="{{ route('seeker_profile') }}"
-                                    class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Profile</a>
-                            @endif
+                        @auth('company')
+                            <a href="{{ route('company.dashboard') }}"
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Dashboard</a>
+                            @elseauth('seeker')
+                            <a href="{{ route('seeker_profile') }}"
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Profile</a>
+
+                            <form action="{{ route('seeker_logout') }}" method="post" class="">
+                                @csrf
+                                <input type="submit" value="Logout"
+                                    class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100 border-2 border-red-100 cursor-pointer">
+
+                            </form>
                         @else
                             <a href="{{ route('login') }}"
-                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Login</a><a
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100 border-2 border-red-100">Login</a><a
                                 href="{{ route('register') }}"
-                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Register</a>
+                                class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100 ">Register</a>
                         @endauth
                     </div>
                 </div>
@@ -171,7 +205,8 @@
                 <div class="md:w-3/6" data-aos="zoom-in">
                     <h2 class="font-semibold text-white">Navigation</h2>
                     <hr class="w-4/5 my-2">
-                    <a href="{{ route('index') }}" class=" rounded block px-6 py-3 hover:bg-white text-black">Home</a>
+                    <a href="{{ route('index') }}"
+                        class=" rounded block px-6 py-3 hover:bg-white text-black">Home</a>
                     <a href="" class=" rounded block px-6 py-3 hover:bg-white text-black">About
                         Us</a>
                     <a href="" class=" rounded block px-6 py-3 hover:bg-white text-black">Services</a>
@@ -210,23 +245,74 @@
                     Benny</a>
             </div>
         </section>
-        <script>
-            let button = document.getElementById('button');
-            let mobile_menu = document.getElementById('mobile_menu');
-            button.addEventListener('click', () => {
-                mobile_menu.classList.toggle('hidden');
-            });
 
-            AOS.init();
-        </script>
-        <script>
-            tinymce.init({
-                selector: 'textarea',
-                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-            });
-        </script>
     </section>
+    <button id="scrollToTopBtn"
+        class="hidden fixed bottom-5 right-5 bg-red-500 px-4 py-4 rounded-full cursor-pointer">
+        <i class="fa-solid fa-chevron-up fa-2x text-red-200"></i>
+    </button>
+    <script>
+        let button = document.getElementById('button');
+        let mobile_menu = document.getElementById('mobile_menu');
+        button.addEventListener('click', () => {
+            mobile_menu.classList.toggle('hidden');
+        });
+
+        AOS.init();
+    </script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+
+
+        // JavaScript to toggle the profile dropdown visibility
+        document.addEventListener('click', function(event) {
+            var dropdown = document.querySelector('.dropdown');
+            if (!dropdown.contains(event.target)) {
+                var dropdownContent = document.querySelector('.dropdown-content');
+                if (dropdownContent.classList.contains('hidden') === false) {
+                    dropdownContent.classList.add('hidden');
+                }
+            }
+        });
+
+        document.querySelector('.dropdown').addEventListener('click', function() {
+            var dropdownContent = document.querySelector('.dropdown-content');
+            dropdownContent.classList.toggle('hidden');
+        });
+
+        //Scroll to top
+        // Get the button element
+        var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        // Show the button when the user scrolls down 20px from the top of the document
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopBtn.classList.remove("hidden");
+            } else {
+                scrollToTopBtn.classList.add("hidden");
+            }
+        };
+
+        // Scroll to the top smoothly when the button is clicked
+        scrollToTopBtn.onclick = function() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+
+            // Smooth scrolling
+            document.body.style.scrollBehavior = "smooth";
+            document.documentElement.style.scrollBehavior = "smooth";
+
+            // Reset scroll behavior after scrolling to the top
+            setTimeout(function() {
+                document.body.style.scrollBehavior = "auto";
+                document.documentElement.style.scrollBehavior = "auto";
+            }, 50000); 
+        };
+    </script>
 </body>
 
 </html>

@@ -11,7 +11,7 @@ class Seeker extends Model implements Authenticatable
     use HasFactory;
 
     protected $fillable = [
-      
+
         'email',
         'phone',
         'password',
@@ -30,11 +30,17 @@ class Seeker extends Model implements Authenticatable
         'language',
 
     ];
-    public function applications(){
+    public function applications()
+    {
         return $this->hasMany(Application::class);
     }
-    public function saved_jobs(){
-        return $this->hasMany(Saved_Job::class);
+    public function saved_jobs()
+    {
+        return $this->hasMany(SavedJob::class);
+    }
+    public function reported_jobs()
+    {
+        return $this->hasMany(ReportJob::class);
     }
 
     // protected $casts = [
@@ -68,5 +74,4 @@ class Seeker extends Model implements Authenticatable
     {
         return 'remember_token';
     }
-
 }

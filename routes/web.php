@@ -27,9 +27,11 @@ Route::get('/', [FrontpageController::class, 'index'])->name('index');
 Route::get('/jobs', [FrontpageController::class, 'jobs'])->name('jobs');
 Route::get('/search', [FrontpageController::class, 'job_search'])->name('jobs.search');
 Route::get('/jobs/{id}', [FrontpageController::class, 'show'])->name('jobs.show');
-Route::post('/jobs/{id}/save', [ApplicationController::class, 'save_job'])->name('save_job');
+Route::post('/jobs/{id}', [ApplicationController::class, 'save_job'])->name('save_job');
+Route::post('/jobs/{id}/report', [ApplicationController::class, 'report_job'])->name('report_job');
 Route::get('/login', [FrontpageController::class, 'login'])->name('login');
 Route::get('/register', [FrontpageController::class, 'register'])->name('register');
+Route::get('/about', [FrontpageController::class,'about'])->name('about');
 //Route::get('/{pages}', [FrontpageController::class, 'pages'])->name('pages');
 
 // Seeker Routes
@@ -76,6 +78,9 @@ Route::middleware(['seeker'])->prefix('/seeker/')->group(function () {
 
     Route::get('/jobs/{id}/apply', [ApplicationController::class, 'apply_job'])->name('apply_job');
     Route::post('/jobs/{id}/apply', [ApplicationController::class, 'apply_job_store'])->name('apply_job_store');
+
+    Route::get('/jobs/applied', [ApplicationController::class,'applied_jobs'])->name('applied_jobs');
+    Route::get('/jobs/saved', [ApplicationController::class,'saved_jobs'])->name('saved_jobs');
 });
 
 // Company Routes

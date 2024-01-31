@@ -1,62 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tailwind CSS Modals with Form</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 p-8">
-  <!-- Centered Modal Trigger -->
-  <button class="bg-green-500 text-white p-2 rounded" onclick="openCenteredModal()">Open Centered Modal</button>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Alert</title>
+  </head>
+  <body>
+    <p>
+      <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="showAlert()">Show Alert</button>
 
-  <!-- Centered Modal -->
-  <div id="centeredModal" class="fixed inset-0 flex items-center justify-center hidden bg-gray-500 bg-opacity-50" onclick="closeCenteredModal()">
-    <div class="bg-white p-8 rounded shadow-lg" onclick="event.stopPropagation()">
-      <h3 class="mb-2 text-2xl font-bold text-gray-800">Add Career</h3>
-
-      <!-- Form -->
-      <div class="text-left w-full ">
-        <form action="" method="post">
-          <label for="position" class="block text-left">Position</label>
-          <input type="text" name="position" id="position" class="rounded p-3 w-full ">
-
-          <label for="compqny" class="block text-left">Company</label>
-          <input type="text" name="compqny" id="compqny" class="rounded p-3 w-full ">
-
-          <div class="flex w-full gap-x-9">
-            <div>
-              <label for="start_month" class="block text-left">Start</label>
-              <input type="month" name="start_month" id="start_month" class="rounded p-3 w-full">
-            </div>
-            <div>
-              <label for="end_month" class="block text-left">End</label>
-              <input type="month" name="end_month" id="end_month" class="rounded p-3 w-full">
-            </div>
-          </div>
-
-          <label for="description" class="block text-left">Description <span class="text-xs italic">(Optional)</span></label>
-          <textarea name="description" id="description" class="rounded p-3 w-full"></textarea>
-        </form>
+      <div class="fixed right-1/2 px-4 py-2 text-white bg-green-500 rounded-md shadow-md transition duration-150 ease-in-out hidden" id="my-alert">
+        Job Saved
       </div>
+<p id="answer"></p>
+ 
+<script>
+  function showAlert() {
+  const alertElement = document.getElementById('my-alert');
+  alertElement.classList.remove('hidden');
 
-      <button class="mt-4 bg-red-500 text-white p-2 rounded" onclick="closeCenteredModal()">Close</button>
-    </div>
-  </div>
+  setTimeout(() => {
+    alertElement.classList.add('hidden');
+  }, 5000); // Change 5000 to your desired duration in milliseconds
+}
 
 
+for (let i = 1; i <= 100; i++) {
+  let output = "";
 
-  <!-- JavaScript for Modals -->
-  <script>
+  if (i % 3 === 0) {
+    output += "Site";
+  }
 
-    // Centered Modal
-    function openCenteredModal() {
-      document.getElementById('centeredModal').classList.remove('hidden');
-    }
-    function closeCenteredModal() {
-      document.getElementById('centeredModal').classList.add('hidden');
-    }
-  </script>
+  if (i % 5 === 0) {
+    output += "Host";
+  }
 
-</body>
+  if (output === "") {
+    output = i;
+  }
+document.getElementById('answer').innerHTML = output;
+  console.log(output);
+}
+
+</script>    
+  </body>
 </html>

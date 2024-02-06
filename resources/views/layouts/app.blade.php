@@ -126,7 +126,7 @@
                                                     class="block px-6 py-3 text-red-100 hover:bg-red-600 hover:text-red-200">Applied&nbsp;Jobs</a>
                                             </div>
                                             <div>
-                                                <a href="{{ route('seeker_profile') }}"
+                                                <a href="{{ route('password_reset') }}"
                                                     class="block px-6 py-3 text-red-100 hover:bg-red-600 hover:text-red-200">Password</a>
                                             </div>
                                             <div class="">
@@ -166,7 +166,7 @@
                         class="mx-2 rounded block px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Companies</a>
                     <div class="flex justify-between w-8/12 mx-auto my-4">
                         @auth('company')
-                            <a href="{{ route('company.dashboard') }}"
+                            <a href="{{ route('company_dashboard') }}"
                                 class="mx-2 rounded px-6 py-3 hover:bg-red-600 hover:text-red-200 text-red-100">Dashboard</a>
                             @elseauth('seeker')
                             <a href="{{ route('seeker_profile') }}"

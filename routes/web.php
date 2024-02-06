@@ -7,6 +7,7 @@ use App\Http\Controllers\FrontpageController;
 use App\Http\Controllers\Company\JobController;
 use App\Http\Controllers\Seeker\SeekerController;
 use App\Http\Controllers\Seeker\ApplicationController;
+use App\Http\Controllers\Company\ApplicationController as CompanyApplicationController;
 use App\Http\Controllers\Seeker\Auth\SeekerAuthController;
 use App\Http\Controllers\Company\Auth\CompanyAuthController;
 use App\Http\Controllers\Company\CompanyDashboardController;
@@ -81,6 +82,9 @@ Route::middleware(['seeker'])->prefix('/seeker/')->group(function () {
 
     Route::get('/jobs/applied', [ApplicationController::class,'applied_jobs'])->name('applied_jobs');
     Route::get('/jobs/saved', [ApplicationController::class,'saved_jobs'])->name('saved_jobs');
+
+    Route::get('profile/password-reset', [SeekerAuthController::class, 'password_reset'])->name('password_reset');
+    Route::post('profile/password-update', [SeekerAuthController::class, 'password_update'])->name('password_update');
 });
 
 // Company Routes
@@ -115,6 +119,9 @@ Route::middleware(['company'])->prefix('/company/')->group(function () {
     Route::get('jobs/{id}', [JobController::class, 'edit'])->name('company_jobs.show');
     Route::post('jobs/{id}/edit', [JobController::class, 'update'])->name('company_jobs.update');
     Route::delete('jobs/{id}', [JobController::class, 'destroy'])->name('company_jobs.delete');
+    Route::get('applications', [CompanyApplicationController::class, 'company_applications'])->name('company_applications');
+    Route::get('applications/{id}', [CompanyApplicationController::class, 'application_details'])->name('application_details');
+    Route::put('applications/{id}/status', [CompanyApplicationController::class, 'updateStatus'])->name('updateStatus');
 });
 
 

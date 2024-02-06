@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,8 +51,10 @@ class FrontpageController extends Controller
     public function show(string $id)
     {
         $job = Job::where('id', $id)->findOrFail($id);
-        $jobs = Job::orderBy('created_at', 'desc')->paginate(12);
-        $title = 'Jobs';
+        $application = '';
+        if (Auth::guard('seeker')->user()) {
+            $application = Application::where('seeker_id', Auth::guard('seeker')->user()->id)->first();
+        }
         if ($job->deadline < now()->toDateString() || ($job->job_status != 1)) {
             return redirect()->route('jobs')->with('error', 'Job expired or not active');
         } else {
@@ -61,7 +64,7 @@ class FrontpageController extends Controller
                 ->where('deadline', '>=', now()->toDateString())
                 ->take(10)->get();
             $title = $job->job_title;
-            return view('job_details', compact('title', 'job', 'related_jobs'));
+            return view('job_details', compact('title', 'job', 'related_jobs', 'application'));
         }
     }
 
@@ -102,7 +105,8 @@ class FrontpageController extends Controller
         return view($pages);
     }
     // About
-    public function about(){
+    public function about()
+    {
         $title = "About Us";
         return view('about', compact('title'));
     }

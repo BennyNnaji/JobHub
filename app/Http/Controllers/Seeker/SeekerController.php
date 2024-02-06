@@ -381,7 +381,7 @@ class SeekerController extends Controller
                 'license_name' => $request->license_name,
                 'issuing_org' => $request->issuing_org,
                 'issued_date' => date("Y-m-d", strtotime($request->issued_date)),
-                'exp_date' => $request->never ? null : ($request->exp_date ? date("Y-m-d", strtotime($request->exp_date)) : null),
+                 'exp_date' => $request->never ? null : (date("Y-m-d", strtotime($request->exp_date))),
                 //'exp_date' => $request->exp_date ? date("Y-m-d", strtotime($request->exp_date)) : null,
                 'description' => $request->description,
             ];

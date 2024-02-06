@@ -135,4 +135,5 @@ class JobController extends Controller
         $job->delete();
         return redirect()->route('company_jobs')->with('success', 'Job Deleted Successfully');
     }
+
 }

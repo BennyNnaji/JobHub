@@ -60,7 +60,9 @@
                 @endif
 
             </div>
-            <h2 class="font-semibold ">{{ $job->job_title }} {!! $job->reported_jobs()->count() > 10 && $job->reported_jobs()->count() <= 15
+            <h2 class="font-semibold ">{{ $job->job_title }} @auth('seeker')
+                <span class="text-xs text-green-500 italic capitalize">{{ str_replace('_', ' ', $application->status) }}</span> 
+            @endauth {!! $job->reported_jobs()->count() > 10 && $job->reported_jobs()->count() <= 15
                 ? '<i class=\'fa-solid fa-triangle-exclamation fa-2x text-yellow-500\' title="Reported job, be careful!"></i>'
                 : '' !!} {!! $job->reported_jobs()->count() > 15
                 ? '<i class=\'fa-solid fa-triangle-exclamation fa-2x text-red-500\' title="Massively Reported job, be careful!"></i>'
@@ -138,7 +140,7 @@
                     <form action="{{ route('report_job', $job->id) }}" method="post">
                         @csrf
                         <label for="reason" class="block text-sm font-medium text-gray-600">Select a reason for
-                            reporting:{{ $job->id }}</label>
+                            reporting:</label>
                         <select id="reason" name="reason" class="mt-1 p-2 w-full border rounded-md">
                             <option value="misleading_information">Misleading Information</option>
                             <option value="scams_and_fraud">Scams and Fraud</option>

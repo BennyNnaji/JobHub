@@ -14,7 +14,9 @@
                 <!-- Dummy Grid -->
                 @foreach ($jobs as $job)
                     <div class="bg-gray-200 p-4 border-2 border-red-600/50 rounded ">
-                        <h2 class="text-lg text-left font-semibold">{{ $job->job_title }}</h2>
+                        <h2 class="text-lg text-left font-semibold">{{ $job->job_title }} {!! $job->job_status == 1
+                            ? '<i class="fa-solid fa-toggle-on text-green-500"></i>'
+                            : '<i class="fa-solid fa-toggle-off text-red-500"></i>' !!}</h2>
                         <p class="text-xs italic text-gray-400">
                             <span>
                                 <i class="fa-solid fa-location-dot"></i>{{ $job->job_location }}

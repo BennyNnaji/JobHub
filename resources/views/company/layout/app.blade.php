@@ -94,6 +94,9 @@
                 <a href="{{ route('company_jobs.add') }}"
                     class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
                         class="fa-solid fa-briefcase"></i> Add Jobs</a>
+                <a href="{{ route('company_applications') }}"
+                    class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
+                        class="fa-solid fa-briefcase"></i> Applications</a>
                 <form action="{{ route('company_logout') }}" method="post" class="block px-4 py-2">
                     @csrf
                     <button type="submit">Logout</button>
@@ -112,6 +115,12 @@
 
             @yield('content')
         </div>
+
+        
+        <button id="scrollToTopBtn"
+            class="hidden fixed bottom-5 right-5 bg-red-500 px-4 py-4 rounded-full cursor-pointer">
+            <i class="fa-solid fa-chevron-up fa-2x text-red-200"></i>
+        </button>
     </section>
     <script>
         let button = document.getElementById("dropdownBtn");
@@ -166,7 +175,6 @@
                 title: "{{ session('success') }}"
             });
         </script>
-        >
     @endif
     <script>
         tinymce.init({
@@ -174,6 +182,23 @@
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         });
+
+
+        // Scroll to the top smoothly when the button is clicked
+        scrollToTopBtn.onclick = function() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+
+            // Smooth scrolling
+            document.body.style.scrollBehavior = "smooth";
+            document.documentElement.style.scrollBehavior = "smooth";
+
+            // Reset scroll behavior after scrolling to the top
+            setTimeout(function() {
+                document.body.style.scrollBehavior = "auto";
+                document.documentElement.style.scrollBehavior = "auto";
+            }, 50000);
+        };
     </script>
 
 

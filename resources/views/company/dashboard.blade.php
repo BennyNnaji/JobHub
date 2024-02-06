@@ -32,7 +32,7 @@
             </div>
             <div class="text-gray-300">
                 <p class="text-center font-bold">Jobs Approved</p>
-                <p class="text-center text-6xl">0</p>
+                <p class="text-center text-6xl">{{ $active }}</p>
             </div>
         </div>
         <div class="px-10 py-5 elevation-10 bg-gray-400 rounded-b flex justify-between items-center">
@@ -40,8 +40,8 @@
                 <img src="https://img.icons8.com/?size=100&id=WbwGa2LgO2kI&format=png" alt="" class="w-full rounded-full">
             </div>
             <div class="text-gray-300">
-                <p class="text-center font-bold">Accepted Applicaions</p>
-                <p class="text-center text-6xl">0</p>
+                <p class="text-center font-bold">Expired Jobs</p>
+                <p class="text-center text-6xl">{{ $expired }}</p>
             </div>
         </div>
      
@@ -50,8 +50,8 @@
                 <img src="https://img.icons8.com/?size=100&id=NY0ryT2CNe4U&format=png" alt="" class="w-full rounded-full">
             </div>
                 <div class="text-gray-300">
-                    <p class="text-center font-bold">Declined Applications</p>
-                    <p class="text-center text-6xl">0</p>
+                    <p class="text-center font-bold"> Applications</p>
+                    <p class="text-center text-6xl">{{ count($applications) }}</p>
             </div>
         </div>
 

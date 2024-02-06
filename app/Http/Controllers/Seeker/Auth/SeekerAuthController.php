@@ -6,6 +6,7 @@ use App\Models\Seeker;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class SeekerAuthController extends Controller
 {
@@ -77,5 +78,43 @@ class SeekerAuthController extends Controller
     {
         Auth::guard('seeker')->logout();
         return redirect()->route('seeker_login')->with('success', 'Logout Successful');
+    }
+
+    // password reset
+    public function password_reset()
+    {
+        $seeker = Auth::guard('seeker')->user();
+        $title = 'Update Password';
+        return view('seeker.update_password', compact('seeker', 'title'));
+    }
+
+    // password reset Update
+    public function password_update(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required|',
+            'password' => 'required|confirmed|min:8',
+        ]);
+        $seeker = Auth::guard('seeker')->user();
+        // Check if the old password matches the one in the database
+        if (!Hash::check($request->old_password, $seeker->password)) {
+        //     return redirect()->back()->with('error', 'The old password is incorrect.');
+        // }
+        // if (!bcrypt($request->old_password != $seeker->password)) {
+            return redirect()->back()->with('error', 'The old password is incorrect.');
+        } else {
+            $seeker->update([
+                'password' => bcrypt($request->password),
+            ]);
+            return redirect()->route('seeker_profile')->with('success', 'Password Updated Successfully');
+        }
+
+        // Update the password
+        // $user->update([
+        //     'password' => Hash::make($request->password),
+        // ]);
+
+
+
     }
 }

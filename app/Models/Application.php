@@ -18,7 +18,7 @@ class Application extends Model
     ];
     public function seeker()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Seeker::class);
     }
     public function job()
     {

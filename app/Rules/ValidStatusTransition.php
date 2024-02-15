@@ -7,15 +7,15 @@ use Illuminate\Contracts\Validation\Rule;
 class ValidStatusTransition implements Rule
 {
     protected $validTransitions = [
-        'submitted' => ['under_review'],
-        'under_review' => ['shortlisted', 'not_selected'],
-        'shortlisted' => ['interview_scheduled', 'not_selected'],
-        'interview_scheduled' => ['interviewed', 'not_selected'],
-        'interviewed' => ['reference_check', 'not_selected'],
-        'reference_check' => ['offer_extended', 'not_selected'],
-        'offer_extended' => ['offer_accepted', 'not_selected'],
-        'offer_accepted' => ['onboarding', 'not_selected'],
-        'onboarding' => ['hired', 'not_selected'],
+        'submitted' => ['under_review', 'withdrawn'],
+        'under_review' => ['shortlisted', 'not_selected' , 'withdrawn'],
+        'shortlisted' => ['interview_scheduled', 'not_selected' , 'withdrawn'],
+        'interview_scheduled' => ['interviewed', 'not_selected' , 'withdrawn'],
+        'interviewed' => ['reference_check', 'not_selected' , 'withdrawn'],
+        'reference_check' => ['offer_extended', 'not_selected' , 'withdrawn'],
+        'offer_extended' => ['offer_accepted', 'not_selected' , 'withdrawn'],
+        'offer_accepted' => ['onboarding', 'not_selected' , 'withdrawn'],
+        'onboarding' => ['hired', 'not_selected' , 'withdrawn'],
         'hired' => [], // No further transitions after being hired
         'not_selected' => [], // No further transitions after not selected
         'withdrawn' => [], // No further transitions after being withdrawn

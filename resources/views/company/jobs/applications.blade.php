@@ -20,7 +20,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center">
                                         <div class="ml-3">
-                                            <h3 class="text-gray-500 text-sm">{{ $application->job->job_title }} <span class="text-xs text-green-500 italic capitalize">{{ str_replace('_', ' ', $application->status) }}</span></h3>
+                                            <h3 class="text-gray-500 text-sm">{{ $application->job->job_title }} <span class="text-xs text-green-500 italic capitalize">{{ str_replace('_', ' ', json_decode($application->status, true)['status'] ) }}</span></h3>
                                             <p class="text-red-600 text-sm">{{ $application->seeker->name }}</p>
                                             <p class="text-gray-300 text-xs italic">{{ $application->created_at->diffForHumans() }}</p>
 

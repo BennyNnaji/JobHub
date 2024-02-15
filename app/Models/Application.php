@@ -24,4 +24,7 @@ class Application extends Model
     {
         return $this->belongsTo(Job::class);
     }
+    public function saved_job(){
+        return $this->belongsTo(SavedJob::class);
+    }
 }

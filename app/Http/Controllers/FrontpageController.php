@@ -50,10 +50,15 @@ class FrontpageController extends Controller
      */
     public function show(string $id)
     {
-        $job = Job::where('id', $id)->findOrFail($id);
-        $application = '';
+        $job = Job::findOrFail($id);
+        $application = null;
         if (Auth::guard('seeker')->user()) {
-            $application = Application::where('seeker_id', Auth::guard('seeker')->user()->id)->first();
+            $application = Application::where('seeker_id', Auth::guard('seeker')->user()->id)
+            ->where('job_id', $id)
+            ->first();
+            if ($application) {
+                $application->status = json_decode($application->status, true);
+            }
         }
         if ($job->deadline < now()->toDateString() || ($job->job_status != 1)) {
             return redirect()->route('jobs')->with('error', 'Job expired or not active');
@@ -62,7 +67,8 @@ class FrontpageController extends Controller
                 ->where('id', '!=', $id)->orderBy('created_at', 'desc')
                 ->where('job_status', 1)
                 ->where('deadline', '>=', now()->toDateString())
-                ->take(10)->get();
+                ->take(10)
+                ->get();
             $title = $job->job_title;
             return view('job_details', compact('title', 'job', 'related_jobs', 'application'));
         }

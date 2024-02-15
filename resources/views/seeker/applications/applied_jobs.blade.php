@@ -14,7 +14,7 @@
             @foreach ($jobs as $appliedJob)
                 <a href="{{ route('jobs.show', $appliedJob->job->id) }}">
                     <div class="bg-gray-200 p-4 border-2 border-red-600/50 rounded ">
-                        <h2 class="text-lg text-left font-semibold">{{ $appliedJob->job->job_title }} <span class="text-xs text-green-500 italic capitalize">{{ str_replace('_', ' ', $appliedJob->status) }}</span></h2>
+                        <h2 class="text-lg text-left font-semibold">{{ $appliedJob->job->job_title }} <span class="text-xs text-green-500 italic capitalize">{{ str_replace('_', ' ', json_decode($appliedJob->status, true)['status']) }}</span></h2>
                         <p class="text-xs italic text-gray-400">
                             <span>
                                 {{-- <i class="fa-solid fa-location-dot"></i>{{ $job->job_location }} --}}

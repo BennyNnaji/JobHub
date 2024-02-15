@@ -6,7 +6,7 @@
             <div class="bg-red-500 p-3 text-white font-bold ">Job Details</div>
             <div class="flex justify-between">
 
-                <div class=" flex justify-start space-x-2 items-center my-2">
+                <div class=" flex justify-start space-x-2 items-center my-2 w-4/6">
                     <div class="w-1/5 ">
                         @if (!$job->company->logo)
                             <img src="https://picsum.photos/200" alt="Company logo" class="w-full rounded-full">
@@ -16,57 +16,100 @@
                     </div>
                     <div class="text-2xl mx-2 w-4/5">{{ $job->company->name }}</div>
                 </div>
-                @if (!Auth::guard('company')->check())
-                    @if (Auth::guard('seeker')->check())
-                        <div class="my-2">
-                            <div class="fixed right-1/2 px-4 py-2 text-white bg-green-500 rounded-md shadow-md transition duration-150 ease-in-out hidden"
-                                id="success-alert"> <i class="fa-solid fa-check"></i>
-                                Job saved!
-                            </div>
-                            <div class="fixed right-1/2 px-4 py-2 text-white bg-red-500 rounded-md shadow-md transition duration-150 ease-in-out hidden"
-                                id="error-alert"> <i class="fa-solid fa-triangle-exclamation"></i>
-                                Job unsaved!
-                            </div>
-                            {{-- <div class="hidden fixed right-1/2 px-4 py-2 text-white bg-green-500/50 rounded-md shadow-md transition duration-150 ease-in-out" id="myAlert"> Lorem ipsum dolor sit amet.</div> --}}
-                            <form id="saveJobForm" action="{{ route('save_job', $job->id) }}" method="post">
-                                @csrf
-                                @php
-                                    $savedJobIds = Auth::guard('seeker')
-                                        ->user()
-                                        ->saved_jobs->pluck('job_id')
-                                        ->toArray();
-                                @endphp
-                                @if (in_array($job->id, $savedJobIds))
-                                    <button type="button" id="saveJobBtn"
-                                        class="cursor-pointer bg-green-500 px-3 py-2 rounded-t text-white my-1">
-                                        <i class="fa-solid fa-heart"></i> Saved
-                                    </button>
-                                @else
-                                    <button type="button" id="saveJobBtn"
-                                        class="cursor-pointer bg-green-500 px-3 py-2 rounded-t text-white my-1">
-                                        <i class="fa-solid fa-heart"></i> Save
-                                    </button>
+
+                <div class="2/6 text-end">
+                    @if (!Auth::guard('company')->check())
+                        @if (Auth::guard('seeker')->check())
+                            <div class="my-2">
+                                <div class="fixed right-1/2 px-4 py-2 text-white bg-green-500 rounded-md shadow-md transition duration-150 ease-in-out hidden"
+                                    id="success-alert"> <i class="fa-solid fa-check"></i>
+                                    Job saved!
+                                </div>
+                                <div class="fixed right-1/2 px-4 py-2 text-white bg-red-500 rounded-md shadow-md transition duration-150 ease-in-out hidden"
+                                    id="error-alert"> <i class="fa-solid fa-triangle-exclamation"></i>
+                                    Job unsaved!
+                                </div>
+                                {{-- <div class="hidden fixed right-1/2 px-4 py-2 text-white bg-green-500/50 rounded-md shadow-md transition duration-150 ease-in-out" id="myAlert"> Lorem ipsum dolor sit amet.</div> --}}
+                                <form id="saveJobForm" action="{{ route('save_job', $job->id) }}" method="post">
+                                    @csrf
+                                    @php
+                                        $savedJobIds = Auth::guard('seeker')->user()->saved_jobs->pluck('job_id')->toArray();
+                                    @endphp
+                                    @if (in_array($job->id, $savedJobIds))
+                                        <button type="button" id="saveJobBtn"
+                                            class="cursor-pointer bg-green-500 px-3 py-2 rounded-t text-white my-1">
+                                            <i class="fa-solid fa-heart"></i> Saved
+                                        </button>
+                                    @else
+                                        <button type="button" id="saveJobBtn"
+                                            class="cursor-pointer bg-green-500 px-3 py-2 rounded-t text-white my-1">
+                                            <i class="fa-solid fa-heart"></i> Save
+                                        </button>
+                                    @endif
+
+                                </form>
+
+
+                                <button onclick="openReport()"
+                                    class="cursor-pointer bg-yellow-500 px-3 py-2 rounded-b text-white my-1"> <i
+                                        class="fa-solid fa-triangle-exclamation"></i> Report</button> <br>
+                                @if ($application)
+                                    @if ($application->status['status'] == 'offer_extended')
+                                        @if ($errors->any())
+                                            @foreach ($errors->all() as $error)
+                                                <div class="text-red-500"><i class="fa-solid fa-circle-exclamation"></i>
+                                                    {{ $error }}</div>
+                                            @endforeach
+                                        @endif
+                                        <form action="{{ route('acceptOffer', $application->id) }}" method="post">
+                                            @method('PUT')
+                                            @csrf
+                                            <input type="hidden" name="status" value="offer_accepted">
+                                            <button type="submit"
+                                                class="cursor-pointer bg-green-500 px-3 py-2 rounded-t text-white my-1">
+                                                <i class="fa-regular fa-circle-check"></i> Accept Offer
+                                            </button>
+                                        </form>
+                                    @endif
+
+                                    @if ($errors->any())
+                                        @foreach ($errors->all() as $error)
+                                            <div class="text-red-500"><i class="fa-solid fa-circle-exclamation"></i>
+                                                {{ $error }}</div>
+                                        @endforeach
+                                    @endif
+                                    @if ($application->status['status'] != 'withdrawn')
+                                        <form action="{{ route('withdrawApplication', $application->id) }}" method="post">
+                                            @method('PUT')
+                                            @csrf
+                                            <input type="hidden" name="status" value="withdrawn">
+                                            <button type="submit"
+                                                class="cursor-pointer bg-red-500 px-3 py-2 rounded-b text-white my-1"> <i
+                                                    class="fa-solid fa-triangle-exclamation"></i> Withdraw
+                                                Application</button>
+                                        </form>
+                                    @endif
                                 @endif
-
-                            </form>
-
-
-                            <button onclick="openReport()"
-                                class="cursor-pointer bg-yellow-500 px-3 py-2 rounded-b text-white my-1"> <i
-                                    class="fa-solid fa-triangle-exclamation"></i> Report</button>
-
-                        </div>
+                            </div>
+                        @endif
                     @endif
-                @endif
+                </div>
+
 
             </div>
-            <h2 class="font-semibold ">{{ $job->job_title }} @auth('seeker')
-                <span class="text-xs text-green-500 italic capitalize">{{ str_replace('_', ' ', $application->status) }}</span> 
-            @endauth {!! $job->reported_jobs()->count() > 10 && $job->reported_jobs()->count() <= 15
-                ? '<i class=\'fa-solid fa-triangle-exclamation fa-2x text-yellow-500\' title="Reported job, be careful!"></i>'
-                : '' !!} {!! $job->reported_jobs()->count() > 15
-                ? '<i class=\'fa-solid fa-triangle-exclamation fa-2x text-red-500\' title="Massively Reported job, be careful!"></i>'
-                : '' !!}
+            <h2 class="font-semibold ">{{ $job->job_title }}
+
+                @auth('seeker')
+                    @if ($application)
+                        <span
+                            class="text-xs text-green-500 italic capitalize">{{ str_replace('_', ' ', $application->status['status']) }}</span>
+                    @endif
+                @endauth
+                {!! $job->reported_jobs()->count() > 10 && $job->reported_jobs()->count() <= 15
+                    ? '<i class=\'fa-solid fa-triangle-exclamation fa-2x text-yellow-500\' title="Reported job, be careful!"></i>'
+                    : '' !!} {!! $job->reported_jobs()->count() > 15
+                    ? '<i class=\'fa-solid fa-triangle-exclamation fa-2x text-red-500\' title="Massively Reported job, be careful!"></i>'
+                    : '' !!}
             </h2>
 
             <div>
@@ -94,13 +137,11 @@
             @if (!Auth::guard('company')->check())
                 @if (Auth::guard('seeker')->check())
                     @php
-                        $appliedJobIds = Auth::guard('seeker')
-                            ->user()
-                            ->applications->pluck('job_id')
-                            ->toArray();
+                        $appliedJobIds = Auth::guard('seeker')->user()->applications->pluck('job_id')->toArray();
                     @endphp
                     @if (in_array($job->id, $appliedJobIds))
-                        <button disabled="disabled" class="w-2/6 bg-red-400 rounded px-6 py-3 my-10 text-center text-red-200 hover:text-red-200 cursor-not-allowed">Applied</button>
+                        <button disabled="disabled"
+                            class="w-2/6 bg-red-400 rounded px-6 py-3 my-10 text-center text-red-200 hover:text-red-200 cursor-not-allowed">Applied</button>
                     @else
                         <a href="{{ route('apply_job', $job->id) }}"
                             class="w-2/6 bg-red-500 rounded px-6 py-3 my-10 hover:bg-red-600 text-center text-red-200 hover:text-red-200">Apply

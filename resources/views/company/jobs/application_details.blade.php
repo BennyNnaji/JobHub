@@ -11,7 +11,8 @@
     </div>
     <section class="elevation-10 w-4/5 p-3 mx-auto ">
         <p class="text-red-600 leading-3 tracking-widest"> {{ $application->job->job_title }} <span
-                class="text-xs text-green-500 italic capitalize">{{ str_replace('_', ' ', $application->status) }}</span></p>
+                class="text-xs text-green-500 italic capitalize">{{ str_replace('_', ' ', $application->status['status']) }}</span>
+        </p>
         <div>
             <div class="md:flex justify-between">
                 <div class="w-5/6">
@@ -40,9 +41,17 @@
                         <div class="text-red-500"><i class="fa-solid fa-circle-exclamation"></i>
                             {{ $message }}</div>
                     @enderror
-                    <button onclick="openStatus()"
-                        class="px-4 py-2 rounded border-2 border-green-500 text-black hover:bg-green-600 hover:text-white block m-2">Update
-                        Status</button>
+                    @if (
+                        $application->status['status'] !== 'offer_extended' &&
+                            $application->status['status'] !== 'hired' &&
+                            $application->status['status'] !== 'not_selected' &&
+                            $application->status['status'] !== 'withdrawn')
+                        <button onclick="openStatus()"
+                            class="px-4 py-2 rounded border-2 border-green-500 text-black hover:bg-green-600 hover:text-white block m-2">Update
+                            Status</button>
+                    @endif
+
+
                     <button
                         class="px-4 py-2 rounded border-2 border-green-500 text-black hover:bg-green-600 hover:text-white block m-2">Message&nbsp;Applicant</button>
                     <!-- Centered Modal -->
@@ -68,7 +77,6 @@
                                         <option value="interviewed">Interviewed</option>
                                         <option value="reference_check">Reference Check</option>
                                         <option value="offer_extended">Offer Extended</option>
-                                        <option value="offer_accepted">Offer Accepted</option>
                                         <option value="onboarding">Onboarding</option>
                                         <option value="hired">Hired/Completed</option>
                                         <option value="not_selected">Not Selected/Rejected</option>
@@ -77,6 +85,8 @@
                                         <div class="text-red-500"><i class="fa-solid fa-circle-exclamation"></i>
                                             {{ $message }}</div>
                                     @enderror
+                                    <label for="status_details" class="block mt-4"> Status Details</label>
+                                    <textarea name="status_details" id="status_details">{{ old('status_details') }}</textarea>
                                     <div class="flex justify-between my-3">
                                         <button type="submit"
                                             class="bg-green-500 hover:bg-green-600 px-5 py-3 rounded focus:ring-green-600 text-green-200 hover:text-green-300">Submit</button>

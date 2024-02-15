@@ -30,9 +30,11 @@ Route::get('/search', [FrontpageController::class, 'job_search'])->name('jobs.se
 Route::get('/jobs/{id}', [FrontpageController::class, 'show'])->name('jobs.show');
 Route::post('/jobs/{id}', [ApplicationController::class, 'save_job'])->name('save_job');
 Route::post('/jobs/{id}/report', [ApplicationController::class, 'report_job'])->name('report_job');
+Route::put('jobs/{id}/withdraw', [ApplicationController::class, 'withdrawApplication'])->name('withdrawApplication');
+Route::put('jobs/{id}/accept-offer', [ApplicationController::class, 'acceptOffer'])->name('acceptOffer');
 Route::get('/login', [FrontpageController::class, 'login'])->name('login');
 Route::get('/register', [FrontpageController::class, 'register'])->name('register');
-Route::get('/about', [FrontpageController::class,'about'])->name('about');
+Route::get('/about', [FrontpageController::class, 'about'])->name('about');
 //Route::get('/{pages}', [FrontpageController::class, 'pages'])->name('pages');
 
 // Seeker Routes
@@ -80,8 +82,11 @@ Route::middleware(['seeker'])->prefix('/seeker/')->group(function () {
     Route::get('/jobs/{id}/apply', [ApplicationController::class, 'apply_job'])->name('apply_job');
     Route::post('/jobs/{id}/apply', [ApplicationController::class, 'apply_job_store'])->name('apply_job_store');
 
-    Route::get('/jobs/applied', [ApplicationController::class,'applied_jobs'])->name('applied_jobs');
-    Route::get('/jobs/saved', [ApplicationController::class,'saved_jobs'])->name('saved_jobs');
+    Route::get('/jobs/applied', [ApplicationController::class, 'applied_jobs'])->name('applied_jobs');
+    Route::get('/jobs/saved', [ApplicationController::class, 'saved_jobs'])->name('saved_jobs');
+
+    //Route::post('/jobs/{id}/report', [ApplicationController::class, 'report_job'])->name('report_job');
+    //Route::put('jobs/{id}/withdraw', [ApplicationController::class, 'withdrawApplication'])->name('withdrawApplication');
 
     Route::get('profile/password-reset', [SeekerAuthController::class, 'password_reset'])->name('password_reset');
     Route::post('profile/password-update', [SeekerAuthController::class, 'password_update'])->name('password_update');
@@ -106,7 +111,7 @@ Route::middleware(['company'])->prefix('/company/')->group(function () {
     Route::get('profile/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry']);
     Route::get('profile/cities/{countryCode}/{stateCode}', [CompanyProfileController::class, 'getCitiesByState']);
     Route::post('profile', [CompanyProfileController::class, 'profile_update'])->name('profile_update');
-    
+
 
     Route::get('profile/update', [CompanyProfileController::class, 'update_profile'])->name('company_profile.u');
     Route::get('profile/update/states/{countryCode}', [CompanyProfileController::class, 'getStatesByCountry.u']);

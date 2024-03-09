@@ -35,4 +35,7 @@ class Job extends Model
     public function reported_jobs(){
         return $this->hasMany(ReportJob::class);
     }
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
 }

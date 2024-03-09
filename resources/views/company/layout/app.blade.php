@@ -97,11 +97,14 @@
                 <a href="{{ route('company_applications') }}"
                     class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3"><i
                         class="fa-solid fa-briefcase"></i> Applications</a>
+
+                        <a href="{{ route('company_messages') }}"
+                        class="block px-4 py-2 rounded hover:border-2 border-gray-400 my-3">   <i class="fa-solid fa-comment-dots"></i> Messages</a>
                 <form action="{{ route('company_logout') }}" method="post" class="block px-4 py-2">
                     @csrf
-                    <button type="submit">Logout</button>
+                    <button type="submit"> <i class="fa-solid fa-right-from-bracket"></i> Logout</button>
                 </form>
-
+             
 
             </div>
 

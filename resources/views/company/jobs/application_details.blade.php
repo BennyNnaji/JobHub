@@ -53,7 +53,7 @@
 
 
                     <button
-                        class="px-4 py-2 rounded border-2 border-green-500 text-black hover:bg-green-600 hover:text-white block m-2">Message&nbsp;Applicant</button>
+                        class="px-4 py-2 rounded border-2 border-green-500 text-black hover:bg-green-600 hover:text-white block m-2"> <a href="{{ route('DisplayMsgForm', $application->id) }}"> Message&nbsp;Applicant</a></button>
                     <!-- Centered Modal -->
                     <div id="status"
                         class="absolute top-0 inset-x-0 flex items-center justify-center hidden bg-gray-500 bg-opacity-50 z-50 rounded"

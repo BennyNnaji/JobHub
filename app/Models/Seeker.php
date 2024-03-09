@@ -42,6 +42,17 @@ class Seeker extends Model implements Authenticatable
     {
         return $this->hasMany(ReportJob::class);
     }
+    // Message lol
+    public function companySeeker()
+    {
+        return $this->hasOne(CompanySeeker::class, 'user_id')->where('user_type', 'seeker');
+    }
+
+    public function company()
+    {
+        return $this->hasOneThrough(Company::class, CompanySeeker::class, 'user_id', 'id', 'id', 'user_id')->where('companies_seekers.user_type', 'company');
+    }
+    // Ends here... God abeg lol
 
     // protected $casts = [
     //     'career' => 'array',

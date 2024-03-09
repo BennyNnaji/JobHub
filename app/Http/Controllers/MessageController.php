@@ -3,63 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function messages(){
+        $title = 'Messages';
+        ///$messages = Message::where('sender_id', Auth::guard('company')->user()->id)->all();
+        return view('company.messages.index', compact('title'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function DisplayMsgForm($id)
     {
-        //
+        $title = 'Message Applicant';
+        $application = Application::findOrFail($id);
+        //dd($application->id);
+        return view('company.messages.new', compact('title', 'application'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function SendMsg(Request $request){
+        $validated =   $request->validate([
+         'subject' =>'required',
+         'message' =>'required',
+         'parent_message_id' => 'nullable',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Message $message)
-    {
-        //
-    }
+        $message = new Message();
+        $message->subject = $request->subject;
+        $message->message = $request->message;
+        $message->sender_id = Auth::guard('company')->user()->id;
+        $message->receiver_id = $request->receiver_id;
+        $message->job_id = $request->job_id;
+        $message->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Message $message)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Message $message)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Message $message)
-    {
-        //
+        return redirect()->route('company_messages')->with('success', 'Message Sent');
     }
 }

@@ -29,7 +29,7 @@ class Company extends Model implements Authenticatable
         ];
     public function getAuthIdentifierName()
     {
-        return 'id'; // Change this if your primary key column name is different
+        return 'id';
     }
 
     public function getAuthIdentifier()
@@ -58,5 +58,15 @@ class Company extends Model implements Authenticatable
     
     public function jobs(){
         return $this->hasMany(Job::class);
+    }
+
+    public function companySeeker()
+    {
+        return $this->hasOne(CompanySeeker::class, 'user_id')->where('user_type', 'company');
+    }
+
+    public function seekers()
+    {
+        return $this->hasManyThrough(Seeker::class, CompanySeeker::class, 'user_id', 'id', 'id', 'user_id')->where('companies_seekers.user_type', 'seeker');
     }
 }

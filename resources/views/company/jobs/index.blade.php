@@ -14,7 +14,7 @@
                 <!-- Dummy Grid -->
                 @foreach ($jobs as $job)
                     <div class="bg-gray-200 p-4 border-2 border-red-600/50 rounded ">
-                        <h2 class="text-lg text-left font-semibold">{{ $job->job_title }} {!! $job->job_status == 1
+                        <h2 class="text-lg text-left font-semibold">{{ $job->job_title }} {!! $job->job_status == 1 && $job->deadline > Carbon\Carbon::now()
                             ? '<i class="fa-solid fa-toggle-on text-green-500"></i>'
                             : '<i class="fa-solid fa-toggle-off text-red-500"></i>' !!}</h2>
                         <p class="text-xs italic text-gray-400">
@@ -34,17 +34,23 @@
 
                             <p class="text-red-500">
                                 {{ $job->job_type }}</p> <br>
+                            @if ($job->deadline > Carbon\Carbon::now())
+                                <a href="{{ route('company_jobs.show', $job->id) }}"
+                                    class="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 ">Edit</a>
+                                <form id="deleteForm{{ $job->id }}"
+                                    action="{{ route('company_jobs.delete', $job->id) }}" method="post" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 text-white hover:bg-red-600 rounded px-4 py-2"
+                                        data-job-id="{{ $job->id }}">Delete</button>
+                                </form>
+                            @else
+                                <span class="px-4 py-2 rounded bg-yellow-500 text-white hover:bg-yellow-600 ">
+                                    Expired</span>
+                            @endif
 
-                            <a href="{{ route('company_jobs.show', $job->id) }}"
-                                class="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 ">Edit</a>
 
-                            <form id="deleteForm{{ $job->id }}" action="{{ route('company_jobs.delete', $job->id) }}"
-                                method="post" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-500 text-white hover:bg-red-600 rounded px-4 py-2"
-                                    data-job-id="{{ $job->id }}">Delete</button>
-                            </form>
+
 
 
                         </div>

@@ -2,16 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\CountryController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontpageController;
 use App\Http\Controllers\Company\JobController;
 use App\Http\Controllers\Seeker\SeekerController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ManageJobController;
+use App\Http\Controllers\Admin\ManageSeekerController;
 use App\Http\Controllers\Seeker\ApplicationController;
-use App\Http\Controllers\Company\ApplicationController as CompanyApplicationController;
+use App\Http\Controllers\Admin\ManageCompanyController;
+use App\Http\Controllers\Admin\Auth\AdminAuthController;
 use App\Http\Controllers\Seeker\Auth\SeekerAuthController;
 use App\Http\Controllers\Company\Auth\CompanyAuthController;
 use App\Http\Controllers\Company\CompanyDashboardController;
 use App\Http\Controllers\Company\ProfileController as CompanyProfileController;
+use App\Http\Controllers\Company\ApplicationController as CompanyApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +43,56 @@ Route::get('/register', [FrontpageController::class, 'register'])->name('registe
 Route::get('/about', [FrontpageController::class, 'about'])->name('about');
 //Route::get('/{pages}', [FrontpageController::class, 'pages'])->name('pages');
 
+// Admin Routes
+Route::prefix('/admin/')->group(function () {
+    Route::get('login', [AdminAuthController::class, 'admin_login'])->name('admin_login');
+    Route::post('login', [AdminAuthController::class, 'admin_login_post'])->name('admin_login_post');
+    Route::get('logout', [AdminAuthController::class, 'admin_logout'])->name('admin_logout');
+    Route::get('reset-password', [AdminAuthController::class, 'admin_forgot_password'])->name('admin_forgot_password');
+    
+});
+// Admin Protected Routes
+Route::middleware(['admin'])->prefix('/admin/')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'admin_dashboard'])->name('admin_dashboard');
+    Route::get('seekers', [ManageSeekerController::class, 'index'])->name('admin_seekers');
+    Route::get('seekers/active', [ManageSeekerController::class, 'active_seekers'])->name('admin_seekers_active');
+    Route::get('seekers/verified', [ManageSeekerController::class, 'verified_seekers'])->name('admin_seekers_verified'); //Not implemented yet
+    Route::get('seekers/unverified', [ManageSeekerController::class, 'unverified_seekers'])->name('admin_seekers_unverified');//not implemented yet
+    Route::get('seeker/{id}', [ManageSeekerController::class, 'admin_seeker_show'])->name('admin_seeker_show');
+
+    Route::get('jobs', [ManageJobController::class, 'index'])->name('admin_jobs');
+    Route::get('jobs/active', [ManageJobController::class, 'active_jobs'])->name('admin_jobs_active');
+    Route::get('jobs/pending', [ManageJobController::class, 'pending_jobs'])->name('admin_jobs_pending');
+    Route::get('jobs/reported', [ManageJobController::class, 'reported_jobs'])->name('admin_jobs_reported');
+    Route::get('jobs/expired', [ManageJobController::class, 'expired_jobs'])->name('admin_jobs_expired');
+    Route::get('jobs/closed', [ManageJobController::class, 'closed_jobs'])->name('admin_jobs_closed'); //Not implemented yet
+    Route::get('jobs/{id}', [ManageJobController::class, 'show_job'])->name('admin_job_show');
+    Route::get('jobs/{id}/edit', [ManageJobController::class, 'job_edit'])->name('admin_job_edit'); // Not implemented yet
+    Route::post('jobs/{id}/edit', [ManageJobController::class, 'job_update'])->name('admin_job_update'); // Not implemented yet
+
+    Route::get('companies', [ManageCompanyController::class, 'index'])->name('admin_companies');
+    Route::get('companies/active', [ManageCompanyController::class, 'active_companies'])->name('admin_companies_active');
+    Route::get('companies/pending', [ManageCompanyController::class, 'pending_companies'])->name('admin_companies_pending');
+    Route::get('companies/rejected', [ManageCompanyController::class, 'rejected_companies'])->name('admin_companies_rejected');  // Not implemented yet
+    Route::get('companies/verified', [ManageCompanyController::class, 'verified_companies'])->name('admin_companies_verified');
+    Route::get('companies/unverified', [ManageCompanyController::class, 'unverified_companies'])->name('admin_companies_unverified');
+    Route::get('companies/{id}', [ManageCompanyController::class, 'admin_company_show'])->name('admin_company_show');
+    Route::get('companies/{id}', [ManageCompanyController::class, 'show_company'])->name('admin_company_show');
+    Route::get('companies/{id}/edit', [ManageCompanyController::class, 'company_edit'])->name('admin_company_edit');
+    Route::post('companies/{id}/edit', [ManageCompanyController::class, 'company_update'])->name('admin_company_update');
+
+    Route::get('recruiters', [ManageRecruiterController::class, 'index'])->name('admin_recruiters');
+    Route::get('recruiters/active', [ManageRecruiterController::class, 'active_recruiters'])->name('admin_recruiters_active');
+    Route::get('recruiters/pending', [ManageRecruiterController::class, 'pending_recruiters'])->name('admin_recruiters_pending');
+    Route::get('recruiters/rejected', [ManageRecruiterController::class, 'rejected_recruiters'])->name('admin_recruiters_rejected');
+    Route::get('recruiters/{id}', [ManageRecruiterController::class, 'show_recruiter'])->name('admin_recruiter_show');
+    Route::get('recruiters/{id}/edit', [ManageRecruiterController::class, 'recruiter_edit'])->name('admin_recruiter_edit');
+    Route::post('recruiters/{id}/edit', [ManageRecruiterController::class, 'recruiter_update'])->name('admin_recruiter_update');
+
+
+    
+
+});
 // Seeker Routes
 Route::prefix('/seeker/')->group(function () {
     Route::get('register', [SeekerAuthController::class, 'seeker_register'])->name('seeker_register');
@@ -127,6 +183,9 @@ Route::middleware(['company'])->prefix('/company/')->group(function () {
     Route::get('applications', [CompanyApplicationController::class, 'company_applications'])->name('company_applications');
     Route::get('applications/{id}', [CompanyApplicationController::class, 'application_details'])->name('application_details');
     Route::put('applications/{id}/status', [CompanyApplicationController::class, 'updateStatus'])->name('updateStatus');
+    Route::get('/messages', [MessageController::class, 'messages'])->name('company_messages');
+    Route::get('applications/{id}/message', [MessageController::class, 'DisplayMsgForm'])->name('DisplayMsgForm');
+    Route::post('applications/{id}/message', [MessageController::class, 'SendMsg'])->name('SendMsg');
 });
 
 
